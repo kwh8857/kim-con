@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "ygo";
+  src: url(ygotjalnanfont.ttf) format("truetype"),
+    url(ygotjalnanfontOTF.otf) format("opentype");
+  font-style: normal;
+  font-weight: normal;
+  unicode-range: U+0-10FFFF;
+}

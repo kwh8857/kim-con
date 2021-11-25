@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="135" height="135" viewBox="0 0 135 135">
+    <defs>
+        <filter id="a" x="0" y="0" width="135" height="135" filterUnits="userSpaceOnUse">
+            <feOffset dy="3"/>
+            <feGaussianBlur stdDeviation="7.5" result="blur"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g data-name="kakao">
+        <g style="filter:url(#a)">
+            <circle data-name="kakao" cx="45" cy="45" r="45" transform="translate(22.5 19.5)" style="fill:#ffd900"/>
+        </g>
+        <path data-name="패스 7312" d="M74.778 48.959c-13.249 0-23.987 9.933-23.987 22.186 0 9.05 3.791 13.37 8.982 17.308l.024.011v10.62a.61.61 0 0 0 .974.489l9.1-6.756.2.085a26.019 26.019 0 0 0 4.715.43c13.248 0 23.986-9.934 23.986-22.187S88.026 48.959 74.778 48.959m-8.041 27.808a5.011 5.011 0 0 0 4.968-3.581h3.476a8.32 8.32 0 0 1-8.445 6.927 8.993 8.993 0 1 1 0-17.986 8.331 8.331 0 0 1 8.47 7.056H71.74a4.947 4.947 0 0 0-5-3.757 5.43 5.43 0 0 0-5.645 5.694 5.568 5.568 0 0 0 5.645 5.647m22.916 3h-3.19v-7.19a2.289 2.289 0 0 0-2.446-2.545c-1.655 0-2.717 1.012-2.717 3.063v6.672h-3.189V62.183H81.3V68.8a4.085 4.085 0 0 1 3.68-1.728 4.371 4.371 0 0 1 3.335 1.359 5.127 5.127 0 0 1 1.336 3.756z" transform="translate(-7.277 -9.195)" style="fill:#050506"/>
+    </g>
+</svg>

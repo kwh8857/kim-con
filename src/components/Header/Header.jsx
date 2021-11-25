@@ -11,6 +11,9 @@ const Wrapper = styled.div`
   width: 100%;
   height: 64px;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;
 const Logo = styled.figure`
   width: 180px;
