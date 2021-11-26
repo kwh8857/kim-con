@@ -6,7 +6,7 @@ const Aside = styled.aside`
   right: 73px;
   display: flex;
   flex-direction: column;
-
+  z-index: 100;
   & > button {
     font-size: 15px;
     font-weight: bold;

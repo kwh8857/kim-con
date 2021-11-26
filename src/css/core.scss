@@ -32,6 +32,48 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 img {
   width: 100%;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:focus {
+  outline: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+.none {
+  display: none !important;
+}
+input,
+p,
+textarea {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  resize: none;
+  font-family: 'Noto Sans KR',
+    sans-serif;
+
+  &::placeholder {
+    font-family: 'Noto Sans KR',
+      sans-serif;
+    color: #c6c6c6;
+
+  }
+  &:focus {
+    outline: none;
+  }
 }

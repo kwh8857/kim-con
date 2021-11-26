@@ -5,6 +5,7 @@ const initialState = {
   status: "test",
   payload: "",
   isLoading: false,
+  isPopup: false,
 };
 
 const config = (state = initialState, action) => {
@@ -23,6 +24,11 @@ const config = (state = initialState, action) => {
       return {
         ...state,
         error: action.error,
+      };
+    case "config/isPopup":
+      return {
+        ...state,
+        isPopup: action.payload,
       };
     default:
       return state;

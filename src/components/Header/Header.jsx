@@ -1,10 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-const menuarr = ["김과장컨설팅", "서비스소개", "고객지원", "문의하기"];
+const menuarr = [
+  { title: "김과장컨설팅", link: "/about" },
+  { title: "서비스소개", link: "" },
+  { title: "고객지원", link: "" },
+  { title: "문의하기", link: "" },
+];
 const Wrapper = styled.div`
   display: flex;
+  z-index: 1000;
   box-sizing: border-box;
   align-items: center;
   padding: 0 74px;
@@ -18,6 +24,7 @@ const Wrapper = styled.div`
 const Logo = styled.figure`
   width: 180px;
   height: 33.5px;
+  cursor: pointer;
 `;
 const Menu = styled.nav`
   display: grid;
@@ -27,20 +34,29 @@ const Menu = styled.nav`
   column-gap: 45px;
 `;
 function Header() {
+  const location = useLocation();
   return (
     <Wrapper>
-      <Logo>
-        <img
-          src="/assets/logo.webp"
-          srcSet="/assets/logo@2x.webp 2x , /assets/logo@3x.webp 3x"
-          alt="김과장컨설팅"
-        />
-      </Logo>
+      <Link to={"/"}>
+        <Logo>
+          <img
+            src="/assets/logo.webp"
+            srcSet="/assets/logo@2x.webp 2x , /assets/logo@3x.webp 3x"
+            alt="김과장컨설팅"
+          />
+        </Logo>
+      </Link>
       <Menu>
-        {menuarr.map((item, idx) => {
+        {menuarr.map(({ title, link }, idx) => {
           return (
-            <Link key={idx} to={"/"}>
-              {item}
+            <Link
+              key={idx}
+              to={link}
+              style={{
+                color: link === location.pathname ? "#00be83" : "black",
+              }}
+            >
+              {title}
             </Link>
           );
         })}
