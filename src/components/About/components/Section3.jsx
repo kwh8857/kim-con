@@ -103,11 +103,25 @@ const Wrapper = styled.section`
           text-align: center;
         }
         & > .arrow {
+          transform: translateX(130px);
+          position: relative;
           width: 0;
           height: 0;
-          border-top: 60px solid transparent;
-          border-bottom: 60px solid transparent;
-          border-left: 60px solid green;
+          border-top: 22px solid transparent;
+          border-bottom: 22px solid transparent;
+          border-left: 22px solid #47d99b;
+          :after {
+            content: "";
+            position: absolute;
+            border-style: solid;
+            border-width: 25px 20px 0;
+            display: block;
+            width: 0;
+            z-index: 1;
+            bottom: -12px;
+            left: -60px;
+            border-color: #47d99b;
+          }
         }
       }
     }
