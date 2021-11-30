@@ -89,7 +89,7 @@ function LocationSelect() {
           >
             <button>
               {nowLocation === item ? (
-                <img src="/assets/check.svg" alt="" />
+                <img src="/assets/main/check.svg" alt="" />
               ) : undefined}
             </button>
             <span>{item}</span>

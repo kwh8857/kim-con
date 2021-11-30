@@ -44,8 +44,8 @@ function Section1() {
         </div>
         <figure>
           <img
-            src="/assets/about1.webp"
-            srcSet="/assets/about1@2x.webp 2x , /assets/about1@3x.webp 3x"
+            src="/assets/about/about1.png"
+            srcSet="/assets/about/about1@2x.png 2x , /assets/about/about1@3x.png 3x"
             alt=""
           />
         </figure>

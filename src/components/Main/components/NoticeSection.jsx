@@ -12,7 +12,7 @@ const Wrapper = styled.section`
     box-sizing: border-box;
     & > .top {
       & > .logo {
-        background-image: url("/assets/greensteach.svg");
+        background-image: url("/assets/main/greensteach.svg");
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -77,7 +77,7 @@ function NoticeSection() {
             <header>
               <div className="title">공지사항</div>
               <figure>
-                <img src="/assets/plus.svg" alt="" />
+                <img src="/assets/main/plus.svg" alt="" />
               </figure>
             </header>
           </article>
@@ -85,7 +85,7 @@ function NoticeSection() {
             <header>
               <div className="title">지원사업 소식</div>
               <figure>
-                <img src="/assets/plus.svg" alt="" />
+                <img src="/assets/main/plus.svg" alt="더보기" />
               </figure>
             </header>
           </article>

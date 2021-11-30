@@ -24,13 +24,13 @@ function Side() {
     <Aside>
       <button>
         <figure>
-          <img src="/assets/kakao.svg" alt="카카오" />
+          <img src="/assets/side/kakao.svg" alt="카카오" />
           <figcaption>카카오톡 문의</figcaption>
         </figure>
       </button>
       <button>
         <figure>
-          <img src="/assets/naver.svg" alt="네이버" />
+          <img src="/assets/side/naver.svg" alt="네이버" />
           <figcaption>네이버 톡톡</figcaption>
         </figure>
       </button>

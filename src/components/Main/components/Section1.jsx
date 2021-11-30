@@ -145,13 +145,13 @@ function Section1() {
           </span>
           <button>
             <span> 김과장에게 문의하기</span>
-            <img src="/assets/right-arrow.svg" alt="이동" />
+            <img src="/assets/main/right-arrow.svg" alt="이동" />
           </button>
         </div>
         <figure className="right">
           <img
-            src="/assets/kimmanager.webp"
-            srcSet="/assets/kimmanager@2x.webp 2x , /assets/kimmanager@3x.webp 3x"
+            src="/assets/main/kimmanager.png"
+            srcSet="/assets/main/kimmanager@2x.png 2x , /assets/kimmanager@3x.png 3x"
             alt=""
           />
         </figure>

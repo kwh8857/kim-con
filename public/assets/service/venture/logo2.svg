@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88.21" height="79.328" viewBox="0 0 88.21 79.328">
+    <defs>
+        <clipPath id="clip-path">
+            <path id="사각형_3196" data-name="사각형 3196" style="fill:none" d="M0 0h88.21v79.327H0z"/>
+        </clipPath>
+        <style>
+            .cls-4{fill:none}.cls-2{fill:#fff}.cls-3{clip-path:url(#clip-path)}.cls-4{stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.5px}
+        </style>
+    </defs>
+    <g id="icon">
+        <path id="패스_7275" data-name="패스 7275" class="cls-2" d="M46.68 78.325H1.25V1.25h63.245v77.075z" transform="translate(-.124 -.124)"/>
+        <g id="그룹_5283" data-name="그룹 5283">
+            <g id="그룹_5282" data-name="그룹 5282" class="cls-3">
+                <path id="패스_7276" data-name="패스 7276" class="cls-4" d="M46.68 78.325H1.25V1.25h63.245v77.075z" transform="translate(-.124 -.124)"/>
+            </g>
+        </g>
+        <path id="선_254" data-name="선 254" class="cls-4" transform="translate(9.565 13.594)" d="M0 0h45.898"/>
+        <path id="선_255" data-name="선 255" class="cls-4" transform="translate(9.565 21.014)" d="M0 0h45.898"/>
+        <path id="선_256" data-name="선 256" class="cls-4" transform="translate(9.565 28.435)" d="M0 0h45.898"/>
+        <path id="선_257" data-name="선 257" class="cls-4" transform="translate(32.514 36.974)" d="M0 0h22.949"/>
+        <path id="선_258" data-name="선 258" class="cls-4" transform="translate(32.514 44.395)" d="M0 0h22.949"/>
+        <path id="선_259" data-name="선 259" class="cls-4" transform="translate(32.514 51.816)" d="M0 0h22.949"/>
+        <path id="사각형_3197" data-name="사각형 3197" transform="translate(9.565 36.494)" style="fill:#caddff" d="M0 0h17.752v17.752H0z"/>
+        <path id="사각형_3198" data-name="사각형 3198" class="cls-4" transform="translate(9.565 36.494)" d="M0 0h17.752v17.752H0z"/>
+        <path id="사각형_3199" data-name="사각형 3199" transform="rotate(-44.561 90.559 -22.001)" style="fill:#e8e589" d="M0 0h49.453v14.786H0z"/>
+        <g id="그룹_5285" data-name="그룹 5285">
+            <g id="그룹_5284" data-name="그룹 5284" class="cls-3">
+                <path id="사각형_3200" data-name="사각형 3200" class="cls-4" transform="rotate(-44.561 90.559 -22.001)" d="M0 0h49.453v14.786H0z"/>
+            </g>
+        </g>
+        <path id="패스_7277" data-name="패스 7277" class="cls-2" d="m41.652 77.776 14.331-3.722L45.594 63.5z" transform="translate(-4.128 -6.294)"/>
+        <path id="패스_7278" data-name="패스 7278" class="cls-4" d="m41.652 77.776 14.331-3.722L45.594 63.5z" transform="translate(-4.128 -6.294)"/>
+        <path id="선_260" data-name="선 260" class="cls-4" transform="translate(39.295 65.068)" d="m0 0 4.806 4.88"/>
+        <path id="선_261" data-name="선 261" class="cls-4" transform="translate(71.715 27.436)" d="m0 0 10.375 10.535"/>
+    </g>
+</svg>

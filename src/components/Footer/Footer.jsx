@@ -13,9 +13,15 @@ const Wrapper = styled.footer`
     font-size: 12px;
     line-height: 1.67;
     box-sizing: border-box;
-    padding-top: 96px;
+    padding-top: 46.2px;
+    & > .left {
+      & > figure {
+        width: 180px;
+        height: 33.4px;
+        margin-bottom: 16.4px;
+      }
+    }
     & > .right {
-      transform: translateY(-45px);
       display: flex;
       align-items: flex-end;
       flex-direction: column;
@@ -36,19 +42,26 @@ function Footer() {
     <Wrapper>
       <div className="wrapper">
         <div className="left">
+          <figure>
+            <img
+              src="/assets/footer/footer-logo.png"
+              srcSet="/assets/footer/footer-logo@2x.png 2x , /assets/footer/footer-logo@3x.png 3x"
+              alt=""
+            />
+          </figure>
           사업자등록번호 123-45-12345 | 대표자 홍길동 <br /> 주소 서울특별시
           강남구 테헤란로 123 | 문의 marketing@naver.com
         </div>
         <div className="right">
           <div className="nav-wrapper">
             <figure>
-              <img src="/assets/blog.svg" alt="블로그" />
+              <img src="/assets/footer/blog.svg" alt="블로그" />
             </figure>
             <figure>
-              <img src="/assets/facebook.svg" alt="페이스북" />
+              <img src="/assets/footer/facebook.svg" alt="페이스북" />
             </figure>
             <figure>
-              <img src="/assets/youtube.svg" alt="유튜브" />
+              <img src="/assets/footer/youtube.svg" alt="유튜브" />
             </figure>
           </div>
           <div className="from">©김과장 컨설팅. All rights reserved.</div>

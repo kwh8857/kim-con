@@ -13,7 +13,7 @@ function About() {
   return (
     <Wrapper>
       <header>
-        <Header />
+        <Header isScroll={true} />
       </header>
       <Section1 />
       <Section2 />

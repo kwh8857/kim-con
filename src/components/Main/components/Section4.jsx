@@ -181,24 +181,24 @@ function Section4() {
         </div>
         <div className="right">
           <figure>
-            <img src="/assets/kimface.svg" alt="" />
+            <img src="/assets/common/kimface.svg" alt="" />
           </figure>
           <div className="info">
             <div>
               <figure>
-                <img src="/assets/call.svg" alt="" />
+                <img src="/assets/main/call.svg" alt="" />
               </figure>
               <span>010-9700-2594</span>
             </div>
             <div>
               <figure>
-                <img src="/assets/mail.svg" alt="" />
+                <img src="/assets/main/mail.svg" alt="" />
               </figure>
               <span>Help@kcons.kr</span>
             </div>
             <div>
               <figure>
-                <img src="/assets/ch.svg" alt="" />
+                <img src="/assets/main/ch.svg" alt="" />
               </figure>
               <span>카카오톡 채널 kcons</span>
             </div>

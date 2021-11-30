@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Footer from "../Footer/Footer";
 // import { useDispatch, useSelector } from "react-redux";
@@ -15,10 +15,26 @@ import SnsSection from "./components/SnsSection";
 
 function Main() {
   const isPopup = useSelector((state) => state.config.isPopup);
+  const [isScroll, setIsScroll] = useState(false);
+  useEffect(() => {
+    const ref = document.getElementById("root");
+    function change(e) {
+      if (e.target.scrollTop !== 0) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    }
+    ref.addEventListener("scroll", change);
+
+    return () => {
+      ref.removeEventListener("scroll", change);
+    };
+  }, []);
   return (
     <div style={{ width: "100%" }}>
       <header style={{ width: "100%" }}>
-        <Header />
+        <Header isScroll={isScroll} />
       </header>
       <Side />
       <Section1 />

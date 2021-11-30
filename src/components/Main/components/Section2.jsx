@@ -152,7 +152,7 @@ function Section2() {
           </span>
         </div>
         <figure>
-          <img src="/assets/kimface.svg" alt="" />
+          <img src="/assets/common/kimface.svg" alt="" />
         </figure>
       </article>
       <section className="bottom">
@@ -161,7 +161,7 @@ function Section2() {
             <article key={idx} className="box">
               <figure>
                 <img
-                  src={`/assets/${img}`}
+                  src={`/assets/main/${img}`}
                   alt=""
                   style={{ transform: `translateX(${idx === 2 ? "8px" : 0})` }}
                 />

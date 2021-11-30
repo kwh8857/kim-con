@@ -1,12 +1,11 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const menuarr = [
   { title: "김과장컨설팅", link: "/about" },
-  { title: "서비스소개", link: "" },
-  { title: "고객지원", link: "" },
-  { title: "문의하기", link: "" },
+  { title: "서비스소개", link: "/service" },
+  { title: "고객지원", link: "/support" },
 ];
 const Wrapper = styled.div`
   display: flex;
@@ -20,6 +19,12 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  transition: background-color 0.2s ease-in-out;
+  ${(props) => {
+    return css`
+      background-color: ${props.scroll ? "white" : "transparent"};
+    `;
+  }}
 `;
 const Logo = styled.figure`
   width: 180px;
@@ -28,20 +33,20 @@ const Logo = styled.figure`
 `;
 const Menu = styled.nav`
   display: grid;
-  grid-template-columns: 72px 60px 48px 48px;
+  grid-template-columns: 72px 60px 48px;
   font-size: 13px;
   font-weight: bold;
   column-gap: 45px;
 `;
-function Header() {
+function Header({ isScroll }) {
   const location = useLocation();
   return (
-    <Wrapper>
+    <Wrapper scroll={isScroll}>
       <Link to={"/"}>
         <Logo>
           <img
-            src="/assets/logo.webp"
-            srcSet="/assets/logo@2x.webp 2x , /assets/logo@3x.webp 3x"
+            src="/assets/header/logo.png"
+            srcSet="/assets/header/logo@2x.png 2x , /assets/header/logo@3x.png 3x"
             alt="김과장컨설팅"
           />
         </Logo>
