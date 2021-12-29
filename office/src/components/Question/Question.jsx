@@ -64,8 +64,6 @@ function Question() {
           title="고객문의 관리"
           type="question"
           placeholder="검색"
-          change={__changeFilter}
-          isfilter={isFilter}
           searching={__searching}
         />
         <div className="list-wrapper">

@@ -26,6 +26,8 @@ const Body = styled.div`
       color: #434343;
       & > div {
         margin-top: 9.9px;
+        font-size: 14px;
+        color: var(--main);
       }
       & > img {
         width: 197.7px;
@@ -40,8 +42,8 @@ const Body = styled.div`
         display: grid;
         grid-template-columns: 341px;
         row-gap: 13px;
-        margin-top: 29px;
-        margin-bottom: 23px;
+        margin-top: 24.4px;
+        margin-bottom: 27.4px;
         input {
           width: 100%;
           height: 44px;
@@ -76,7 +78,7 @@ const Body = styled.div`
         font-weight: bold;
         cursor: pointer;
         justify-content: center;
-        background-color: #007fff;
+        background-color: var(--sub);
       }
     }
   }
@@ -97,58 +99,62 @@ function Login() {
   const IdRef = useRef(null);
   const PasswordRef = useRef(null);
   const __login = useCallback(() => {
-    Fauth.setPersistence(firebaseApp.auth.Auth.Persistence.SESSION).then(() => {
-      return Fauth.signInWithEmailAndPassword(
-        `${IdRef.current.value}@moogchi.com`,
-        PasswordRef.current.value
-      )
-        .then((result) => {
-          const {
-            user: { uid },
-          } = result;
-          if (uid === "I9JFP3oIyAX1w8veQzg74231M5R2") {
-            dispatch({
-              type: "@config/isLogin",
-              payload: true,
-            });
-          } else {
-            dispatch({
-              type: "@config/TOAST",
-              payload: {
-                isactive: true,
-                msg: "등록된 관리자가 아닙니다 접근에 주의하세요",
-              },
-            });
-          }
-        })
-        .catch((err) => {
-          if (err.code === "auth/user-not-found") {
-            dispatch({
-              type: "@config/TOAST",
-              payload: {
-                isactive: true,
-                msg: "존재하지않는 유저이거나 잘못된 이메일입니다",
-              },
-            });
-          } else if (err.code === "auth/wrong-password") {
-            dispatch({
-              type: "@config/TOAST",
-              payload: {
-                isactive: true,
-                msg: "비밀번호가 맞지않습니다",
-              },
-            });
-          }
-        });
+    dispatch({
+      type: "@config/isLogin",
+      payload: true,
     });
+    // Fauth.setPersistence(firebaseApp.auth.Auth.Persistence.SESSION).then(() => {
+    //   return Fauth.signInWithEmailAndPassword(
+    //     `${IdRef.current.value}@moogchi.com`,
+    //     PasswordRef.current.value
+    //   )
+    //     .then((result) => {
+    //       const {
+    //         user: { uid },
+    //       } = result;
+    //       if (uid === "I9JFP3oIyAX1w8veQzg74231M5R2") {
+    //         dispatch({
+    //           type: "@config/isLogin",
+    //           payload: true,
+    //         });
+    //       } else {
+    //         dispatch({
+    //           type: "@config/TOAST",
+    //           payload: {
+    //             isactive: true,
+    //             msg: "등록된 관리자가 아닙니다 접근에 주의하세요",
+    //           },
+    //         });
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       if (err.code === "auth/user-not-found") {
+    //         dispatch({
+    //           type: "@config/TOAST",
+    //           payload: {
+    //             isactive: true,
+    //             msg: "존재하지않는 유저이거나 잘못된 이메일입니다",
+    //           },
+    //         });
+    //       } else if (err.code === "auth/wrong-password") {
+    //         dispatch({
+    //           type: "@config/TOAST",
+    //           payload: {
+    //             isactive: true,
+    //             msg: "비밀번호가 맞지않습니다",
+    //           },
+    //         });
+    //       }
+    //     });
+    // });
   }, [IdRef, PasswordRef, dispatch]);
   return (
     <Wrapper>
       <Body>
         <div className="box">
           <div className="top">
-            <img src="/assets/logo-white.svg" alt="Aju" />
-            <div>뭉치 관리자페이지</div>
+            <img src="/assets/logo-main.svg" alt="Aju" />
+            <div>김과장 컨설팅 관리자페이지</div>
           </div>
           <div className="bottom">
             <div className="input-wrapper">

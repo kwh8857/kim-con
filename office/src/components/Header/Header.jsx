@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { Link, useLocation } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     & > div {
       font-size: 13px;
       font-weight: bold;
-      color: #007fff;
+      color: var(--main);
       margin-left: 8.4px;
     }
   }
@@ -34,14 +34,21 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(6, auto);
     column-gap: 50px;
-    & > a {
-      font-size: 13px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
   }
 `;
+
+const StyleLink = styled(Link)`
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+  ${(props) => {
+    return css`
+      color: ${props.now === "true" ? "var(--main)" : "black"};
+    `;
+  }}
+`;
 function Header({ isLogin }) {
+  const location = useLocation();
   return (
     <Wrapper>
       <Link to="/">
@@ -50,12 +57,21 @@ function Header({ isLogin }) {
       </Link>
       {isLogin ? (
         <div className="right">
-          <Link to="/">다운로드관리</Link>
-          <Link to="/question">고객문의관리</Link>
-          <Link to="/look">미리보기관리</Link>
-          <Link to="/notice">공지사항관리</Link>
-          <Link to="/blog">블로그 관리</Link>
-          <Link to="/popup">팝업 관리</Link>
+          <StyleLink to="/" now={location.pathname === "/" ? "true" : "false"}>
+            공지사항관리
+          </StyleLink>
+          <StyleLink
+            to="/blog"
+            now={location.pathname === "/blog" ? "true" : "false"}
+          >
+            지원사업관리
+          </StyleLink>
+          <StyleLink
+            to="/question"
+            now={location.pathname === "/question" ? "true" : "false"}
+          >
+            고객문의
+          </StyleLink>
         </div>
       ) : undefined}
     </Wrapper>
