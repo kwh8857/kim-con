@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   width: 100%;
   position: fixed;
-  top: 0;
   height: 64px;
   border-bottom: solid 1px #dbdbdb;
   display: flex;
@@ -16,6 +15,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   background-color: white;
   z-index: 1000;
+  transition: top 1.2s ease-in;
   & > a {
     display: flex;
     align-items: center;
@@ -26,33 +26,38 @@ const Wrapper = styled.div`
     & > div {
       font-size: 13px;
       font-weight: bold;
-      color: #00be83;
-      margin-left: 7px;
+      color: #007fff;
+      margin-left: 8.4px;
     }
   }
   .right {
     display: grid;
-    grid-template-columns: repeat(3, auto);
-    column-gap: 43px;
+    grid-template-columns: repeat(6, auto);
+    column-gap: 50px;
     & > a {
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 13px;
+      font-weight: 500;
       white-space: nowrap;
     }
   }
 `;
-function Header() {
+function Header({ isLogin }) {
   return (
     <Wrapper>
-      <Link to="/main">
+      <Link to="/">
         <img src="/assets/logo.svg" alt="logo" />
         <div>ADMIN</div>
       </Link>
-      <div className="right">
-        <Link to="/notice">공지사항관리</Link>
-        <Link to="/main">지원사업관리</Link>
-        <Link to="/notice">고객문의</Link>
-      </div>
+      {isLogin ? (
+        <div className="right">
+          <Link to="/">다운로드관리</Link>
+          <Link to="/question">고객문의관리</Link>
+          <Link to="/look">미리보기관리</Link>
+          <Link to="/notice">공지사항관리</Link>
+          <Link to="/blog">블로그 관리</Link>
+          <Link to="/popup">팝업 관리</Link>
+        </div>
+      ) : undefined}
     </Wrapper>
   );
 }

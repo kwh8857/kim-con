@@ -2,13 +2,14 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import firebaseApp from "../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
-function UploadFile({ __close, template, temKey }) {
+const Fstore = firebaseApp.firestore();
+function UploadFile({ __close, template, temKey, category, state }) {
   const dispatch = useDispatch();
   const [File, setFile] = useState(undefined);
   const __uploadFile = useCallback(
-    (item) => {
+    (item, id) => {
       return new Promise((resolve, reject) => {
-        Fstorage.ref(`/editor/${temKey}/files/${item.name}`)
+        Fstorage.ref(`/${category}/${temKey}/${item.name}`)
           .put(item)
           .then((res) => {
             res.ref.getDownloadURL().then((url) => {
@@ -18,36 +19,72 @@ function UploadFile({ __close, template, temKey }) {
                   title: item.name,
                   url,
                 },
-                id: `file-${
-                  new Date().getTime() -
-                  Math.floor(Math.random() * (100 - 1 + 1)) +
-                  1
-                }`,
+                id,
               });
             });
           });
       });
     },
-    [temKey]
+    [temKey, category]
   );
   const __readFile = useCallback(() => {
     const arr = template.slice();
     let fileList = Object.values(File);
     Promise.all(
       fileList.map(async (item, idx) => {
-        const result = await __uploadFile(item).then((result) => {
+        const result = await __uploadFile(
+          item,
+          `file-${
+            new Date().getTime() - Math.floor(Math.random() * (100 - 1 + 1)) + 1
+          }`
+        ).then((result) => {
           return result;
         });
         return result;
       })
     ).then((result) => {
+      if (state === "new") {
+        Fstore.collection(category)
+          .doc(temKey)
+          .update({ template: [...arr, ...result] });
+      } else {
+        Fstore.collection(category)
+          .doc(temKey)
+          .get()
+          .then((res) => {
+            const value = res.data();
+            if (value.urlList) {
+              const concatArr = value.urlList.concat(result);
+              res.ref.update({ urlList: concatArr });
+              dispatch({
+                type: "@layouts/INIT_DELETELIST",
+                payload: concatArr,
+              });
+            } else {
+              res.ref.update({ urlList: result });
+              dispatch({
+                type: "@layouts/INIT_DELETELIST",
+                payload: result,
+              });
+            }
+          });
+      }
       dispatch({
         type: "@layouts/CHANGE_EDITOR",
         payload: [...arr, ...result],
       });
       __close();
     });
-  }, [File, dispatch, __close, template, __uploadFile]);
+  }, [
+    File,
+    dispatch,
+    __close,
+    template,
+    __uploadFile,
+    state,
+    category,
+    temKey,
+  ]);
   return (
     <div className="popup-wrapper file">
       <img

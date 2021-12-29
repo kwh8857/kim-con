@@ -1,103 +1,19 @@
 import React, { useCallback, useMemo, useState } from "react";
-import Header from "../Header/Header";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import Card from "../Main/components/Card";
 import { Animation } from "../styles/Animation";
 import firebaseApp from "../config/firebaseApp";
-
+import Card from "../common/Card";
+import { useDispatch } from "react-redux";
+const Fstore = firebaseApp.firestore();
+const Fstorage = firebaseApp.storage();
 const List = styled.div`
   width: 100%;
   height: 100%;
   margin-top: 33px;
   display: grid;
   grid-template-columns: 100%;
-  row-gap: 17px;
-  .card {
-    overflow: hidden;
-    position: relative;
-    height: 73px;
-    width: 100%;
-    border: solid 1px #dbdbdb;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 14px 24px;
-    .left {
-      .title {
-        font-size: 16px;
-        font-weight: bold;
-      }
-      .time {
-        font-size: 13px;
-        font-weight: 500;
-        color: #898989;
-        margin-top: 2px;
-      }
-    }
-    .right {
-      display: grid;
-      grid-template-columns: repeat(2, 88px);
-      column-gap: 14px;
-      & > div {
-        width: 100%;
-        height: 37px;
-        font-size: 15px;
-        font-weight: bold;
-        color: white;
-        border-radius: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-      }
-      .fix {
-        background-color: #434343;
-      }
-      .remove {
-        background-color: #a50006;
-      }
-    }
-    .delete-wrapper {
-      transition: right 0.2s ease-in-out;
-      border-radius: 10px;
-      padding-left: 15px;
-      box-sizing: border-box;
-      align-items: center;
-      position: absolute;
-      right: 0;
-      display: flex;
-      width: 348.4px;
-      height: 73px;
-      background-color: #a50006;
-      .white-cancel {
-        cursor: pointer;
-        margin-right: 11.5px;
-        width: 12px;
-      }
-      .delete-title {
-        font-size: 13px;
-        font-weight: 500;
-        color: white;
-      }
-      .delete-btn {
-        cursor: pointer;
-        margin-left: 32px;
-        color: #a50006;
-        border-radius: 14px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 13px;
-        font-weight: bold;
-        width: 72px;
-        height: 27px;
-        background-color: white;
-      }
-    }
-  }
+  row-gap: 12px;
 `;
 const Top = styled.div`
   display: flex;
@@ -162,8 +78,8 @@ const Body = styled.div`
   padding-top: 117px;
   box-sizing: border-box;
 `;
-const Fstore = firebaseApp.firestore();
 function Notice() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [ListData, setListData] = useState([]);
   const [DisplayList, setDisplayList] = useState([]);
@@ -180,35 +96,76 @@ function Notice() {
   );
   const __getData = useCallback(async () => {
     let arr = [];
-    await Fstore.collection("editor")
+    await Fstore.collection("notice")
+      .orderBy("timestamp", "desc")
       .get()
       .then((result) => {
         if (result) {
           result.forEach((item) => {
             const value = item.data();
-            if (value.state === "notice") {
-              arr.push(Object.assign(value, { id: item.id }));
-            }
+            arr.push(Object.assign(value, { id: item.id, index: arr.length }));
           });
         }
       });
-    return arr.sort((a, b) => b.timestamp - a.timestamp);
+    return arr;
   }, []);
-  const __deleteCard = useCallback(
-    (id, file) => {
-      firebaseApp
-        .firestore()
-        .collection("editor")
+  const __blind = useCallback(
+    (id, state) => {
+      Fstore.collection("notice")
         .doc(id)
-        .delete()
+        .update({
+          config: {
+            isBlind: !state,
+          },
+        })
         .then(() => {
+          dispatch({
+            type: "@config/TOAST",
+            payload: {
+              isactive: true,
+              msg: `게시글이 블라인드${state ? "해제" : ""} 되었습니다`,
+            },
+          });
           __getData().then((result) => {
             setListData(result);
             setDisplayList(result);
           });
         });
     },
-    [__getData]
+    [__getData, dispatch]
+  );
+  const __deleteCard = useCallback(
+    async (id, file) => {
+      let ref = await Fstorage.ref(`notice/${id}`);
+      //해당 리워드에 존재하는 storage 파일들 전부삭제
+      ref.listAll().then((dir) => {
+        dir.items.forEach((fileRef) => {
+          deleteFile(ref.fullPath, fileRef.name);
+        });
+        dir.prefixes.forEach((folderRef) => {
+          deleteFolderContents(folderRef.fullPath);
+        });
+      });
+      firebaseApp
+        .firestore()
+        .collection("notice")
+        .doc(id)
+        .delete()
+        .then(() => {
+          dispatch({
+            type: "@config/TOAST",
+            payload: {
+              isactive: true,
+              msg: "게시글이 삭제되었습니다",
+            },
+          });
+          __getData().then((result) => {
+            setListData(result);
+            setDisplayList(result);
+          });
+        });
+    },
+    [__getData, dispatch]
   );
   useMemo(
     () =>
@@ -220,7 +177,6 @@ function Notice() {
   );
   return (
     <div>
-      <Header />
       <Animation>
         <Body>
           <Top>
@@ -251,19 +207,24 @@ function Notice() {
             </div>
           </Top>
           <List>
-            {DisplayList.map(({ title, timestamp, id }, idx) => {
-              return (
-                <Card
-                  __delete={__deleteCard}
-                  navigation={__navMake}
-                  key={idx}
-                  id={id}
-                  title={title}
-                  timestamp={timestamp}
-                  index={idx}
-                />
-              );
-            })}
+            {DisplayList.map(
+              ({ title, timestamp, id, index, config, template }, idx) => {
+                return (
+                  <Card
+                    __delete={__deleteCard}
+                    navigation={__navMake}
+                    key={idx}
+                    id={id}
+                    title={title}
+                    timestamp={timestamp}
+                    config={config}
+                    index={ListData.length - index}
+                    template={template}
+                    __blind={__blind}
+                  />
+                );
+              }
+            )}
           </List>
         </Body>
       </Animation>
@@ -272,3 +233,13 @@ function Notice() {
 }
 
 export default Notice;
+function deleteFolderContents(path) {
+  const ref = Fstorage.ref(path);
+  ref.delete();
+}
+
+function deleteFile(pathToFile, fileName) {
+  const ref = Fstorage.ref(pathToFile);
+  const childRef = ref.child(fileName);
+  childRef.delete();
+}

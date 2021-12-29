@@ -3,37 +3,39 @@ import "./css/index.css";
 import EdiHeader from "./components/EdiHeader";
 import Screen from "./components/Screen";
 import Popup from "./components/Popup";
-import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { Beforeunload } from "react-beforeunload";
-import { Prompt, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import firebaseApp from "../config/firebaseApp";
 import TitleSection from "./components/TitleSection";
 import { Animation } from "../styles/Animation";
 import Loading from "./components/Loading";
 const Fstore = firebaseApp.firestore();
 const Fstorage = firebaseApp.storage();
+
 function Editor({ location }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { type, timestamp, category, id } = location.state;
-  console.log(id);
   const temKey = useSelector((state) => state.database.key);
+  const deletelist = useSelector((state) => state.database.deletelist);
   const template = useSelector((state) => state.database.editor);
-
   function reducer(state, action) {
     switch (action.type) {
       case "RESET":
         return {
           title: undefined,
-          sub: undefined,
+          isPin: false,
+          isBlind: false,
         };
       case "INIT":
         return action.info;
       case "TITLE":
         return { ...state, title: action.title };
-      case "SUB":
-        return { ...state, sub: action.sub };
+      case "PIN":
+        return { ...state, isPin: action.isPin };
+      case "BLIND":
+        return { ...state, isBlind: action.isBlind };
       default:
         throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -41,64 +43,103 @@ function Editor({ location }) {
 
   const [info, patch] = useReducer(reducer, {
     title: undefined,
-    sub: undefined,
+    isPin: false,
   });
   const [isUp, setIsUp] = useState({
     status: false,
     type: "",
   });
-  const [isExit, setIsExit] = useState(false);
-  const __updateData = useCallback(
-    (path) => {
-      if (category === "portfolio") {
-        const { title, sub } = info;
-        const mainfilt = template.filter(({ type }) => type === "IMAGE");
-        Fstore.collection("editor")
-          .doc(temKey)
-          .update({
-            template: template,
-            title: title ? title : "임시저장",
-            sub: sub ? sub : "",
-            mainimg:
-              mainfilt.length > 0
-                ? mainfilt[0].content
-                : {
-                    resize:
-                      "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic-reszie.jpeg?alt=media&token=42033a61-6b83-4627-990d-9dc0c713a152",
-                    url: "https://firebasestorage.googleapis.com/v0/b/steadee-pf.appspot.com/o/editor%2Fbasic%2Fbasic.jpeg?alt=media&token=62440937-0aed-4387-8199-fa5c1c572b48",
-                  },
-          })
-          .then(() => {
-            setIsExit(true);
-            if (path) {
-              history.push(path);
+  const __removeUrl = useCallback((template, urlList) => {
+    return new Promise((resolve, reject) => {
+      if (urlList.length > 0) {
+        const clone = urlList.slice();
+        template.forEach(({ content: { url }, type }) => {
+          if (type === "IMAGE" || type === "FILE") {
+            for (let i = 0; i < clone.length; i++) {
+              const element = clone[i];
+              if (element.content.url === url) {
+                clone.splice(i, i + 1);
+              }
             }
-          });
+          }
+        });
+        resolve(clone);
       } else {
-        const { title } = info;
-        Fstore.collection("editor")
-          .doc(temKey)
+        resolve(undefined);
+      }
+    });
+  }, []);
+
+  const __insetData = useCallback(() => {
+    const { title, isPin, isBlind } = info;
+    if (type !== "new") {
+      const res = Fstore.collection(category).doc(temKey);
+      if (deletelist.length > 0) {
+        __removeUrl(template, deletelist).then((urlList) => {
+          res
+            .update({
+              urlList,
+              template: template,
+              title: title,
+              config: {
+                isPin,
+                isBlind,
+              },
+            })
+            .then(() => {
+              history.goBack();
+            });
+        });
+      } else {
+        res
           .update({
             template: template,
-            title: title ? title : "임시저장",
+            title: title,
+            config: {
+              isPin,
+              isBlind,
+            },
           })
           .then(() => {
-            setIsExit(true);
-            if (path) {
-              history.push(path);
-            }
+            history.goBack();
           });
       }
-    },
-    [temKey, template, info, history, category]
-  );
+    } else {
+      Fstore.collection(category)
+        .doc(temKey)
+        .update({
+          template: template,
+          title: title,
+          config: {
+            isBlind: false,
+            isPin,
+          },
+        })
+        .then(() => {
+          history.goBack();
+        });
+    }
+  }, [
+    template,
+    category,
+    temKey,
+    info,
+    history,
+    type,
+    __removeUrl,
+    deletelist,
+  ]);
 
   useEffect(() => {
     if (type === "new") {
-      Fstore.collection("editor")
+      Fstore.collection(category)
         .add({
+          title: "임시저장",
           timestamp: timestamp,
-          state: category,
+          config: {
+            isBlind: true,
+            isPin: false,
+          },
         })
         .then((res) => {
           patch({
@@ -113,19 +154,30 @@ function Editor({ location }) {
           console.log(err);
         });
     } else {
-      Fstore.collection("editor")
+      Fstore.collection(category)
         .doc(id)
         .get()
         .then((result) => {
           const value = result.data();
-
           patch({
             type: "INIT",
             info: {
               title: value.title,
-              sub: category !== "notice" ? value.sub : undefined,
+              isPin: value.config.isPin,
+              isBlind: value.config.isBlind,
             },
           });
+          if (value.urlList) {
+            dispatch({
+              type: "@layouts/INIT_DELETELIST",
+              payload: value.urlList,
+            });
+          } else {
+            dispatch({
+              type: "@layouts/INIT_DELETELIST",
+              payload: [],
+            });
+          }
           if (value.videoList) {
             dispatch({
               type: "@layouts/INIT_VIDEO",
@@ -137,10 +189,22 @@ function Editor({ location }) {
               payload: [],
             });
           }
-          console.log(value.template);
+
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
-            payload: value.template,
+            payload: value.template
+              ? value.template
+              : [
+                  {
+                    type: "TITLE",
+                    content: "",
+                    id: `title-${
+                      new Date().getTime() -
+                      Math.floor(Math.random() * (100 - 1 + 1)) +
+                      1
+                    }`,
+                  },
+                ],
           });
         });
       dispatch({
@@ -160,29 +224,33 @@ function Editor({ location }) {
   return (
     <Beforeunload
       onBeforeunload={(e) => {
-        __updateData();
         e.preventDefault();
       }}
     >
-      <Prompt
-        message={(e) => {
-          if (!isExit) {
-            __updateData(e.pathname);
-            return false;
-          } else {
-            return true;
-          }
-        }}
-      />
       <Animation>
         <div className="editor">
-          <Header />
-          <TitleSection category={category} dispatch={patch} info={info} />
+          <TitleSection dispatch={patch} info={info} insert={__insetData} />
           <div className="editor-wrapper">
-            <EdiHeader setIsUp={setIsUp} temKey={temKey} category={category} />
-            <Screen temKey={temKey} Fstore={Fstore} Fstorage={Fstorage} />
+            <EdiHeader
+              setIsUp={setIsUp}
+              temKey={temKey}
+              category={category}
+              type={type}
+            />
+            <Screen
+              temKey={temKey}
+              Fstore={Fstore}
+              Fstorage={Fstorage}
+              state={type}
+            />
           </div>
-          <Popup isUp={isUp} setIsUp={setIsUp} temKey={temKey} />
+          <Popup
+            isUp={isUp}
+            setIsUp={setIsUp}
+            temKey={temKey}
+            category={category}
+            state={type}
+          />
         </div>
       </Animation>
       <Loading />

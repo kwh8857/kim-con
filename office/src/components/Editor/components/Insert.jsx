@@ -3,40 +3,40 @@ import { useSelector, useDispatch } from "react-redux";
 import Resizer from "react-image-file-resizer";
 import firebaseApp from "../../config/firebaseApp";
 const dummy = [
-  { img: "summary", type: "SUMMARY" },
+  // { img: "summary", type: "SUMMARY" },
   { img: "temp", type: "IMAGE" },
   { img: "video", type: "VIDEO" },
   // { img: "youtube", type: "YOUTUBE" },
-  // { img: "link", type: "LINK" },
-  // { img: "file", type: "FILE" },
+  { img: "link", type: "LINK" },
+  { img: "file", type: "FILE" },
 ];
 
 const Fstorage = firebaseApp.storage();
 const Fstore = firebaseApp.firestore();
-function Insert({ setIsUp, temKey }) {
+function Insert({ setIsUp, temKey, category, type }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
   const __imageUpload = useCallback(
-    (data64, name, resize) => {
+    (data64, resize, id) => {
       return new Promise((resolve, reject) => {
         const data = data64.split(",")[1];
         const redata = resize.split(",")[1];
-        Fstorage.ref(`editor/${temKey}/${name}`)
+        Fstorage.ref(`${category}/${temKey}/${id}`)
           .putString(data, "base64")
           .then((result) => {
             result.ref.getDownloadURL().then((downloadUrl) => {
-              Fstorage.ref(`editor/${temKey}/${name}-resize`)
+              Fstorage.ref(`${category}/${temKey}/${id}-resize`)
                 .putString(redata, "base64")
                 .then((result) => {
                   result.ref.getDownloadURL().then((resizeUrl) => {
-                    resolve({ url: downloadUrl, resize: resizeUrl });
+                    resolve({ url: downloadUrl, resize: resizeUrl, id });
                   });
                 });
             });
           });
       });
     },
-    [temKey]
+    [temKey, category]
   );
   const __fileReader = useCallback((file) => {
     return new Promise((resolve, reject) => {
@@ -86,27 +86,57 @@ function Insert({ setIsUp, temKey }) {
       );
       base64.then((result) => {
         Promise.all(
-          result.map(({ url, name, resize, width, height }) => {
-            const po = __imageUpload(url, name, resize).then((result) => {
+          result.map(({ url, resize, width, height }) => {
+            const po = __imageUpload(
+              url,
+              resize,
+              `image-${
+                new Date().getTime() -
+                Math.floor(Math.random() * (100 - 1 + 1)) +
+                1
+              }`
+            ).then(({ url, resize, id }) => {
               return {
                 type: "IMAGE",
-                content: result,
+                content: {
+                  url,
+                  resize,
+                },
                 width,
                 height,
-                id: `image-${
-                  new Date().getTime() -
-                  Math.floor(Math.random() * (100 - 1 + 1)) +
-                  1
-                }`,
+                id: id,
               };
             });
             return po;
           })
         ).then((result) => {
           const arr = template.slice();
-          Fstore.collection("/editor")
-            .doc(temKey)
-            .update({ template: [...arr, ...result] });
+          if (type === "new") {
+            Fstore.collection(category)
+              .doc(temKey)
+              .update({ template: [...arr, ...result] });
+          } else {
+            Fstore.collection(category)
+              .doc(temKey)
+              .get()
+              .then((res) => {
+                const value = res.data();
+                if (value.urlList) {
+                  const concatArr = value.urlList.concat(result);
+                  res.ref.update({ urlList: concatArr });
+                  dispatch({
+                    type: "@layouts/INIT_DELETELIST",
+                    payload: concatArr,
+                  });
+                } else {
+                  res.ref.update({ urlList: result });
+                  dispatch({
+                    type: "@layouts/INIT_DELETELIST",
+                    payload: result,
+                  });
+                }
+              });
+          }
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: [...arr, ...result],
@@ -118,7 +148,7 @@ function Insert({ setIsUp, temKey }) {
         });
       });
     },
-    [__imageUpload, __fileReader, template, dispatch, temKey]
+    [__imageUpload, __fileReader, template, dispatch, temKey, category, type]
   );
   return (
     <div className="insert-wrapper">

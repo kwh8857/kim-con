@@ -12,9 +12,125 @@ const initialState = {
   focusIdx: 0,
   videolist: [],
   deletelist: [],
+  answer: {
+    image: {
+      url: "",
+      name: "",
+      resize: "",
+      key: "",
+    },
+    content: "",
+  },
+  question: {
+    removelist: [],
+  },
+  preview: [
+    {
+      title: "",
+      category: "",
+      content: "",
+      link: "",
+      image: {
+        url: "",
+        resize: "",
+      },
+      timestamp: Date.now(),
+    },
+  ],
 };
-const database = (state = initialState, { type, idx, payload, index }) => {
+const database = (
+  state = initialState,
+  { type, idx, payload, index, resize }
+) => {
   switch (type) {
+    case "@database/QUESTION_REMOVE_RESET": {
+      return {
+        ...state,
+        question: {
+          ...state.question,
+          removelist: [],
+        },
+      };
+    }
+    case "@database/QUESTION_REMOVE": {
+      let arr = state.question.removelist;
+      arr.push(payload);
+      arr.push(resize);
+      return {
+        ...state,
+        question: {
+          ...state.question,
+          removelist: [...arr],
+        },
+      };
+    }
+    case "@database/PREVIEW_IMAGE": {
+      let arr = state.preview;
+      arr[index].image = payload;
+      return {
+        ...state,
+        preview: [...arr],
+      };
+    }
+    case "@database/PREVIEW_LINK": {
+      let arr = state.preview;
+      arr[index].link = payload;
+      return {
+        ...state,
+        preview: [...arr],
+      };
+    }
+    case "@database/PREVIEW_CONTENT": {
+      let arr = state.preview;
+      arr[index].content = payload;
+      return {
+        ...state,
+        preview: [...arr],
+      };
+    }
+    case "@database/PREVIEW_CATEGORY": {
+      let arr = state.preview;
+      arr[index].category = payload;
+      return {
+        ...state,
+        preview: [...arr],
+      };
+    }
+    case "@database/PREVIEW_TITLE": {
+      let arr = state.preview;
+      arr[index].title = payload;
+      return {
+        ...state,
+        preview: [...arr],
+      };
+    }
+    case "@database/PREVIEW_RESET": {
+      return {
+        ...state,
+        preview: initialState.preview,
+      };
+    }
+    case "@database/PREVIEW": {
+      return {
+        ...state,
+        preview: payload,
+      };
+    }
+    case "@database/ANSWER_IMAGE": {
+      return {
+        ...state,
+        answer: {
+          ...state.answer,
+          image: payload,
+        },
+      };
+    }
+    case "@database/ANSWER_RESET": {
+      return {
+        ...state,
+        answer: initialState.answer,
+      };
+    }
     case "@layouts/INIT_KEY": {
       return {
         ...state,
@@ -22,11 +138,9 @@ const database = (state = initialState, { type, idx, payload, index }) => {
       };
     }
     case "@layouts/INIT_DELETELIST": {
-      let arr = state.deletelist;
-      arr.push(payload);
       return {
         ...state,
-        deletelist: [...arr],
+        deletelist: payload,
       };
     }
     case "@layouts/RESET": {

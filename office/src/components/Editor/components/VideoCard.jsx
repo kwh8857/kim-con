@@ -11,6 +11,7 @@ function VideoCard({
   selectList,
   __upload,
   temKey,
+  category,
 }) {
   const [video, setVideo] = useState(undefined);
   const [upload, setupload] = useState(undefined);
@@ -20,15 +21,9 @@ function VideoCard({
 
   const __deleteVideo = useCallback(() => {
     if (video) {
-      Fstorage.refFromURL(video)
-        .delete()
-        .then(() => {
-          Fstorage.refFromURL(thumbnail)
-            .delete()
-            .then(() => {
-              __delete(idx);
-            });
-        });
+      Fstorage.refFromURL(video).delete();
+      Fstorage.refFromURL(thumbnail).delete();
+      __delete(idx);
     } else {
       if (uploadstate) {
         uploadstate.task.cancel();
@@ -41,12 +36,12 @@ function VideoCard({
   }, [video, __delete, idx, uploadstate, thumbnail]);
   const __uploadVideo = useCallback(
     (thumbnail) => {
-      const update = Fstorage.ref(`editor/${temKey}/${data.name}/video`).put(
+      const update = Fstorage.ref(`${category}/${temKey}/${data.name}`).put(
         data
       );
       __upload(idx, update, data.name, thumbnail);
     },
-    [data, __upload, idx, temKey]
+    [data, __upload, idx, temKey, category]
   );
   const __withdrawThumbnail = useCallback(() => {
     return new Promise((resolve, reject) => {
@@ -66,8 +61,10 @@ function VideoCard({
           .drawImage(video, 0, 0, canvas.width, canvas.height);
         var image = canvas.toDataURL();
         const base = image.split(",")[1];
-        Fstorage.ref(`editor/${temKey}/video/${data.name}/thumbnail`)
-          .putString(base, "base64")
+        Fstorage.ref(`${category}/${temKey}/${data.name}-thumbnail`)
+          .putString(base, "base64", {
+            contentType: "image/jpeg",
+          })
           .then((result) => {
             result.ref.getDownloadURL().then((getDownloadURL) => {
               resolve(getDownloadURL);
@@ -81,7 +78,7 @@ function VideoCard({
       video.playsInline = true;
       video.play();
     });
-  }, [data, temKey]);
+  }, [data, temKey, category]);
   useEffect(() => {
     if (percent === 100 && video === undefined && upload) {
       upload.then((snapshot) => {
@@ -106,12 +103,9 @@ function VideoCard({
     //데이터가 file인경우 type이 존재
     if (data.type) {
       //이미 존재하는 이름의 비디오인지 확인
-      Fstorage.ref(`editor/${temKey}/video/${data.name}/video`)
+      Fstorage.ref(`${category}/${temKey}/${data.name}`)
         .getDownloadURL()
-        .then((res) => {
-          //이부분 토스트 메세지 추가 필요
-          console.log(res);
-        })
+        .then((res) => {})
         .catch((err) => {
           __withdrawThumbnail().then((result) => {
             __uploadVideo(result);
@@ -127,14 +121,14 @@ function VideoCard({
       setVideo(undefined);
       setthumbnail(undefined);
     };
-  }, [__uploadVideo, data, __withdrawThumbnail, temKey]);
+  }, [__uploadVideo, data, __withdrawThumbnail, temKey, category]);
   useEffect(() => {
     if (data.upload) {
       setupload(data.upload);
       setthumbnail(data.thumbnail);
     }
     return () => {};
-  }, [data]);
+  }, [data, category]);
   return (
     <div className="video-card">
       <div className="thumbnail-wrapper">

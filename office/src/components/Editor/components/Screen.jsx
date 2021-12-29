@@ -9,20 +9,18 @@ import {
 import TemplateImage from "./Template/TemplateImage";
 import TemplateEmty from "./Template/TemplateEmty";
 import TemplateTitle from "./Template/TemplateTitle";
-// import TemplateLink from "./Template/TemplateLink";
+import TemplateLink from "./Template/TemplateLink";
 import TemplateVideo from "./Template/TemplateVideo";
-// import TemplateYoutube from "./Template/TemplateYoutube";
-import Summary from "./Template/Summary";
 resetServerContext();
 
-function Screen({ temKey, Fstore, Fstorage }) {
+function Screen({ temKey, Fstore, Fstorage, state }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
-  console.log(template);
-  const [foucsIdx, setFoucsIdx] = useState(0);
+  const deletelist = useSelector((state) => state.database.deletelist);
+  const [focusIdx, setfocusIdx] = useState(0);
   const handleOnDragEnd = useCallback(
     (result) => {
-      setFoucsIdx(-1);
+      setfocusIdx(-1);
       if (!result.destination) return;
       const currentTags = [...template];
       const beforeDragItemIndex = result.source.index;
@@ -41,50 +39,61 @@ function Screen({ temKey, Fstore, Fstorage }) {
   const __deleteTemplate = useCallback(
     (idx) => {
       if (template.length > 1) {
-        setFoucsIdx(-1);
+        setfocusIdx(-1);
         const arr = template.slice();
         arr.splice(idx, 1);
+        if (state === "new") {
+          Fstore.collection("editor").doc(temKey).update({ template: arr });
+        }
         dispatch({
           type: "@layouts/CHANGE_EDITOR",
           payload: arr,
         });
       }
     },
-    [template, dispatch]
+    [template, dispatch, Fstore, temKey, state]
+  );
+  const __deleteImage = useCallback(
+    (url, type, idx, data, resize) => {
+      if (state === "new") {
+        if (type === "IMAGE") {
+          Fstorage.refFromURL(resize).delete();
+        }
+        Fstorage.refFromURL(url).delete();
+      } else {
+        let arr = deletelist.slice();
+        const filt = arr.filter(
+          (item) => item.type === type && item.content.url === url
+        );
+        if (filt.length === 0) {
+          arr.push(data);
+          dispatch({
+            type: "@layouts/INIT_DELETELIST",
+            payload: arr,
+          });
+        }
+      }
+      __deleteTemplate(idx);
+    },
+    [__deleteTemplate, Fstorage, state, deletelist, dispatch]
   );
   useEffect(() => {
     function deleteTem(event) {
-      if (event.key === "Backspace" && template.length > 1 && foucsIdx > -1) {
+      if (event.key === "Backspace" && template.length > 1 && focusIdx > -1) {
         const arr = template.slice();
-        let nowTemplate = arr[foucsIdx];
+        let nowTemplate = arr[focusIdx];
         if (nowTemplate.type !== "TITLE") {
-          setFoucsIdx(-1);
+          if (nowTemplate.type === "IMAGE" || nowTemplate.type === "FILE") {
+            const { content, type } = nowTemplate;
+            __deleteImage(content.url, type, focusIdx, content.resize);
+          }
 
-          if (nowTemplate.type === "IMAGE") {
-            const { resize, url } = nowTemplate.content;
-            Fstorage.refFromURL(resize).delete();
-            Fstorage.refFromURL(url).delete();
-          }
-          if (nowTemplate.type === "VIDEO") {
-            Fstorage.refFromURL(nowTemplate.content).delete();
-          }
-          if (nowTemplate.type === "SUMMARY") {
-            nowTemplate.content.images.forEach(({ resize, img }) => {
-              Fstorage.refFromURL(resize).delete();
-              Fstorage.refFromURL(img).delete();
-            });
-          }
-          arr.splice(foucsIdx, 1);
-          Fstore.collection("editor").doc(temKey).update({ template: arr });
-          dispatch({
-            type: "@layouts/CHANGE_EDITOR",
-            payload: arr,
-          });
+          __deleteTemplate(focusIdx);
         } else {
-          arr.splice(foucsIdx, 1);
+          arr.splice(focusIdx, 1);
           if (
             nowTemplate.type === "TITLE" &&
-            foucsIdx !== 0 &&
+            focusIdx !== 0 &&
             nowTemplate.content.length === 0
           ) {
             dispatch({
@@ -92,7 +101,6 @@ function Screen({ temKey, Fstore, Fstorage }) {
               payload: arr,
             });
           }
-          setFoucsIdx(-1);
         }
       }
     }
@@ -100,7 +108,16 @@ function Screen({ temKey, Fstore, Fstorage }) {
     return () => {
       document.removeEventListener("keydown", deleteTem);
     };
-  }, [foucsIdx, template, dispatch, temKey, Fstore, Fstorage]);
+  }, [
+    focusIdx,
+    template,
+    dispatch,
+    temKey,
+    Fstore,
+    Fstorage,
+    __deleteImage,
+    __deleteTemplate,
+  ]);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId="tags" direction="vertical">
@@ -122,9 +139,10 @@ function Screen({ temKey, Fstore, Fstorage }) {
                             key={idx}
                             idx={idx}
                             provided={provided}
-                            setFocus={setFoucsIdx}
+                            setFocus={setfocusIdx}
                             template={template}
-                            focusIdx={foucsIdx}
+                            focusIdx={focusIdx}
+                            __delete={__deleteImage}
                           />
                         );
                       } else if (type === "TITLE") {
@@ -134,62 +152,38 @@ function Screen({ temKey, Fstore, Fstorage }) {
                             data={content}
                             provided={provided}
                             idx={idx}
-                            setFocus={setFoucsIdx}
-                            focusIdx={foucsIdx}
+                            setFocus={setfocusIdx}
+                            focusIdx={focusIdx}
                             __delete={__deleteTemplate}
                           />
                         );
-                      }
-                      //  else if (type === 'LINK' || type === 'FILE') {
-                      //   return (
-                      //     <TemplateLink
-                      //       key={idx}
-                      //       data={content}
-                      //       provided={provided}
-                      //       idx={idx}
-                      //       type={type}
-                      //       template={template}
-                      //     />
-                      //   );
-                      // }
-                      else if (type === "VIDEO") {
+                      } else if (type === "LINK" || type === "FILE") {
+                        return (
+                          <TemplateLink
+                            key={idx}
+                            data={content}
+                            provided={provided}
+                            idx={idx}
+                            type={type}
+                            template={template}
+                            __delete={
+                              type === "FILE" ? __deleteImage : __deleteTemplate
+                            }
+                          />
+                        );
+                      } else if (type === "VIDEO") {
                         return (
                           <TemplateVideo
                             key={idx}
                             data={content}
-                            setFocus={setFoucsIdx}
+                            setFocus={setfocusIdx}
                             provided={provided}
                             idx={idx}
                             template={template}
-                          />
-                        );
-                      } else if (type === "SUMMARY") {
-                        return (
-                          <Summary
-                            key={idx}
-                            data={content}
-                            setFocus={setFoucsIdx}
-                            provided={provided}
-                            idx={idx}
-                            template={template}
-                            focusIdx={foucsIdx}
-                            id={id}
-                            temKey={temKey}
+                            __delete={__deleteTemplate}
                           />
                         );
                       }
-                      // else if (type === 'YOUTUBE') {
-                      //   return (
-                      //     <TemplateYoutube
-                      //       key={idx}
-                      //       data={content}
-                      //       setFocus={setFoucsIdx}
-                      //       provided={provided}
-                      //       idx={idx}
-                      //       template={template}
-                      //     />
-                      //   );
-                      // }
                     }}
                   </Draggable>
                 );
