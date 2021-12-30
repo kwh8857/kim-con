@@ -139,6 +139,7 @@ function Notice() {
             type="notice"
             placeholder="공지사항명 검색"
             searching={__searching}
+            add={__navMake}
           />
           <List>
             {DisplayList.map(

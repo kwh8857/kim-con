@@ -10,6 +10,7 @@ import firebaseApp from "../config/firebaseApp";
 import TitleSection from "./components/TitleSection";
 import { Animation } from "../styles/Animation";
 import Loading from "./components/Loading";
+import { v4 as uuidv4 } from "uuid";
 const Fstore = firebaseApp.firestore();
 const Fstorage = firebaseApp.storage();
 
@@ -132,27 +133,13 @@ function Editor({ location }) {
 
   useEffect(() => {
     if (type === "new") {
-      Fstore.collection(category)
-        .add({
-          title: "임시저장",
-          timestamp: timestamp,
-          config: {
-            isBlind: true,
-            isPin: false,
-          },
-        })
-        .then((res) => {
-          patch({
-            type: "RESET",
-          });
-          dispatch({
-            type: "@layouts/INIT_KEY",
-            payload: res.id,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      patch({
+        type: "RESET",
+      });
+      dispatch({
+        type: "@layouts/INIT_KEY",
+        payload: uuidv4(),
+      });
     } else {
       Fstore.collection(category)
         .doc(id)
@@ -229,7 +216,12 @@ function Editor({ location }) {
     >
       <Animation>
         <div className="editor">
-          <TitleSection dispatch={patch} info={info} insert={__insetData} />
+          <TitleSection
+            dispatch={patch}
+            info={info}
+            insert={__insetData}
+            type={category}
+          />
           <div className="editor-wrapper">
             <EdiHeader
               setIsUp={setIsUp}

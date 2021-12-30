@@ -12,12 +12,14 @@ const Wrapper = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 5px;
+  background-color: white;
   & > .left {
     display: flex;
     align-items: center;
     font-size: 16px;
-    & > .index {
-      width: 76px;
+    & > .category {
+      width: 134px;
+      color: var(--main);
       font-weight: bold;
       text-align: center;
     }
@@ -55,8 +57,14 @@ const Wrapper = styled.div`
     & > .btn-wrapper {
       margin-left: 31px;
       display: grid;
-      grid-template-columns: repeat(3, 88px);
+      grid-template-columns: repeat(2, 88px);
       column-gap: 14px;
+      & > .fix {
+        background-color: #434343;
+      }
+      & > .remove {
+        background-color: var(--sub);
+      }
       & > button {
         height: 37px;
         border-radius: 6px;
@@ -108,33 +116,17 @@ const Wrapper = styled.div`
 
   ${(props) => {
     return css`
-      background-color: ${props.isBlind ? "transparent" : "white"};
-      border: ${props.isBlind ? "solid 1px #dbdbdb" : "unset"};
       & > .setup {
         right: ${props.on ? "0" : "-430px"};
         transition: right 0.2s ease-in-out;
         background-color: ${props.on === "remove" ? "#007fff" : "#dbdbdb"};
       }
-      & > .right {
-        & > .btn-wrapper {
-          & > .blind {
-            background-color: ${props.isBlind ? "#007fff" : "#dbdbdb"};
-            color: ${props.isBlind ? "white" : "#434343"};
-          }
-          & > .fix {
-            background-color: ${props.isBlind ? "#dbdbdb" : "#434343"};
-          }
-          & > .remove {
-            background-color: ${props.isBlind ? "#dbdbdb" : "#007fff;"};
-          }
-        }
-      }
       & > .left {
         & > .index {
-          color: ${props.isBlind ? "#a8a8a8" : "#007fff"};
+          color: "#007fff";
         }
         & > .title {
-          color: ${props.isBlind ? "#a8a8a8" : "black"};
+          color: "#a8a8a8";
         }
       }
     `;
@@ -156,9 +148,9 @@ function Card({
     : [];
   const [On, setOn] = useState(undefined);
   return (
-    <Wrapper isBlind={isBlind} on={On}>
+    <Wrapper on={On}>
       <div className="left">
-        <div className="index">{index}</div>
+        <div className="category">우리이야기</div>
         <div className="title-wrapper">
           <div className="title">{title}</div>
           <div className="badge">
@@ -169,7 +161,7 @@ function Card({
             ) : undefined}
             {isPin ? (
               <figure>
-                <img src="/assets/common/blue-pin.svg" alt="" />
+                <img src="/assets/common/main-pin.svg" alt="" />
               </figure>
             ) : undefined}
           </div>
@@ -193,14 +185,6 @@ function Card({
             }}
           >
             삭제하기
-          </button>
-          <button
-            className="blind"
-            onClick={() => {
-              setOn("blind");
-            }}
-          >
-            {isBlind ? "블라인드해제" : "블라인드"}
           </button>
         </div>
       </div>
@@ -239,15 +223,7 @@ function Card({
               </g>
             </svg>
           </figure>
-          <div className="title">
-            해당 게시글을{" "}
-            {On === "blind"
-              ? isBlind
-                ? "블라인드 해제"
-                : "블라인드 "
-              : "삭제"}
-            하시겠습니까?
-          </div>
+          <div className="title">해당 게시글을 삭제 하시겠습니까?</div>
         </div>
         <button
           onClick={() => {

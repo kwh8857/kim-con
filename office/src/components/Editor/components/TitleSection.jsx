@@ -1,6 +1,9 @@
 import React from "react";
+import { useState } from "react";
 
 import styled, { css } from "styled-components";
+const noticeCategory = ["우리이야기", "컨설팅사례", "정책기사"];
+const projectCategory = ["중소기업", "기타"];
 
 const Wrapper = styled.div`
   width: 1024px;
@@ -9,6 +12,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 29px;
     .title {
       font-size: 30px;
       font-weight: bold;
@@ -45,11 +49,11 @@ const Wrapper = styled.div`
     }
   }
   .ti {
-    font-size: 19px;
+    font-size: 17px;
     font-weight: bold;
-    margin-top: 30px;
-    margin-bottom: 9px;
+    margin-bottom: 11px;
   }
+
   input {
     width: 100%;
     height: 50px;
@@ -58,17 +62,14 @@ const Wrapper = styled.div`
     font-size: 17px;
     box-sizing: border-box;
     padding: 12px 17px;
+    margin-bottom: 24px;
   }
-  textarea {
-    width: 100%;
-    height: 80px;
-    border: solid 1px #dbdbdb;
-    border-radius: 5px;
-    font-size: 17px;
-    box-sizing: border-box;
-    padding: 12px 17px;
+  & > .category-wrapper {
+    display: grid;
+    column-gap: 15px;
   }
   ${(props) => {
+    console.log(props.category);
     return css`
       .top {
         & > .right {
@@ -78,13 +79,50 @@ const Wrapper = styled.div`
           }
         }
       }
+      & > .category-wrapper {
+        grid-template-columns: ${props.category === "notice"
+          ? "repeat(3,153px)"
+          : "repeat(2,153px)"};
+      }
     `;
   }}
 `;
-
-function TitleSection({ dispatch, info: { title, isPin }, insert }) {
+const CategoryBtn = styled.button`
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #434343;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 16px;
+  cursor: pointer;
+  & > div {
+    width: 26px;
+    height: 26px;
+    border-radius: 26px;
+    margin-right: 7px;
+    box-sizing: border-box;
+  }
+  ${(props) => {
+    return css`
+      border: solid 1px
+        ${props.category === props.my ? "var(--main)" : "#dbdbdb"};
+      background-color: ${props.category === props.my ? "#effff8" : "white"};
+      color: ${props.category === props.my ? "var(--main)" : "#434343"};
+      & > div {
+        border: ${props.category === props.my ? "unset" : "solid 1px #dbdbdb"};
+      }
+    `;
+  }}
+`;
+function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
+  const [category, setCategory] = useState(undefined);
   return (
-    <Wrapper isPin={isPin}>
+    <Wrapper isPin={isPin} category={type}>
       <div className="top">
         <div className="title">게시글 추가</div>
         <div className="right">
@@ -146,6 +184,46 @@ function TitleSection({ dispatch, info: { title, isPin }, insert }) {
           }
         }}
       />
+      <div className="ti">카테고리 선택</div>
+      <div className="category-wrapper">
+        {type === "notice"
+          ? noticeCategory.map((item, idx) => {
+              return (
+                <CategoryBtn
+                  key={idx}
+                  category={category}
+                  my={item}
+                  className="category"
+                  onClick={() => {
+                    setCategory(item);
+                  }}
+                >
+                  <div>
+                    {category === item ? (
+                      <img src="/assets/common/check.svg" alt="" />
+                    ) : undefined}
+                  </div>
+                  {item}
+                </CategoryBtn>
+              );
+            })
+          : projectCategory.map((item, idx) => {
+              return (
+                <CategoryBtn
+                  key={idx}
+                  my={item}
+                  category={category}
+                  className="category"
+                  onClick={() => {
+                    setCategory(item);
+                  }}
+                >
+                  <div />
+                  {item}
+                </CategoryBtn>
+              );
+            })}
+      </div>
     </Wrapper>
   );
 }

@@ -79,7 +79,12 @@ function Search({ title, type, placeholder, searching, add }) {
           <img src="/assets/grey-search.svg" alt="검색" />
         </div>
         {type !== "question" ? (
-          <button onClick={add} className="insert">
+          <button
+            onClick={() => {
+              add("new");
+            }}
+            className="insert"
+          >
             추가하기
           </button>
         ) : undefined}
