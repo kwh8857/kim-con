@@ -111,32 +111,40 @@ function Insert({ setIsUp, temKey, category, type }) {
           })
         ).then((result) => {
           const arr = template.slice();
-          if (type === "new") {
-            Fstore.collection(category)
-              .doc(temKey)
-              .update({ template: [...arr, ...result] });
-          } else {
-            Fstore.collection(category)
-              .doc(temKey)
-              .get()
-              .then((res) => {
-                const value = res.data();
-                if (value.urlList) {
-                  const concatArr = value.urlList.concat(result);
-                  res.ref.update({ urlList: concatArr });
-                  dispatch({
-                    type: "@layouts/INIT_DELETELIST",
-                    payload: concatArr,
-                  });
-                } else {
-                  res.ref.update({ urlList: result });
-                  dispatch({
-                    type: "@layouts/INIT_DELETELIST",
-                    payload: result,
-                  });
-                }
-              });
-          }
+          // if (type === "new") {
+          Fstore.collection("storage")
+            .doc(temKey)
+            .get()
+            .then((res) => {
+              if (res.exists) {
+                const { list } = res.data();
+                res.ref.update({ list: [...list, ...result] });
+              } else {
+                res.ref.set({ list: result });
+              }
+            });
+          // } else {
+          //   Fstore.collection(category)
+          //     .doc(temKey)
+          //     .get()
+          //     .then((res) => {
+          //       const value = res.data();
+          //       if (value.urlList) {
+          //         const concatArr = value.urlList.concat(result);
+          //         res.ref.update({ urlList: concatArr });
+          //         dispatch({
+          //           type: "@layouts/INIT_DELETELIST",
+          //           payload: concatArr,
+          //         });
+          //       } else {
+          //         res.ref.update({ urlList: result });
+          //         dispatch({
+          //           type: "@layouts/INIT_DELETELIST",
+          //           payload: result,
+          //         });
+          //       }
+          //     });
+          // }
           dispatch({
             type: "@layouts/CHANGE_EDITOR",
             payload: [...arr, ...result],

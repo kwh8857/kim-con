@@ -145,7 +145,7 @@ function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
                 <path
                   d="m22.489 21.1-8.678-5.01a2.226 2.226 0 1 0-2.227 3.856l8.677 5.01a2.227 2.227 0 0 0 2.228-3.856zm-7.157-5.418 6.75 3.9 2.3-6.389-4.665-2.693-4.385 5.182zM10.356 32.1l6.457-7.843-2.893-1.67-3.564 9.513zm16.81-22.439L21.382 6.32a1.67 1.67 0 0 0-1.67 2.893l5.785 3.34a1.67 1.67 0 1 0 1.669-2.893z"
                   transform="translate(-10.356 -6.096)"
-                  style={{ fill: isPin ? "#007fff" : "#a8a8a8" }}
+                  style={{ fill: isPin ? "var(--sub)" : "#a8a8a8" }}
                 />
               </svg>
             </figure>
@@ -153,7 +153,7 @@ function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
           <div
             className="btn"
             style={{
-              backgroundColor: title ? "#007fff" : "#7c7c7c",
+              backgroundColor: title && category ? "var(--sub)" : "#dbdbdb",
             }}
             onClick={() => {
               insert();
