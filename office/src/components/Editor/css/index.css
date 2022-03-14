@@ -297,6 +297,17 @@
 #root .editor .editor-wrapper .editor-screen {
   font-size: 15px;
   text-align: left;
+  min-height: 1500px;
+  border: unset;
+}
+
+#root .editor .editor-wrapper .editor-screen > div {
+  width: 100%;
+  min-height: 20px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-bottom: 5px;
 }
 
 #root .editor .editor-wrapper .editor-screen #text-line {

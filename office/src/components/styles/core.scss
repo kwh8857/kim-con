@@ -6,6 +6,9 @@
   border: none;
   scrollbar-width: none;
   -webkit-font-smoothing: antialiased;
+  [contenteditable=true] {
+    outline: unset;
+  }
   [contenteditable=true]:empty:before{
   content: attr(placeholder);
   display: block; /* For Firefox */

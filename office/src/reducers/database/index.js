@@ -1,14 +1,6 @@
 const initialState = {
   key: undefined,
-  editor: [
-    {
-      type: "TITLE",
-      content: "",
-      id: `title-${
-        new Date().getTime() - Math.floor(Math.random() * (100 - 1 + 1)) + 1
-      }`,
-    },
-  ],
+  editor: [],
   focusIdx: 0,
   videolist: [],
   deletelist: [],

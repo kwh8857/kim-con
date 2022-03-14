@@ -16,28 +16,7 @@ const Fstore = firebaseApp.firestore();
 function Insert({ setIsUp, temKey, category, type }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
-  const __imageUpload = useCallback(
-    (data64, resize, id) => {
-      return new Promise((resolve, reject) => {
-        const data = data64.split(",")[1];
-        const redata = resize.split(",")[1];
-        Fstorage.ref(`${category}/${temKey}/${id}`)
-          .putString(data, "base64")
-          .then((result) => {
-            result.ref.getDownloadURL().then((downloadUrl) => {
-              Fstorage.ref(`${category}/${temKey}/${id}-resize`)
-                .putString(redata, "base64")
-                .then((result) => {
-                  result.ref.getDownloadURL().then((resizeUrl) => {
-                    resolve({ url: downloadUrl, resize: resizeUrl, id });
-                  });
-                });
-            });
-          });
-      });
-    },
-    [temKey, category]
-  );
+
   const __fileReader = useCallback((file) => {
     return new Promise((resolve, reject) => {
       var reader = new FileReader();
@@ -54,6 +33,12 @@ function Insert({ setIsUp, temKey, category, type }) {
             100,
             0,
             (uri) => {
+              const pal = document.getElementsByClassName("editor-screen")[0];
+              const ima = document.createElement("img");
+              ima.src = imageUrl;
+              ima.alt = file.name;
+              pal.appendChild(ima);
+
               resolve({
                 url: imageUrl,
                 resize: uri,
@@ -71,92 +56,13 @@ function Insert({ setIsUp, temKey, category, type }) {
   }, []);
   const __imageUpdate = useCallback(
     (e) => {
-      dispatch({
-        type: "@config/isLoading",
-        payload: true,
-      });
       let fileList = Object.values(e.target.files);
-      const base64 = Promise.all(
-        fileList.map((item) => {
-          const da = __fileReader(item).then((result) => {
-            return result;
-          });
-          return da;
-        })
-      );
-      base64.then((result) => {
-        Promise.all(
-          result.map(({ url, resize, width, height }) => {
-            const po = __imageUpload(
-              url,
-              resize,
-              `image-${
-                new Date().getTime() -
-                Math.floor(Math.random() * (100 - 1 + 1)) +
-                1
-              }`
-            ).then(({ url, resize, id }) => {
-              return {
-                type: "IMAGE",
-                content: {
-                  url,
-                  resize,
-                },
-                width,
-                height,
-                id: id,
-              };
-            });
-            return po;
-          })
-        ).then((result) => {
-          const arr = template.slice();
-          // if (type === "new") {
-          Fstore.collection("storage")
-            .doc(temKey)
-            .get()
-            .then((res) => {
-              if (res.exists) {
-                const { list } = res.data();
-                res.ref.update({ list: [...list, ...result] });
-              } else {
-                res.ref.set({ list: result });
-              }
-            });
-          // } else {
-          //   Fstore.collection(category)
-          //     .doc(temKey)
-          //     .get()
-          //     .then((res) => {
-          //       const value = res.data();
-          //       if (value.urlList) {
-          //         const concatArr = value.urlList.concat(result);
-          //         res.ref.update({ urlList: concatArr });
-          //         dispatch({
-          //           type: "@layouts/INIT_DELETELIST",
-          //           payload: concatArr,
-          //         });
-          //       } else {
-          //         res.ref.update({ urlList: result });
-          //         dispatch({
-          //           type: "@layouts/INIT_DELETELIST",
-          //           payload: result,
-          //         });
-          //       }
-          //     });
-          // }
-          dispatch({
-            type: "@layouts/CHANGE_EDITOR",
-            payload: [...arr, ...result],
-          });
-          dispatch({
-            type: "@config/isLoading",
-            payload: false,
-          });
-        });
+
+      fileList.map((item) => {
+        __fileReader(item);
       });
     },
-    [__imageUpload, __fileReader, template, dispatch, temKey, category, type]
+    [__fileReader, template, dispatch, temKey, category, type]
   );
   return (
     <div className="insert-wrapper">

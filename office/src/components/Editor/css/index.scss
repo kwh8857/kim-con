@@ -232,7 +232,14 @@ $gray3: #dbdbdb;
       .editor-screen {
         font-size: 15px;
         text-align: left;
-
+        min-height: 1500px;
+        border: unset;
+        &>div{
+          width: 100%;
+          min-height: 20px;
+          height: fit-content;
+          padding-bottom: 5px;
+        }
         #text-line {
           width: 100%;
           min-height: 30px;

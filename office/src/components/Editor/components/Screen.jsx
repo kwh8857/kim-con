@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Droppable,
@@ -6,36 +6,17 @@ import {
   Draggable,
   resetServerContext,
 } from "react-beautiful-dnd";
-import TemplateImage from "./Template/TemplateImage";
-import TemplateEmty from "./Template/TemplateEmty";
-import TemplateTitle from "./Template/TemplateTitle";
 import TemplateLink from "./Template/TemplateLink";
-import TemplateVideo from "./Template/TemplateVideo";
 resetServerContext();
 
 function Screen({ temKey, Fstore, Fstorage, state }) {
   const dispatch = useDispatch();
+  const screenRef = useRef(null);
   const template = useSelector((state) => state.database.editor);
   const deletelist = useSelector((state) => state.database.deletelist);
   const [focusIdx, setfocusIdx] = useState(0);
-  const handleOnDragEnd = useCallback(
-    (result) => {
-      setfocusIdx(-1);
-      if (!result.destination) return;
-      const currentTags = [...template];
-      const beforeDragItemIndex = result.source.index;
-      const afterDragItemIndex = result.destination.index;
-      const removeTag = currentTags.splice(beforeDragItemIndex, 1);
+  const [DragData, setDragData] = useState(undefined);
 
-      currentTags.splice(afterDragItemIndex, 0, removeTag[0]);
-
-      dispatch({
-        type: "@layouts/CHANGE_EDITOR",
-        payload: currentTags,
-      });
-    },
-    [template, dispatch]
-  );
   const __deleteTemplate = useCallback(
     (idx) => {
       if (template.length > 1) {
@@ -119,83 +100,36 @@ function Screen({ temKey, Fstore, Fstorage, state }) {
     __deleteTemplate,
   ]);
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Droppable droppableId="tags" direction="vertical">
-        {(provided) => (
-          <div
-            className="editor-screen"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {template.length > 0 ? (
-              template.map(({ type, content, id }, idx) => {
-                return (
-                  <Draggable key={id} draggableId={id} index={idx}>
-                    {(provided) => {
-                      if (type === "IMAGE") {
-                        return (
-                          <TemplateImage
-                            data={content}
-                            key={idx}
-                            idx={idx}
-                            provided={provided}
-                            setFocus={setfocusIdx}
-                            template={template}
-                            focusIdx={focusIdx}
-                            __delete={__deleteImage}
-                          />
-                        );
-                      } else if (type === "TITLE") {
-                        return (
-                          <TemplateTitle
-                            key={idx}
-                            data={content}
-                            provided={provided}
-                            idx={idx}
-                            setFocus={setfocusIdx}
-                            focusIdx={focusIdx}
-                            __delete={__deleteTemplate}
-                          />
-                        );
-                      } else if (type === "LINK" || type === "FILE") {
-                        return (
-                          <TemplateLink
-                            key={idx}
-                            data={content}
-                            provided={provided}
-                            idx={idx}
-                            type={type}
-                            template={template}
-                            __delete={
-                              type === "FILE" ? __deleteImage : __deleteTemplate
-                            }
-                          />
-                        );
-                      } else if (type === "VIDEO") {
-                        return (
-                          <TemplateVideo
-                            key={idx}
-                            data={content}
-                            setFocus={setfocusIdx}
-                            provided={provided}
-                            idx={idx}
-                            template={template}
-                            __delete={__deleteTemplate}
-                          />
-                        );
-                      }
-                    }}
-                  </Draggable>
-                );
-              })
-            ) : (
-              <TemplateEmty />
-            )}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <div
+      className="editor-screen"
+      contentEditable="true"
+      ref={screenRef}
+      onClick={() => {
+        console.log(screenRef.current.childNodes);
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDragStart={(e) => {
+        setDragData(e);
+      }}
+      onDrop={(e) => {
+        if (DragData) {
+          if (e.target.className !== "editor-screen") {
+            e.target.before(DragData.target);
+          } else {
+            if (e.clientY > DragData.clientY) {
+              e.target.appendChild(DragData.target);
+            } else {
+              e.target.insertBefore(DragData.target, e.target.firstChild);
+            }
+          }
+          setDragData(undefined);
+        }
+      }}
+    >
+      <div></div>
+    </div>
   );
 }
 
