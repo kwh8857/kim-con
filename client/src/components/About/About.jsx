@@ -19,6 +19,11 @@ function About() {
       <Section2 />
       <Section3 />
       <Section4 />
+      <div style={{ backgroundColor: "red" }}>
+        <video width={400} autoPlay loop muted>
+          <source src="/assets/about/test.mov" type="video/mp4" />
+        </video>
+      </div>
       <Footer />
     </Wrapper>
   );
