@@ -37,9 +37,11 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 img {
   width: 100%;
 }
+
 input[type=number] {
   -moz-appearance: textfield;
 }
@@ -55,6 +57,7 @@ textarea:focus {
 .none {
   display: none !important;
 }
+
 input,
 p,
 textarea {
@@ -73,7 +76,26 @@ textarea {
     color: #c6c6c6;
 
   }
+
   &:focus {
     outline: none;
+  }
+}
+
+.wrapper {
+  width: 993px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+@media screen and (max-width: 1365px) {
+  .wrapper {
+    width: 728px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper {
+    width: 320px;
   }
 }

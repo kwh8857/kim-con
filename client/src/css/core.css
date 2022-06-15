@@ -102,4 +102,22 @@ p:focus,
 textarea:focus {
   outline: none;
 }
+
+.wrapper {
+  width: 993px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+@media screen and (max-width: 1365px) {
+  .wrapper {
+    width: 728px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper {
+    width: 320px;
+  }
+}
 /*# sourceMappingURL=core.css.map */

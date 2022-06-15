@@ -1,1 +1,298 @@
-/* No CSS *//*# sourceMappingURL=index.css.map */
+.request {
+  width: 100%;
+}
+
+.request > .top {
+  width: 100%;
+  height: 405px;
+  background-color: #f5f6f8;
+}
+
+.request > .top > .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 118px;
+  padding-bottom: 75px;
+}
+
+.request > .top > .wrapper > .left > .category {
+  width: 113px;
+  height: 41px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: white;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #434343;
+}
+
+.request > .top > .wrapper > .left > .title {
+  margin: 16px 0 10px 0;
+  font-size: 33px;
+  font-weight: bold;
+  line-height: 1.36;
+}
+
+.request > .top > .wrapper > .left > .sub {
+  font-size: 16px;
+  line-height: 1.69;
+}
+
+.request > .top > .wrapper > .right {
+  width: 186px;
+  height: 186px;
+  background-color: white;
+  border-radius: 186px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 44px;
+  padding-left: 47px;
+}
+
+.request > .top > .wrapper > .right > img {
+  width: 109.4px;
+}
+
+.request > .content > .wrapper {
+  padding-top: 33.5px;
+}
+
+.request > .content > .wrapper .select-input {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  row-gap: 10px;
+}
+
+.request > .content > .wrapper .select-input > .title {
+  -webkit-column-gap: 4.5px;
+          column-gap: 4.5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.request > .content > .wrapper .select-input > .title > .circle {
+  width: 7px;
+  height: 7px;
+  background-color: #00be83;
+  border-radius: 7px;
+}
+
+.request > .content > .wrapper .select-input > .select-wrapper {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  border: solid 1px #dbdbdb;
+  font-size: 14px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.request > .content > .wrapper .select-input > .select-wrapper .card {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 14.5px 15px;
+  height: 50px;
+}
+
+.request > .content > .wrapper .select-input > .select-wrapper > .now {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.request > .content > .wrapper .select-input > .select-wrapper > .now > .place {
+  color: #a8a8a8;
+}
+
+.request > .content > .wrapper .select-input > .select-wrapper > .now > img {
+  width: 20px;
+}
+
+.request > .content > .wrapper .select-input > .select-wrapper > .select-card-wrapper > .select {
+  border-top: solid 1px #dbdbdb;
+}
+
+.request > .content > .wrapper .select-input > .open {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.request > .content > .wrapper .info-input {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  row-gap: 10px;
+}
+
+.request > .content > .wrapper .info-input > .title {
+  -webkit-column-gap: 4.5px;
+          column-gap: 4.5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.request > .content > .wrapper .info-input > .title > .circle {
+  width: 7px;
+  height: 7px;
+  background-color: #00be83;
+  border-radius: 7px;
+}
+
+.request > .content > .wrapper .info-input > input {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  border: solid 1px #dbdbdb;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 14.5px 15px;
+  font-size: 14px;
+}
+
+.request > .content > .wrapper .content-head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  -webkit-column-gap: 11px;
+          column-gap: 11px;
+  padding-bottom: 10px;
+  border-bottom: solid 1px #dbdbdb;
+}
+
+.request > .content > .wrapper .content-head > img {
+  width: 47px;
+}
+
+.request > .content > .wrapper .content-head > .text {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.request > .content > .wrapper .speech {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 63px;
+  border-radius: 10px;
+  background-color: #f3fdf9;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 15.4px;
+  -webkit-column-gap: 11.2px;
+          column-gap: 11.2px;
+}
+
+.request > .content > .wrapper .speech > img {
+  width: 35.7px;
+}
+
+.request > .content > .wrapper .speech > .text {
+  font-size: 12px;
+  line-height: 1.67;
+  color: #00be83;
+  padding-right: 36.7px;
+}
+
+.request > .content > .wrapper .speech > .long {
+  padding-right: 16.7px;
+}
+
+.request > .content > .wrapper > .notice {
+  width: 100%;
+  height: 50px;
+  background-color: #f3fdf9;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-left: 20.5px;
+  -webkit-column-gap: 6.5px;
+          column-gap: 6.5px;
+  margin-bottom: 35.5px;
+}
+
+.request > .content > .wrapper > .notice > .circle {
+  width: 7px;
+  height: 7px;
+  background-color: #00be83;
+  border-radius: 7px;
+}
+
+.request > .content > .wrapper > .notice > .text {
+  font-size: 15px;
+  color: #00be83;
+}
+
+.request > .content > .wrapper > .section1 > .company-wrapper {
+  margin-top: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 27.5px;
+          column-gap: 27.5px;
+}
+
+.request > .content > .wrapper > .section1 > .company-wrapper > .left {
+  width: 468px;
+  display: -ms-grid;
+  display: grid;
+  row-gap: 38px;
+}
+
+.request > .content > .wrapper > .section1 > .company-wrapper > .right {
+  align-self: flex-end;
+  display: -ms-grid;
+  display: grid;
+  row-gap: 55px;
+}
+/*# sourceMappingURL=index.css.map */
