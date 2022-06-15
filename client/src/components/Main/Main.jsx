@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 // import { SEARCH } from "../../reducers/actions";
 import Header from "../Header/Header";
 import NoticeSection from "./components/NoticeSection";
-import Popup from "./components/Popup";
+import Popup from "../Popup/Popup";
 import Section1 from "./components/Section1";
 import Section2 from "./components/Section2";
 import Section3 from "./components/Section3";
