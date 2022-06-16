@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="31.125" height="48.196" viewBox="0 0 31.125 48.196">
+    <g data-name="그룹 5710">
+        <path data-name="Icon ionic-md-bulb" d="M16.243 42.574a2.1 2.1 0 0 0 2.092 2.092h9.2a2.1 2.1 0 0 0 2.092-2.092v-1.882H16.243zM22.937 4.5C14.6 4.5 7.875 10.766 7.875 18.516A13.833 13.833 0 0 0 14.3 30.085v4.54a2.091 2.091 0 0 0 2.155 2.008h12.96a2.084 2.084 0 0 0 2.155-2.008v-4.54A13.818 13.818 0 0 0 38 18.516C38 10.766 31.274 4.5 22.937 4.5z" transform="translate(-7.375 3.029)" style="stroke:#707070;fill:#e8e589"/>
+        <g data-name="그룹 5574">
+            <path data-name="선 806" transform="translate(16.092)" style="fill:none;stroke:#707070" d="M0 0v4.242"/>
+            <g data-name="그룹 5573">
+                <path data-name="선 807" transform="rotate(30 8.72 42.574)" style="fill:none;stroke:#707070" d="M0 0v4.242"/>
+                <path data-name="선 808" transform="rotate(150 5.253 4.097)" style="fill:none;stroke:#707070" d="M0 4.242V0"/>
+            </g>
+        </g>
+        <path data-name="패스 7622" d="M-11191.234 11702.327s4.9 1.38 5.819 5.875" transform="translate(11211.849 -11689.785)" style="fill:none;stroke:#707070"/>
+    </g>
+</svg>

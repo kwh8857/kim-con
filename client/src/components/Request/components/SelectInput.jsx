@@ -16,6 +16,7 @@ function SelectInput({
       onClick={() => {
         setIsOpen(!isOpen);
       }}
+      style={{ zIndex: type === "history" ? 100 : type === "sector" ? 50 : 10 }}
     >
       <div className="title">
         {title}
@@ -31,8 +32,21 @@ function SelectInput({
         <div className="select-card-wrapper">
           {arr.map((item, idx) => {
             return (
-              <div key={idx} className="select card">
-                {item}
+              <div
+                key={idx}
+                className="select card"
+                onClick={() => {
+                  dispatch(type === "sector" ? item.title : item);
+                }}
+              >
+                {type === "sector" ? (
+                  <>
+                    {item.img}
+                    <div className="text">{item.title}</div>
+                  </>
+                ) : (
+                  <>{item}</>
+                )}
               </div>
             );
           })}
