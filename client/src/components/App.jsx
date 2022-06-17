@@ -6,6 +6,8 @@ import About from "./About/About";
 import Service from "./Service/Service";
 import Support from "./Support/Support";
 import Request from "./Request/Request";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
 function App() {
   const [agent, setAgent] = useState("pc");
   useEffect(() => {
@@ -20,6 +22,7 @@ function App() {
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path="/" exact element={<Main />} />
         <Route path="/request" exact element={<Request />} />
@@ -27,6 +30,7 @@ function App() {
         <Route path="/service" exact element={<Service />} />
         <Route path="/support" exact element={<Support />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

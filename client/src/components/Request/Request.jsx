@@ -224,8 +224,8 @@ function Request() {
           <div className="notice">
             <div className="circle" />
             <div className="text">
-              필수입력 항목입니다. 입력항목에 따라, 사업안내가 제한적일 수
-              있습니다 .
+              필수입력 항목입니다. 입력항목에 따라, <br /> 사업안내가 제한적일
+              수 있습니다 .
             </div>
           </div>
           <div className="section1">
@@ -236,7 +236,7 @@ function Request() {
             <div className="company-wrapper">
               <div className="left">
                 {section1Input.map(
-                  ({ title, type, content, placeholder, arr }, idx) => {
+                  ({ title, type, content, placeholder, arr, speech }, idx) => {
                     return content !== "select" ? (
                       <Infoinput
                         key={idx}
@@ -246,39 +246,37 @@ function Request() {
                         dispatch={type === "company" ? __company : __number}
                       />
                     ) : (
-                      <SelectInput
-                        key={idx}
-                        title={title}
-                        type={type}
-                        content={content}
-                        placeholder={placeholder}
-                        arr={arr}
-                        info={
-                          type === "history"
-                            ? info.history
-                            : type === "sector"
-                            ? info.sector
-                            : info.region
-                        }
-                        dispatch={
-                          type === "history"
-                            ? __history
-                            : type === "sector"
-                            ? __sector
-                            : __region
-                        }
-                      />
+                      <div key={idx} className="speech-wrapper">
+                        <SelectInput
+                          title={title}
+                          type={type}
+                          content={content}
+                          placeholder={placeholder}
+                          arr={arr}
+                          info={
+                            type === "history"
+                              ? info.history
+                              : type === "sector"
+                              ? info.sector
+                              : info.region
+                          }
+                          dispatch={
+                            type === "history"
+                              ? __history
+                              : type === "sector"
+                              ? __sector
+                              : __region
+                          }
+                        />
+                        <Speech content={speech} />
+                      </div>
                     );
                   }
                 )}
               </div>
-              <div className="right">
-                {section1Speech.map((item, idx) => {
-                  return <Speech key={idx} content={item} />;
-                })}
-              </div>
             </div>
           </div>
+          <div className="bold-line" />
           <div className="section2">
             <div className="content-head">
               <img src="/assets/request/team.svg" alt="" />
@@ -299,8 +297,9 @@ function Request() {
                 <Speech
                   content={
                     <div className="text">
-                      4대보험 가입자 수에 따라 수혜가능한 지원사업이 달라집니다.{" "}
-                      <br />
+                      4대보험 가입자 수에 따라 수혜가능한 지원사업이{" "}
+                      <br className="mb" /> 달라집니다.
+                      <br className="pc" />
                       정확한 가입자 수를 입력해주세요.
                     </div>
                   }
@@ -329,7 +328,8 @@ function Request() {
               />
             </div>
           </div>
-          <div className="section3">
+          <div className="bold-line" />
+          <div className="section3 wrapper">
             <div className="content-head">
               <img src="/assets/request/kim.svg" alt="" />
               <div className="text">지원 희망 분야</div>
@@ -389,6 +389,7 @@ function Request() {
               </div>
             </div>
           </div>
+          <div className="bold-line" />
           <div className="section4">
             <div className="content-head">
               <img src="/assets/request/kim.svg" alt="" />
@@ -470,6 +471,12 @@ const section1Input = [
     content: "select",
     placeholder: "업력 선택",
     arr: ["예비창업자", "1년 미만", "3년 미만", "7년 미만", "7년 이상"],
+    speech: (
+      <div className="text">
+        업력에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업력을
+        입력해주세요.
+      </div>
+    ),
   },
   {
     title: "업종",
@@ -530,12 +537,24 @@ const section1Input = [
         img: <img src="/assets/request/sector13.svg" alt="" />,
       },
     ],
+    speech: (
+      <div className="text">
+        업종에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업종을
+        입력해주세요.
+      </div>
+    ),
   },
   {
     title: "지역",
     type: "region",
     content: "select",
     placeholder: "지역 선택",
+    speech: (
+      <div className="text long">
+        사업장 소재지에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한
+        지역을 입력해주세요.
+      </div>
+    ),
     arr: [
       "서울특별시",
       "경기도",
@@ -557,20 +576,20 @@ const section1Input = [
     ],
   },
 ];
-const section1Speech = [
-  <div className="text">
-    업력에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업력을
-    입력해주세요.
-  </div>,
-  <div className="text">
-    업종에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업종을
-    입력해주세요.
-  </div>,
-  <div className="text long">
-    사업장 소재지에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 지역을
-    입력해주세요.
-  </div>,
-];
+// const section1Speech = [
+//   <div className="text">
+//     업력에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업력을
+//     입력해주세요.
+//   </div>,
+//   <div className="text">
+//     업종에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업종을
+//     입력해주세요.
+//   </div>,
+//   <div className="text long">
+//     사업장 소재지에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 지역을
+//     입력해주세요.
+//   </div>,
+// ];
 const sectorArr = [
   {
     img: <img alt="" src="/assets/request/marketing.svg" />,

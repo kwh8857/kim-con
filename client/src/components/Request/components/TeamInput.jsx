@@ -12,6 +12,7 @@ function TeamInput({
   const yearRef = useRef(null);
   return (
     <div className={`team-input ${index === 0 ? "zero" : ""}`}>
+      <div className="title">주민등록번호 (출생연도/성별)</div>
       <div className="id-wrapper">
         <input
           type="number"
@@ -31,6 +32,7 @@ function TeamInput({
           })}
         </div>
         <div className="line" />
+
         <input
           type="number"
           className="second"
@@ -48,6 +50,7 @@ function TeamInput({
           })}
         </div>
       </div>
+      <div className="title">고용보험 등재 연월</div>
       <div className="year-wrapper">
         <input
           type="text"
