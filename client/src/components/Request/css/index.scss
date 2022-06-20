@@ -1048,6 +1048,28 @@
             margin: 88.5px 0 10.5px 0;
           }
         }
+
+        &>.section4 {
+          &>.etc-wrapper {
+            &>.policy-wrapper {
+              &>.policy {
+                &>.left {
+                  &>.text {
+                    font-size: 14px;
+
+                    &>span {
+                      display: none;
+                    }
+                  }
+                }
+
+                &>a {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

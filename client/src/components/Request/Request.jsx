@@ -559,8 +559,8 @@ const section1Input = [
     placeholder: "지역 선택",
     speech: (
       <div className="text long">
-        사업장 소재지에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한
-        지역을 입력해주세요.
+        사업장 소재지에 따라 수혜 가능한 지원사업이 <br className="mb" />{" "}
+        달라집니다. <br className="pc" /> 정확한 지역을 입력해주세요.
       </div>
     ),
     arr: [

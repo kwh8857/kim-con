@@ -1149,5 +1149,14 @@
   .request > .content > .wrapper > .section3 > .title {
     margin: 88.5px 0 10.5px 0;
   }
+  .request > .content > .wrapper > .section4 > .etc-wrapper > .policy-wrapper > .policy > .left > .text {
+    font-size: 14px;
+  }
+  .request > .content > .wrapper > .section4 > .etc-wrapper > .policy-wrapper > .policy > .left > .text > span {
+    display: none;
+  }
+  .request > .content > .wrapper > .section4 > .etc-wrapper > .policy-wrapper > .policy > a {
+    font-size: 12px;
+  }
 }
 /*# sourceMappingURL=index.css.map */

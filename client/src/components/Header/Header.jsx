@@ -55,6 +55,7 @@ const Wrapper = styled.div`
   }}
 
   @media screen and (max-width: 1365px) {
+    padding: 0 20px;
     & > .right {
       & > .mb-menu {
         display: block;
