@@ -1,11 +1,16 @@
 import React, { useCallback, useReducer } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import firebaseApp from "../../config/firebaseApp";
 import Infoinput from "./components/Infoinput";
 import SectorCard from "./components/SectorCard";
 import SelectInput from "./components/SelectInput";
 import Speech from "./components/Speech";
 import TeamInput from "./components/TeamInput";
 import "./css/index.css";
+
+const Fstore = firebaseApp.firestore();
+
 function reducer(state, action) {
   switch (action.type) {
     case "company":
@@ -56,7 +61,9 @@ function reducer(state, action) {
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
+
 function Request() {
+  const reduxpatch = useDispatch();
   const navigate = useNavigate();
   const [info, dispatch] = useReducer(reducer, {
     company: "",
@@ -68,24 +75,24 @@ function Request() {
     teamarr: [
       {
         number: {
-          first: undefined,
-          second: undefined,
+          first: "",
+          second: "",
         },
-        year: undefined,
+        year: "",
       },
       {
         number: {
-          first: undefined,
-          second: undefined,
+          first: "",
+          second: "",
         },
-        year: undefined,
+        year: "",
       },
       {
         number: {
-          first: undefined,
-          second: undefined,
+          first: "",
+          second: "",
         },
-        year: undefined,
+        year: "",
       },
     ],
     plan: 0,
@@ -176,7 +183,7 @@ function Request() {
   }, []);
   const __team = useCallback(
     (e) => {
-      const arr = Array(parseInt(e)).fill();
+      const arr = Array(parseFloat(e)).fill();
       let arrobj = [];
       for (let i = 0; i < arr.length; i++) {
         arrobj.push(
@@ -184,16 +191,16 @@ function Request() {
             ? info.teamarr[i]
             : {
                 number: {
-                  first: undefined,
-                  second: undefined,
+                  first: "",
+                  second: "",
                 },
-                year: undefined,
+                year: "",
               }
         );
       }
       dispatch({
         type: "team",
-        payload: e,
+        payload: parseFloat(e),
       });
       dispatch({
         type: "teamarr",
@@ -203,8 +210,72 @@ function Request() {
     [dispatch, info]
   );
   const __send = useCallback(() => {
-    navigate("/request/end");
-  }, []);
+    const {
+      company,
+      number,
+      history,
+      sector,
+      region,
+      team,
+      plan,
+      category,
+      content,
+      etc: { email, tel, policy },
+    } = info;
+    if (
+      company &&
+      number &&
+      history &&
+      sector &&
+      region &&
+      team > 0 &&
+      plan > 0 &&
+      category.length > 0 &&
+      content &&
+      email &&
+      tel
+    ) {
+      if (policy) {
+        console.log(info);
+        Fstore.collection("/request")
+          .add({
+            data: info,
+            timestamp: new Date(),
+          })
+          .then(() => {
+            reduxpatch({
+              type: "config/isPopup",
+              payload: {
+                state: true,
+                type: "request",
+              },
+            });
+            navigate({
+              pathname: "/request/end",
+              state: {
+                email,
+              },
+            });
+          });
+      } else {
+        reduxpatch({
+          type: "config/toast",
+          payload: {
+            state: true,
+            msg: "개인정보 이용 항목에 동의해주세요",
+          },
+        });
+      }
+    } else {
+      reduxpatch({
+        type: "config/toast",
+        payload: {
+          state: true,
+          msg: "필수 정보를 모두 입력해주세요",
+        },
+      });
+    }
+  }, [info, navigate, reduxpatch]);
 
   return (
     <div className="request">
@@ -249,6 +320,7 @@ function Request() {
                         title={title}
                         content={content}
                         placeholder={placeholder}
+                        type={type}
                         dispatch={type === "company" ? __company : __number}
                       />
                     ) : (

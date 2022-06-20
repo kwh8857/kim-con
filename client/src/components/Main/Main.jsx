@@ -1,29 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Header from "../Header/Header";
+import React from "react";
 import Fold from "./components/Fold";
 import "./css/index.css";
 function Main() {
-  const [isScroll, setIsScroll] = useState(false);
-  useEffect(() => {
-    const ref = document.getElementById("root");
-    function change(e) {
-      if (e.target.scrollTop !== 0) {
-        setIsScroll(true);
-      } else {
-        setIsScroll(false);
-      }
-    }
-    ref.addEventListener("scroll", change);
-
-    return () => {
-      ref.removeEventListener("scroll", change);
-    };
-  }, []);
   return (
     <div style={{ width: "100%" }} className="mainsub">
-      <header style={{ width: "100%" }}>
-        <Header isScroll={isScroll} />
-      </header>
       {/* <Side /> */}
       <div className="section">
         <div className="wrapper">

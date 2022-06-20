@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import MainPopup from "./components/MainPopup";
+import RequestPopup from "./components/RequestPopup";
 const Wrapper = styled.section`
   position: fixed;
   top: 0;
@@ -116,7 +117,7 @@ const Wrapper = styled.section`
         & > .circle {
           height: 10px;
           border-radius: 10px;
-          background-color: #dbdbdb;
+          background-color: #c49999;
         }
       }
     }
@@ -140,7 +141,11 @@ function Popup({ type }) {
         <figure className="cancel" onClick={cancel}>
           <img src="/assets/cancel.svg" alt="닫기" />
         </figure>
-        {type === "main" ? <MainPopup cancel={cancel} /> : undefined}
+        {type === "main" ? (
+          <MainPopup cancel={cancel} />
+        ) : (
+          <RequestPopup cancel={cancel} />
+        )}
       </div>
     </Wrapper>
   );

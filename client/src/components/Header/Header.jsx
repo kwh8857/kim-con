@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -88,6 +88,12 @@ const Menu = styled.nav`
 function Header({ isScroll }) {
   const location = useLocation();
   const navigate = useNavigate();
+  useEffect(() => {
+    document.getElementById("root").scrollTo(0, 0);
+
+    return () => {};
+  }, [location.pathname]);
+
   return (
     <Wrapper scroll={isScroll}>
       <Link to={"/"}>

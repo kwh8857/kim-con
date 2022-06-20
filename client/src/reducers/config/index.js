@@ -6,8 +6,12 @@ const initialState = {
   payload: "",
   isLoading: false,
   isPopup: {
-    state: true,
-    type: "main",
+    state: false,
+    type: "",
+  },
+  isToast: {
+    state: false,
+    msg: "",
   },
 };
 
@@ -32,6 +36,11 @@ const config = (state = initialState, action) => {
       return {
         ...state,
         isPopup: action.payload,
+      };
+    case "config/toast":
+      return {
+        ...state,
+        isToast: action.payload,
       };
     default:
       return state;

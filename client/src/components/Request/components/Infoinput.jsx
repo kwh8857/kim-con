@@ -13,7 +13,11 @@ function Infoinput({ title, content, placeholder, dispatch, sub, type }) {
         placeholder={placeholder}
         ref={inputRef}
         onBlur={(e) => {
-          if (e.target.value > 0) {
+          if (content === "number") {
+            if (e.target.value > 0) {
+              dispatch(e.target.value);
+            }
+          } else {
             dispatch(e.target.value);
           }
         }}
