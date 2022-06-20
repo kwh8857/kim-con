@@ -1,6 +1,8 @@
 import React from "react";
+import { useLocation, useParams } from "react-router-dom";
 import "./css/index.css";
 function Finish() {
+  const { state } = useLocation();
   return (
     <div className="finish">
       <div className="top">
@@ -9,8 +11,8 @@ function Finish() {
           <div className="sub">
             고객님의 ‘정부지원금 찾기 신청’ 접수완료 되었습니다. <br /> 영업일
             기준 1~2일 내로 김과장이 열심히 찾아서 <br /> 고객님의
-            <span> XXXXXX@naver.com</span> 으로 <br className="mb" /> 최대한
-            빠르게 안내해 드리겠습니다.
+            <span> {state}</span> 으로 <br className="mb" /> 최대한 빠르게
+            안내해 드리겠습니다.
           </div>
           <button>
             <img src="/assets/finish/ch.svg" alt="" />

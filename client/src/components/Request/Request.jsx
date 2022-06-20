@@ -236,7 +236,6 @@ function Request() {
       tel
     ) {
       if (policy) {
-        console.log(info);
         Fstore.collection("/request")
           .add({
             data: info,
@@ -250,12 +249,7 @@ function Request() {
                 type: "request",
               },
             });
-            navigate({
-              pathname: "/request/end",
-              state: {
-                email,
-              },
-            });
+            navigate("/request/end", { state: email });
           });
       } else {
         reduxpatch({
