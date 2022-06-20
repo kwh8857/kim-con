@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="68.642" height="69.683" viewBox="0 0 68.642 69.683">
+    <defs>
+        <clipPath id="713h4wunta">
+            <path data-name="사각형 3192" style="stroke-width:2px;stroke:#707070;fill:none" d="M0 0h68.561v69.602H0z"/>
+        </clipPath>
+    </defs>
+    <path data-name="사각형 3190" transform="translate(1 5.759)" style="fill:#fff;stroke-width:2px;stroke:#707070" d="M0 0h51.633v62.924H0z"/>
+    <g data-name="그룹 5278">
+        <g data-name="그룹 5277" style="clip-path:url(#713h4wunta)" transform="translate(.081)">
+            <path data-name="사각형 3191" transform="translate(.919 5.759)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h51.633v62.924H0z"/>
+        </g>
+    </g>
+    <path data-name="선 249" transform="translate(7.89 16.673)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h37.471"/>
+    <path data-name="선 250" transform="translate(7.89 22.731)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h37.471"/>
+    <path data-name="선 251" transform="translate(7.89 28.79)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h37.471"/>
+    <path data-name="선 252" transform="translate(7.89 34.731)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h37.471"/>
+    <path data-name="선 253" transform="translate(7.89 40.789)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h37.471"/>
+    <path data-name="패스 7259" d="M10.618 81.368h4.572l4.374-5.968 3.579 5.965h5.368l1.033-2.386h4.136" transform="translate(-2.728 -19.946)" style="fill:#fff;stroke-width:2px;stroke:#707070"/>
+    <path data-name="패스 7260" d="M10.618 81.368h4.572l4.374-5.968 3.579 5.965h5.368l1.033-2.386h4.136" transform="translate(-2.728 -19.946)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+    <g data-name="그룹 5280">
+        <g data-name="그룹 5279" style="clip-path:url(#713h4wunta)" transform="translate(.081)">
+            <path data-name="패스 7261" d="M11.933 10.929a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.5" transform="translate(-2.494 -.331)" style="fill:#e8e589;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7262" d="M11.933 10.929h0a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.504z" transform="translate(-2.494 -.331)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+            <path data-name="패스 7263" d="M27.611 10.929a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.5" transform="translate(-6.641 -.331)" style="fill:#e8e589;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7264" d="M27.611 10.929h0a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.504z" transform="translate(-6.641 -.331)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+            <path data-name="패스 7265" d="M43.29 10.929a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.5" transform="translate(-10.788 -.331)" style="fill:#e8e589;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7266" d="M43.29 10.929h0a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.504z" transform="translate(-10.788 -.331)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+            <path data-name="패스 7267" d="M58.968 10.929a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.5" transform="translate(-14.936 -.331)" style="fill:#e8e589;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7268" d="M58.968 10.929h0a2.512 2.512 0 0 1-2.505-2.5V3.755a2.505 2.505 0 0 1 5.01 0v4.67a2.512 2.512 0 0 1-2.505 2.504z" transform="translate(-14.936 -.331)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+            <path data-name="사각형 3193" transform="rotate(-44.6 87.38 -31.976)" style="fill:#fff;stroke-width:2px;stroke:#707070" d="M0 0h5.736v10.018H0z"/>
+            <path data-name="사각형 3194" transform="rotate(-44.6 87.38 -31.976)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none" d="M0 0h5.736v10.018H0z"/>
+            <path data-name="패스 7269" d="M61.245 39.628a15.571 15.571 0 1 1-22.02-.169 15.57 15.57 0 0 1 22.02.169" transform="translate(-9.147 -9.254)" style="fill:#fff;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7270" d="M61.245 39.628a15.571 15.571 0 1 1-22.02-.169 15.57 15.57 0 0 1 22.02.169z" transform="translate(-9.147 -9.254)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+            <path data-name="패스 7271" d="M59.76 44.095a11.363 11.363 0 1 1-16.069-.124 11.362 11.362 0 0 1 16.069.124" transform="translate(-10.661 -10.767)" style="fill:#caddff;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7272" d="M59.76 44.095a11.363 11.363 0 1 1-16.069-.124 11.362 11.362 0 0 1 16.069.124z" transform="translate(-10.661 -10.767)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+            <path data-name="패스 7273" d="M85 86.046a5.143 5.143 0 0 1-7.273-.056l-5.967-6.063 7.532-7.417 5.771 5.86A5.427 5.427 0 0 1 85 86.046" transform="translate(-18.982 -19.18)" style="fill:#5b5652;stroke-width:2px;stroke:#707070"/>
+            <path data-name="패스 7274" d="M85 86.046h0a5.143 5.143 0 0 1-7.273-.056l-5.967-6.063 7.532-7.417 5.771 5.86A5.427 5.427 0 0 1 85 86.046z" transform="translate(-18.982 -19.18)" style="stroke:#5b5652;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+        </g>
+    </g>
+</svg>

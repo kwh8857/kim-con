@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import Popup from "../Popup/Popup";
 import Fold from "./components/Fold";
 import "./css/index.css";
 function Main() {
-  const isPopup = useSelector((state) => state.config.isPopup);
   const [isScroll, setIsScroll] = useState(false);
   useEffect(() => {
     const ref = document.getElementById("root");
@@ -46,6 +42,13 @@ function Main() {
               src="/assets/sub/main.png"
               srcSet="/assets/sub/main@2x.png 2x, /assets/sub/main@3x.png 3x"
               alt=""
+              className="pc"
+            />
+            <img
+              src="/assets/sub/main-mb.png"
+              srcSet="/assets/sub/main-mb@2x.png 2x, /assets/sub/main-mb@3x.png 3x"
+              alt=""
+              className="main-mb"
             />
           </div>
         </div>
@@ -98,7 +101,9 @@ function Main() {
       </div>
       <div className="section3">
         <div className="wrapper">
-          <div className="title">김과장 컨설팅, 아직도 망설이시나요?</div>
+          <div className="title">
+            김과장 컨설팅, <br /> 아직도 망설이시나요?
+          </div>
           <div className="fold-wrapper">
             {foldarr.map(({ number, title, content }, idx) => {
               return (
@@ -113,7 +118,6 @@ function Main() {
           </div>
         </div>
       </div>
-      {isPopup ? <Popup /> : undefined}
     </div>
   );
 }
@@ -160,6 +164,7 @@ const box = [
         <img src="/assets/sub/icon2.svg" alt="" />
       </div>
     ),
+    type: "first",
   },
   {
     title: (
@@ -181,6 +186,7 @@ const box = [
         <img src="/assets/sub/icon3.svg" alt="" />
       </div>
     ),
+    type: "second",
   },
 ];
 const foldarr = [

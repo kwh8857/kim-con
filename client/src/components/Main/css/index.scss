@@ -2,47 +2,6 @@
   font-weight: bold;
 
 
-
-  &>.wrapper {
-    width: 1366px;
-    padding-left: 75px;
-    padding-right: 105px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    &>.menu {
-      display: flex;
-      align-items: center;
-      gap: 45px;
-      font-size: 13px;
-
-      &>.box {
-        gap: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #434343;
-        width: 165px;
-        height: 40px;
-        border-radius: 57px;
-        font-size: 13px;
-        background-color: #47d99b;
-
-        &>a {
-          color: #434343;
-        }
-      }
-
-      &>.btn {
-        display: none;
-      }
-    }
-  }
-
-
-
-
   &>.section {
     height: 606px;
     background-color: #edfff8;
@@ -98,6 +57,11 @@
       &>.back-img {
         position: absolute;
         bottom: -80px;
+
+        &>.main-mb {
+          display: none;
+        }
+
       }
     }
   }
@@ -154,6 +118,15 @@
             margin-left: 121px;
           }
 
+        }
+
+        &>.first,
+        .second {
+          &>.img {
+            justify-content: flex-end;
+            box-sizing: border-box;
+            padding-right: 28px;
+          }
         }
       }
     }
@@ -240,6 +213,10 @@
         padding-top: 129px;
         margin-bottom: 39px;
         font-family: 'ygo';
+
+        &>br {
+          display: none;
+        }
 
       }
 
@@ -353,6 +330,183 @@
       }
     }
 
-    &>.section3 {}
+    &>.section3 {
+      padding-bottom: 184px;
+
+      &>.wrapper {
+        &>.title {
+          line-height: 1.43;
+          margin-bottom: 59px;
+
+          &>br {
+            display: block;
+          }
+        }
+
+        &>.fold-wrapper {
+          &>.fold {
+            &>.content {
+              font-size: 15px;
+              line-height: 1.71;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .mainsub {
+    &>.section {
+      height: 510px;
+
+      &>.wrapper {
+        padding-top: 140.4px;
+
+        &>.title {
+          font-size: 34px;
+          line-height: 1.1;
+
+          &>span {
+            font-size: 23px;
+
+          }
+        }
+
+        &>.box {
+          margin-top: 32px;
+          margin-bottom: 0;
+          width: 230px;
+          height: 50px;
+
+          &>img {
+            width: 34.8px;
+          }
+
+          &>.text {
+            font-size: 16px;
+          }
+        }
+
+        &>.back-img {
+          width: 307px;
+          bottom: -80px;
+
+          &>.pc {
+            display: none;
+          }
+
+          &>.main-mb {
+            display: block;
+          }
+        }
+      }
+
+    }
+
+    &>.section1 {
+      height: 1693px;
+
+      &>.wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &>.title {
+          padding-top: 235px;
+          width: 204px;
+          font-size: 28px;
+          line-height: 1.5;
+        }
+
+        &>.box {
+          margin-top: 37px;
+          row-gap: 24px;
+        }
+      }
+    }
+
+    &>.section2 {
+      height: 559px;
+
+      &>.wrapper {
+        &>.wrapper2 {
+          &>.left {
+            &>.title_tb {
+              font-size: 28px;
+              line-height: 1.5;
+              margin-bottom: 23px;
+            }
+
+            &>.box {
+              width: 230px;
+              height: 50px;
+
+              &>img {
+                width: 34.8px;
+              }
+
+              &>.text {
+                font-size: 16px;
+              }
+            }
+          }
+
+          &>.right {
+            width: 318px;
+          }
+        }
+      }
+    }
+
+    &>.section3 {
+      padding-bottom: 140px;
+
+      &>.wrapper {
+        &>.title {
+          font-size: 28px;
+          line-height: 1.5;
+          padding-top: 165px;
+          margin-bottom: 40px;
+        }
+
+        &>.fold-wrapper {
+          &>.fold {
+            padding: 0 17px 0 21px;
+
+            &>.box-title {
+              align-items: center;
+
+              &>.left {
+                height: fit-content;
+                flex-direction: column;
+                font-size: 14px;
+                align-items: flex-start;
+                row-gap: 7px;
+                column-gap: unset;
+
+                &>span {
+                  font-size: 18px;
+
+                }
+              }
+
+              &>img {
+                width: 21px;
+              }
+            }
+
+            &>.content {
+              font-size: 14px;
+            }
+          }
+
+          &>.open {
+            height: 455px;
+          }
+        }
+      }
+    }
   }
 }

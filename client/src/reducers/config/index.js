@@ -5,7 +5,10 @@ const initialState = {
   status: "test",
   payload: "",
   isLoading: false,
-  isPopup: false,
+  isPopup: {
+    state: true,
+    type: "main",
+  },
 };
 
 const config = (state = initialState, action) => {

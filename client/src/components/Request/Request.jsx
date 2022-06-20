@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import Infoinput from "./components/Infoinput";
 import SectorCard from "./components/SectorCard";
 import SelectInput from "./components/SelectInput";
@@ -56,6 +57,7 @@ function reducer(state, action) {
   }
 }
 function Request() {
+  const navigate = useNavigate();
   const [info, dispatch] = useReducer(reducer, {
     company: "",
     number: "",
@@ -200,6 +202,10 @@ function Request() {
     },
     [dispatch, info]
   );
+  const __send = useCallback(() => {
+    navigate("/request/end");
+  }, []);
+
   return (
     <div className="request">
       <div className="top">
@@ -441,7 +447,9 @@ function Request() {
                   </a>
                 </div>
               </div>
-              <button className="send">김과장에게 문의하기</button>
+              <button className="send" onClick={__send}>
+                김과장에게 문의하기
+              </button>
             </div>
           </div>
         </div>

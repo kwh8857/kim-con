@@ -1,0 +1,80 @@
+.finish > .top {
+  height: 649px;
+}
+
+.finish > .top > .wrapper {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 138px;
+}
+
+.finish > .top > .wrapper > .title {
+  font-family: 'ygo';
+  font-size: 40px;
+  color: #434343;
+}
+
+.finish > .top > .wrapper > .sub {
+  font-size: 17px;
+  line-height: 1.47;
+  margin: 22px 0 26px 0;
+}
+
+.finish > .top > .wrapper > .sub > span {
+  color: #00be83;
+  font-weight: bold;
+}
+
+.finish > .top > .wrapper > button {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 320px;
+  height: 58px;
+  padding: 13px 32px 13px 22.1px;
+  background-color: #00be83;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-radius: 60px;
+}
+
+.finish > .top > .wrapper > button > img {
+  width: 31.9px;
+}
+
+.finish > .top > .wrapper > button > .text {
+  font-size: 17px;
+  font-weight: bold;
+  color: #f3fdf9;
+}
+
+.finish > .top > .wrapper > .background {
+  position: absolute;
+  bottom: 0;
+  width: 614.9px;
+}
+
+.finish > .bottom {
+  height: 585px;
+  background-color: #47d99b;
+}
+/*# sourceMappingURL=index.css.map */

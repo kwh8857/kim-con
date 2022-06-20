@@ -6,7 +6,6 @@ const Wrapper = styled.footer`
   background-color: #434343;
   color: #ffffff;
   & > .wrapper {
-    width: 993px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -19,6 +18,11 @@ const Wrapper = styled.footer`
         width: 180px;
         height: 33.4px;
         margin-bottom: 16.4px;
+      }
+      & > .text {
+        & > .mb {
+          display: none;
+        }
       }
     }
     & > .right {
@@ -36,6 +40,50 @@ const Wrapper = styled.footer`
       }
     }
   }
+  @media screen and (max-width: 1365px) {
+    height: 275px;
+    & > .wrapper {
+      flex-direction: column;
+      align-items: center;
+      justify-content: unset;
+      text-align: center;
+      & > .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 16.4px;
+        & > figure {
+          margin-bottom: unset;
+        }
+      }
+      & > .right {
+        align-items: center;
+        & > .nav-wrapper {
+          margin: 21.4px 0 15.6px 0;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 306px;
+    & > .wrapper {
+      & > .left {
+        & > .text {
+          & > span {
+            display: none;
+          }
+          & > .mb {
+            display: block;
+          }
+        }
+      }
+      & > .right {
+        & > .nav-wrapper {
+          margin: 28.4px 0 15.6px 0;
+        }
+      }
+    }
+  }
 `;
 function Footer() {
   return (
@@ -49,8 +97,11 @@ function Footer() {
               alt=""
             />
           </figure>
-          사업자등록번호 123-45-12345 | 대표자 홍길동 <br /> 주소 서울특별시
-          강남구 테헤란로 123 | 문의 marketing@naver.com
+          <div className="text">
+            사업자등록번호 123-45-12345 | 대표자 홍길동 <br /> 주소 서울특별시
+            강남구 테헤란로 123 <span>|</span>
+            <br className="mb" /> 문의 marketing@naver.com
+          </div>
         </div>
         <div className="right">
           <div className="nav-wrapper">
