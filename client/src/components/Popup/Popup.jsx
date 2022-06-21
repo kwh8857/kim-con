@@ -117,7 +117,7 @@ const Wrapper = styled.section`
         & > .circle {
           height: 10px;
           border-radius: 10px;
-          background-color: #c49999;
+          background-color: #dbdbdb;
         }
       }
     }

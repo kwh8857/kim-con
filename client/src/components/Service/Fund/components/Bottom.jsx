@@ -57,6 +57,99 @@ const Wrapper = styled.section`
       }
     }
   }
+  @media screen and (max-width: 1365px) {
+    & > div {
+      width: 728px;
+      padding-top: 106.9px;
+      padding-bottom: 253.8px;
+      .one {
+        margin-bottom: 102px;
+        & > figure {
+          width: 445px;
+        }
+      }
+      .two {
+        margin: 79.7px 0 102px 0;
+        & > figure {
+          width: 469px;
+        }
+      }
+      .three {
+        margin-top: 80px;
+        & > .title {
+          font-size: 28px;
+        }
+        & > .sub {
+          margin-top: 25.2px;
+          font-size: 15px;
+          line-height: 1.67;
+        }
+      }
+      & > div {
+        align-items: center;
+        flex-direction: column;
+        row-gap: 51.5px;
+        & > .left {
+          & > .title {
+            font-size: 28px;
+            line-height: 1.43;
+          }
+          & > .sub {
+            font-size: 15px;
+            line-height: 1.67;
+            margin-top: 10.2px;
+            width: 100%;
+          }
+        }
+        & > figure {
+          margin-left: unset;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    & > div {
+      width: 320px;
+      padding-top: 78px;
+      padding-bottom: 134px;
+      .one {
+        margin-bottom: 70px;
+        & > figure {
+          width: 290px;
+        }
+      }
+      .two {
+        margin: 62px 0 70px 0;
+        & > figure {
+          width: 305px;
+        }
+      }
+      .three {
+        margin-top: 62.5px;
+        & > .title {
+          font-size: 20px;
+        }
+        & > .sub {
+          margin-top: 17px;
+          font-size: 13px;
+          line-height: 1.62;
+        }
+      }
+      & > div {
+        & > .left {
+          & > .title {
+            font-size: 20px;
+            line-height: 1.5;
+          }
+          & > .sub {
+            margin-top: 15px;
+            font-size: 13px;
+            line-height: 1.62;
+          }
+        }
+      }
+    }
+  }
 `;
 function Bottom() {
   return (

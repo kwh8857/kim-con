@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -26,19 +26,24 @@ const Wrapper = styled.div`
     column-gap: 34px;
     & > button {
       cursor: pointer;
-      width: 165px;
+      width: 119px;
       height: 40px;
       border-radius: 57px;
-      background-color: #47d99b;
+      background-color: #ffde00;
       display: flex;
       align-items: center;
-      justify-content: center;
       font-size: 13px;
       font-weight: bold;
       color: #434343;
-      column-gap: 5.6px;
+      column-gap: 11px;
+      box-sizing: border-box;
+      padding-left: 11px;
       & > img {
-        width: 25.5px;
+        width: 23px;
+      }
+      & > .text {
+        font-size: 13px;
+        font-weight: bold;
       }
     }
     & > .mb-menu {
@@ -82,18 +87,69 @@ const Menu = styled.nav`
   font-weight: bold;
   column-gap: 45px;
   @media screen and (max-width: 1365px) {
-    display: none;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding-top: ${(props) => (props.isOpen ? "37px" : "0")};
+    box-sizing: border-box;
+    overflow: hidden;
+    height: ${(props) => (props.isOpen ? "267px" : "0")};
+    position: absolute;
+    bottom: ${(props) => (props.isOpen ? "-267px" : "0")};
+    left: 0;
+    background-color: white;
+    width: 100%;
+    column-gap: unset;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    white-space: nowrap;
+    & > a {
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-weight: 500;
+      & > div {
+        width: 72px;
+        height: 1px;
+        background-color: #dbdbdb;
+        margin: 20px 0 23px 0;
+      }
+    }
   }
 `;
-function Header({ isScroll }) {
+function Header() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isScroll, setIsScroll] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     document.getElementById("root").scrollTo(0, 0);
 
     return () => {};
   }, [location.pathname]);
-
+  useEffect(() => {
+    const ref = document.getElementById("root");
+    function change(e) {
+      if (e.target.scrollTop !== 0) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    }
+    if (location.pathname === "/") {
+      ref.addEventListener("scroll", change);
+    } else {
+      setIsScroll(true);
+    }
+    return () => {
+      if (location.pathname === "/") {
+        ref.removeEventListener("scroll", change);
+      }
+    };
+  }, [location.pathname]);
   return (
     <Wrapper scroll={isScroll}>
       <Link to={"/"}>
@@ -105,32 +161,54 @@ function Header({ isScroll }) {
           />
         </Logo>
       </Link>
+      <Menu isOpen={isOpen}>
+        {menuarr.map(({ title, link }, idx) => {
+          return (
+            <Link
+              key={idx}
+              to={link}
+              onClick={() => {
+                if (isOpen) {
+                  setIsOpen(false);
+                }
+              }}
+              style={
+                link === location.pathname
+                  ? {
+                      color: "#00be83",
+                      fontWeight: "bold",
+                    }
+                  : {
+                      color: "#434343",
+                      fontWeight: 500,
+                    }
+              }
+            >
+              {title}
+              {idx !== 2 ? <div /> : undefined}
+            </Link>
+          );
+        })}
+      </Menu>
       <div className="right">
-        <Menu>
-          {menuarr.map(({ title, link }, idx) => {
-            return (
-              <Link
-                key={idx}
-                to={link}
-                style={{
-                  color: link === location.pathname ? "#00be83" : "black",
-                }}
-              >
-                {title}
-              </Link>
-            );
-          })}
-        </Menu>
         <button
           onClick={() => {
             navigate("/request");
           }}
         >
-          <img src="/assets/common/kimface.svg" alt="" />
-          <div className="text">내 정부지원금 찾기</div>
+          <img src="/assets/header/kakao.svg" alt="" />
+          <div className="text">문의하기</div>
         </button>
-        <div className="mb-menu">
-          <img src="/assets/header/menu.svg" alt="" />
+        <div
+          className="mb-menu"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <img
+            src={`/assets/header${isOpen ? "/cancel" : "/menu"}.svg`}
+            alt=""
+          />
         </div>
       </div>
     </Wrapper>

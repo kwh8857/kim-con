@@ -18,7 +18,7 @@ function Toast() {
     }
 
     return () => {};
-  }, [state]);
+  }, [state, dispatch]);
 
   return (
     <div className={`toast ${state ? "on" : ""}`}>

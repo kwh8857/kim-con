@@ -12,14 +12,10 @@ const Wrapper = styled.div`
 function About() {
   return (
     <Wrapper>
-      <header>
-        <Header isScroll={true} />
-      </header>
       <Section1 />
       <Section2 />
       <Section3 />
       <Section4 />
-      <Footer />
     </Wrapper>
   );
 }

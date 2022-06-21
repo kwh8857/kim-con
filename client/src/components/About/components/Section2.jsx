@@ -6,8 +6,6 @@ const first = [
   "#기업행정업무",
   "#고용지원금",
   "#창업패키지",
-];
-const two = [
   "#ISO 인증",
   "#바우처사업",
   "#HACCP 인증",
@@ -15,6 +13,7 @@ const two = [
   "#정책자금",
   "#기업세무지원",
 ];
+
 const Wrapper = styled.section`
   width: 100%;
   height: 335px;
@@ -36,8 +35,11 @@ const Wrapper = styled.section`
     & > .grid-wrapper {
       margin-top: 32px;
       .grid {
-        display: grid;
-        column-gap: 11px;
+        display: flex;
+        width: 950px;
+        flex-wrap: wrap;
+        gap: 23px 10px;
+        justify-content: center;
         & > .grid-box {
           width: 150px;
           height: 56px;
@@ -51,13 +53,43 @@ const Wrapper = styled.section`
           align-items: center;
         }
       }
-      .first {
-        grid-template-columns: repeat(5, 150px);
-        margin-bottom: 23px;
-        justify-content: center;
+    }
+  }
+  @media screen and (max-width: 1365px) {
+    height: 441px;
+    & > div {
+      width: 720px;
+      padding-top: 89px;
+      & > .grid-wrapper {
+        .grid {
+          gap: 26px 10px;
+          width: 720px;
+        }
       }
-      .two {
-        grid-template-columns: repeat(6, 150px);
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 375px;
+    & > div {
+      width: 320px;
+      padding-top: 54px;
+      & > .title {
+        font-size: 20px;
+        text-align: center;
+        line-height: 1.65;
+        width: 230px;
+      }
+      & > .grid-wrapper {
+        margin-top: 30px;
+        .grid {
+          gap: 16px 7px;
+          width: 320px;
+          & > .grid-box {
+            width: 94px;
+            height: 35px;
+            font-size: 11px;
+          }
+        }
       }
     }
   }
@@ -70,17 +102,8 @@ function Section2() {
           기업 성장에 대한 모든 것, 김과장과 함께하세요
         </div>
         <div className="grid-wrapper">
-          <div className="grid first">
+          <div className="grid">
             {first.map((item, idx) => {
-              return (
-                <div key={idx} className="grid-box">
-                  {item}
-                </div>
-              );
-            })}
-          </div>
-          <div className="grid two">
-            {two.map((item, idx) => {
               return (
                 <div key={idx} className="grid-box">
                   {item}

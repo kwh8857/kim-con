@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import Fold from "./components/Fold";
 import "./css/index.css";
 function Main() {
+  const dispatch = useDispatch();
   return (
     <div style={{ width: "100%" }} className="mainsub">
       {/* <Side /> */}
@@ -11,10 +13,19 @@ function Main() {
             복잡한 정부지원금 <br />
             <span>김과장과 함께 쉽게!</span>
           </div>
-          <div className="box">
-            <div className="text">
-              <a href="/">내정부 지원금찾기</a>
-            </div>
+          <div
+            className="box"
+            onClick={() => {
+              dispatch({
+                type: "config/isPopup",
+                payload: {
+                  state: true,
+                  type: "main",
+                },
+              });
+            }}
+          >
+            <div className="text">내정부 지원금찾기</div>
             <img src="/assets/sub/next.svg" alt="" />
           </div>
           <div className="back-img">
@@ -62,10 +73,19 @@ function Main() {
                 김과장컨설팅으로 <br />
                 정부지원금 받으세요
               </div>
-              <div className="box">
-                <div className="text">
-                  <a href="/">내정부 지원금찾기</a>
-                </div>
+              <div
+                className="box"
+                onClick={() => {
+                  dispatch({
+                    type: "config/isPopup",
+                    payload: {
+                      state: true,
+                      type: "main",
+                    },
+                  });
+                }}
+              >
+                <div className="text">내정부 지원금찾기</div>
                 <img src="/assets/sub/next.svg" alt="" />
               </div>
             </div>

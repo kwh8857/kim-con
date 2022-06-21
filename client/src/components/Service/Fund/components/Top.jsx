@@ -50,6 +50,12 @@ const Wrapper = styled.section`
     }
     & > figure {
       margin-top: 35.2px;
+      & > .tb {
+        display: none;
+      }
+      & > .mb {
+        display: none;
+      }
     }
     & > .bottom {
       margin-top: 35.2px;
@@ -64,12 +70,95 @@ const Wrapper = styled.section`
           font-size: 28px;
           font-family: "ygo";
           color: #00be83;
+          line-height: 1.43;
         }
         & > .sub {
           width: 611.2px;
           font-size: 17px;
           line-height: 1.65;
           margin-top: 10.2px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1365px) {
+    height: 1287.5px;
+    & > div {
+      width: 728px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > .sub {
+        text-align: center;
+      }
+      & > figure {
+        margin-top: 47.2px;
+        & > .pc {
+          display: none;
+        }
+        & > .tb {
+          display: block;
+        }
+      }
+      & > .bottom {
+        width: 100%;
+        margin-top: 76.2px;
+        flex-direction: column-reverse;
+        row-gap: 47.2px;
+        & > .right {
+          width: 100%;
+          & > .sub {
+            font-size: 15px;
+            line-height: 1.67;
+            width: 728px;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 1012px;
+    & > div {
+      width: 320px;
+      padding-top: 46.8px;
+      .speech-bubble {
+        padding: 9px 15.5px;
+        font-size: 12px;
+      }
+      & > .title {
+        font-size: 25px;
+      }
+      & > .sub {
+        font-size: 13px;
+        line-height: 1.62;
+      }
+      & > figure {
+        margin-top: 30px;
+        & > .tb {
+          display: none;
+        }
+        & > .mb {
+          display: block;
+        }
+      }
+      & > .bottom {
+        margin-top: 30px;
+        flex-direction: column;
+        row-gap: 58px;
+        & > figure {
+          width: 177.8px;
+          height: 161.3px;
+        }
+        & > .right {
+          & > .title {
+            font-size: 20px;
+          }
+          & > .sub {
+            margin-top: 15px;
+            width: 320px;
+            font-size: 13px;
+            line-height: 1.62;
+          }
         }
       }
     }
@@ -90,6 +179,19 @@ function Top() {
             src="/assets/service/fund/middle.jpg"
             srcSet="/assets/service/fund/middle@2x.jpg 2x ,assets/service/fund/middle@3x.jpg 3x"
             alt=""
+            className="pc"
+          />
+          <img
+            src="/assets/service/fund/middle-tb.jpg"
+            srcSet="/assets/service/fund/middle-tb@2x.jpg 2x ,assets/service/fund/middle-tb@3x.jpg 3x"
+            alt=""
+            className="tb"
+          />
+          <img
+            src="/assets/service/fund/middle-mb.jpg"
+            srcSet="/assets/service/fund/middle-mb@2x.jpg 2x ,assets/service/fund/middle-mb@3x.jpg 3x"
+            alt=""
+            className="mb"
           />
         </figure>
         <div className="bottom">

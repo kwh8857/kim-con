@@ -20,6 +20,9 @@ const Wrapper = styled.section`
       margin-top: 18px;
       font-size: 17px;
       line-height: 1.47;
+      & > .mb {
+        display: none;
+      }
     }
     & > figure {
       width: 721.4px;
@@ -27,6 +30,48 @@ const Wrapper = styled.section`
       position: absolute;
       right: 0;
       bottom: -8px;
+    }
+  }
+  @media screen and (max-width: 1365px) {
+    height: 741px;
+    & > div {
+      width: 721px;
+      padding-top: 123px;
+      text-align: center;
+      & > .title {
+        font-size: 38px;
+        line-height: 1.45;
+      }
+      & > .sub {
+        font-size: 16px;
+        line-height: 1.56;
+        margin-top: 24px;
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 429px;
+    & > div {
+      width: 321px;
+      padding-top: 63px;
+      & > .title {
+        font-size: 23px;
+        line-height: 1.43;
+      }
+      & > .sub {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin-top: 18px;
+        & > .mb {
+          display: block;
+        }
+      }
+      & > figure {
+        width: 321px;
+        height: 178.7px;
+        bottom: -4px;
+      }
     }
   }
 `;
@@ -40,7 +85,7 @@ function Section1() {
         <div className="sub">
           ‘기업이 가진 잠재적 가치를 생산할 수 있도록’ <br /> 기업에 알맞는
           정부지원사업을 기획지원하며 <br /> 스타트업의 생존과 사업화 성공을
-          위해, 대표님과 함께 뛰어갑니다.
+          위해, <br className="mb" /> 대표님과 함께 뛰어갑니다.
         </div>
         <figure>
           <img

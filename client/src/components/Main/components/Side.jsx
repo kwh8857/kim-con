@@ -2,21 +2,27 @@ import React from "react";
 import styled from "styled-components";
 const Aside = styled.aside`
   position: fixed;
-  top: 50%;
-  right: 73px;
-  display: flex;
+  bottom: 86px;
+  right: 20px;
+  display: none;
   flex-direction: column;
   z-index: 100;
   & > button {
-    font-size: 15px;
-    font-weight: bold;
-    background-color: unset;
+    width: 59px;
+    height: 59px;
+    background-color: #ffde00;
+    border-radius: 59px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     & > figure {
-      & > figcaption {
-        transform: translateY(-15px);
-      }
+      width: 36.1px;
+      height: 38.1px;
     }
+  }
+  @media screen and (max-width: 767px) {
+    display: flex;
   }
 `;
 function Side() {
@@ -24,14 +30,7 @@ function Side() {
     <Aside>
       <button>
         <figure>
-          <img src="/assets/side/kakao.svg" alt="카카오" />
-          <figcaption>카카오톡 문의</figcaption>
-        </figure>
-      </button>
-      <button>
-        <figure>
-          <img src="/assets/side/naver.svg" alt="네이버" />
-          <figcaption>네이버 톡톡</figcaption>
+          <img src="/assets/header/kakao.svg" alt="카카오" />
         </figure>
       </button>
     </Aside>
