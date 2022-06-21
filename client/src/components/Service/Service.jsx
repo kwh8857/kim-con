@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import styled, { css } from "styled-components";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import Fund from "./Fund/Fund";
 import Iso from "./Iso/Iso";
 import Research from "./Research/Research";
@@ -49,6 +47,27 @@ const Wrapper = styled.div`
       }}
     }
   }
+  @media screen and (max-width: 1365px) {
+    & > nav {
+      & > .wrapper {
+        width: 728px;
+        grid-template-columns: repeat(5, 110px);
+        column-gap: 30px;
+        & > .bar {
+          width: 110px;
+        }
+        ${(props) => {
+          return css`
+            & > .bar {
+              transform: translateX(${140 * props.idx}px);
+            }
+          `;
+        }}
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+  }
 `;
 const Navbox = styled.div`
   display: flex;
@@ -57,6 +76,7 @@ const Navbox = styled.div`
   font-size: 17px;
   font-weight: 500;
   color: #434343;
+  white-space: nowrap;
   cursor: pointer;
   ${(props) => {
     return css`
@@ -64,11 +84,15 @@ const Navbox = styled.div`
       font-weight: ${props.now === props.item ? "bold" : 500};
     `;
   }}
+  @media screen and (max-width: 1365px) {
+    font-size: 15px;
+  }
 `;
 function Service() {
   const location = useLocation();
   const [now, setNow] = useState("fund");
   const [index, setIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
   const __change = useCallback((type, idx) => {
     setNow(type);
     setIndex(idx);
@@ -88,10 +112,8 @@ function Service() {
   }, [location]);
   return (
     <Wrapper idx={index}>
-      <header>
-        <Header />
-      </header>
       <nav>
+        <div className="now">{arr[index].title}</div>
         <div className="wrapper">
           {arr.map(({ title, type }, idx) => {
             return (
@@ -121,7 +143,6 @@ function Service() {
       ) : (
         <Research />
       )}
-      <Footer />
     </Wrapper>
   );
 }
