@@ -50,6 +50,9 @@ const Wrapper = styled.section`
     }
     & > figure {
       margin-top: 35.2px;
+      & > .mb {
+        display: none;
+      }
     }
     & > .bottom {
       margin-top: 87.7px;
@@ -62,6 +65,78 @@ const Wrapper = styled.section`
         margin-top: 11.5px;
         font-size: 17px;
         line-height: 1.65;
+      }
+    }
+  }
+  @media screen and (max-width: 1365px) {
+    height: 857.5px;
+    & > div {
+      width: 728px;
+      padding-top: 70.2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > .sub {
+        text-align: center;
+      }
+      & > figure {
+        height: 187.6px;
+        margin-top: 47.2px;
+        & > img {
+          height: 100%;
+        }
+      }
+      & > .bottom {
+        margin-top: 76.2px;
+        & > .title {
+          font-size: 28px;
+        }
+        & > .sub {
+          font-size: 15px;
+          line-height: 1.67;
+          margin-top: 21.2px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 806.5px;
+    & > div {
+      width: 320px;
+      padding-top: 46.5px;
+      & > .speech-bubble {
+        width: 119px;
+        height: 35.9px;
+        padding: unset;
+        font-size: 12px;
+      }
+      & > .title {
+        font-size: 25px;
+        margin-top: 12.8px;
+      }
+      & > .sub {
+        margin-top: 14px;
+        font-size: 13px;
+        line-height: 1.62;
+      }
+      & > figure {
+        & > .pc {
+          display: none;
+        }
+        & > .mb {
+          display: block;
+        }
+      }
+      & > .bottom {
+        margin-top: 74.3px;
+        & > .title {
+          font-size: 20px;
+        }
+        & > .sub {
+          font-size: 13px;
+          line-height: 1.62;
+          margin-top: 15px;
+        }
       }
     }
   }
@@ -80,6 +155,13 @@ function Top() {
             src="/assets/service/venture/middle.jpg"
             srcSet="/assets/service/venture/middle@2x.jpg 2x ,assets/service/venture/middle@3x.jpg 3x"
             alt=""
+            className="pc"
+          />
+          <img
+            src="/assets/service/venture/middle-mb.jpg"
+            srcSet="/assets/service/venture/middle-mb@2x.jpg 2x ,assets/service/venture/middle-mb@3x.jpg 3x"
+            alt=""
+            className="mb"
           />
         </figure>
         <div className="bottom">

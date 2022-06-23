@@ -23,6 +23,9 @@ const Wrapper = styled.div`
     width: 100%;
     border-bottom: solid 1px #dbdbdb;
     padding-bottom: 13.5px;
+    & > .now {
+      display: none;
+    }
     & > .wrapper {
       width: 993px;
       margin: 0 auto;
@@ -67,6 +70,49 @@ const Wrapper = styled.div`
     }
   }
   @media screen and (max-width: 767px) {
+    & > nav {
+      padding-top: 74px;
+      padding-bottom: unset;
+      border: unset;
+      & > .now {
+        cursor: pointer;
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: white;
+        height: 49px;
+        border-bottom: solid 1px #cbcbcb;
+        z-index: 900;
+        font-size: 15px;
+        font-weight: 500;
+        & > img {
+          width: 17.6px;
+          position: absolute;
+          right: 22px;
+          transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "unset")};
+        }
+      }
+      & > .wrapper {
+        transition: 0.2s ease-in;
+        width: 100%;
+        height: ${({ isOpen }) => (isOpen ? "325px" : "0")};
+        overflow: hidden;
+        grid-template-columns: unset;
+        position: absolute;
+        bottom: ${({ isOpen }) => (isOpen ? "-325px" : "0")};
+        background-color: white;
+        grid-template-rows: repeat(5, 57px);
+        padding-top: 15px;
+        box-sizing: border-box;
+        box-shadow: ${({ isOpen }) =>
+          isOpen ? "0 6px 20px 0 rgba(0, 0, 0, 0.16)" : "unset"};
+        & > .bar {
+          display: none;
+        }
+      }
+    }
   }
 `;
 const Navbox = styled.div`
@@ -93,10 +139,16 @@ function Service() {
   const [now, setNow] = useState("fund");
   const [index, setIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const __change = useCallback((type, idx) => {
-    setNow(type);
-    setIndex(idx);
-  }, []);
+  const __change = useCallback(
+    (type, idx) => {
+      setNow(type);
+      setIndex(idx);
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    },
+    [isOpen]
+  );
   useEffect(() => {
     document.getElementById("root").scrollTo(0, 0);
     return () => {};
@@ -111,9 +163,17 @@ function Service() {
     return () => {};
   }, [location]);
   return (
-    <Wrapper idx={index}>
+    <Wrapper idx={index} isOpen={isOpen}>
       <nav>
-        <div className="now">{arr[index].title}</div>
+        <div
+          className="now"
+          onClick={() => {
+            setIsOpen((prev) => !prev);
+          }}
+        >
+          {arr[index].title}
+          <img src="/assets/service/menu-arrow.svg" alt="" />
+        </div>
         <div className="wrapper">
           {arr.map(({ title, type }, idx) => {
             return (

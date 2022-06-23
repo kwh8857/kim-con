@@ -6,29 +6,21 @@ const arr = [
     title: `벤처인
 회원가입`,
     img: "logo1.png",
-    width: "154px",
-    height: "56px",
   },
   {
     title: `사업계획서 및
 재무제표 입력`,
     img: "logo2.svg",
-    width: "88.2px",
-    height: "79.3px",
   },
   {
     title: `서류접수 및
 방문실사`,
     img: "logo3.svg",
-    width: "67.2px",
-    height: "81.3px",
   },
   {
     title: `벤처기업
 인증서`,
     img: "logo4.svg",
-    width: "84.7px",
-    height: "88px",
   },
 ];
 const Wrapper = styled.section`
@@ -69,6 +61,9 @@ const Wrapper = styled.section`
         font-size: 24px;
         color: #00be83;
         font-family: "ygo";
+        & > br {
+          display: none;
+        }
       }
       & > .content {
         background-color: white;
@@ -84,12 +79,81 @@ const Wrapper = styled.section`
       }
     }
   }
+  @media screen and (max-width: 1365px) {
+    height: 1138px;
+    & > div {
+      width: 727px;
+      padding-top: 103px;
+      & > .top {
+        & > .title {
+          font-size: 28px;
+        }
+        & > .sub {
+          font-size: 15px;
+          margin: 21.2px 0 34.5px 0;
+        }
+        & > .circle-wrapper {
+          grid-template-columns: repeat(4, 148.6px);
+          column-gap: 44.6px;
+        }
+      }
+      & > .bar {
+        margin: 76.9px 0 55.8px 0;
+      }
+      & > .bottom {
+        & > .title {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 1739.5px;
+    & > div {
+      width: 320px;
+      padding-top: 46.8px;
+      & > .top {
+        & > .title {
+          font-size: 20px;
+        }
+        & > .sub {
+          font-size: 13px;
+          margin: 15px 0 55px 0;
+          line-height: 1.62;
+        }
+        & > .circle-wrapper {
+          grid-template-columns: 320px;
+          column-gap: unset;
+          row-gap: 49px;
+        }
+      }
+      & > .bar {
+        display: none;
+      }
+      & > .bottom {
+        margin-top: 115px;
+        & > .title {
+          font-size: 20px;
+          line-height: 1.5;
+          & > br {
+            display: block;
+          }
+        }
+        & > .content {
+          margin-top: 32px;
+          height: 428px;
+          padding: 29px 21.5px;
+          font-size: 13px;
+          line-height: 2.69;
+        }
+      }
+    }
+  }
 `;
 const Box = styled.div`
   position: relative;
   & > .arrow {
     width: 27.6px;
-    height: 22.8px;
     position: absolute;
     top: 34%;
     right: -42px;
@@ -102,14 +166,11 @@ const Box = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    ${(props) => {
-      return css`
-        & > img {
-          width: ${props.wid};
-          height: ${props.hei};
-        }
-      `;
-    }}
+    box-sizing: border-box;
+    padding-left: ${({ index }) => (index === 1 ? "19px" : "unset")};
+    & > img {
+      width: fit-content;
+    }
   }
   & > .title {
     font-size: 19px;
@@ -119,6 +180,53 @@ const Box = styled.div`
     white-space: pre-wrap;
     color: #5c5c5c;
     margin-top: 16px;
+  }
+  @media screen and (max-width: 1365px) {
+    & > .arrow {
+      width: 22px;
+      top: 32%;
+      right: -33px;
+    }
+    & > .img-wrapper {
+      width: 100%;
+      height: 148.6px;
+      padding-left: ${({ index }) => (index === 1 ? "14px" : "unset")};
+      & > img {
+        width: ${({ index }) =>
+          index === 0
+            ? "114.4px"
+            : index === 1
+            ? "65.5px"
+            : index === 2
+            ? "50px"
+            : "63px"};
+      }
+    }
+    & > .title {
+      font-size: 14px;
+      margin-top: 11px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+    & > .arrow {
+      transform: rotate(90deg);
+      top: unset;
+      bottom: -35.4px;
+      right: 75%;
+    }
+    & > .img-wrapper {
+      width: 143px;
+      height: 143px;
+    }
+    & > .title {
+      margin-top: unset;
+      text-align: left;
+      font-size: 19px;
+      line-height: 1.47;
+    }
   }
 `;
 function Bottom() {
@@ -132,9 +240,9 @@ function Bottom() {
             인터넷으로만 이루어집니다.
           </div>
           <div className="circle-wrapper">
-            {arr.map(({ title, img, width, height }, idx) => {
+            {arr.map(({ title, img }, idx) => {
               return (
-                <Box key={idx} className="box" wid={width} hei={height}>
+                <Box key={idx} className="box" index={idx}>
                   <figure className="img-wrapper">
                     {idx === 0 ? (
                       <img
@@ -162,7 +270,9 @@ function Bottom() {
         </div>
         <div className="bar" />
         <div className="bottom">
-          <div className="title">벤처인증기업, 어떤 혜택이 있나요?</div>
+          <div className="title">
+            벤처인증기업, <br /> 어떤 혜택이 있나요?
+          </div>
           <div className="content">
             - 법인세 50% 감면 <br />
             - 벤처확인일로부터 4년 이내 취득하는 사업용 부동산에 대한 취득세 75%

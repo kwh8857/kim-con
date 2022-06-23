@@ -73,6 +73,55 @@ const Wrapper = styled.section`
       }
     }
   }
+  @media screen and (max-width: 1365px) {
+    height: 1407.2px;
+    & > div {
+      width: 728px;
+      grid-template-rows: 300px 274px 300px 227px;
+      row-gap: 26px;
+      & > .box {
+        height: 100%;
+        & > .left {
+          & > .content {
+            width: 428px;
+            white-space: normal;
+            font-size: 15px;
+            line-height: 1.67;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 2027px;
+    & > div {
+      width: 320px;
+      padding-top: 32px;
+      grid-template-rows: 462px 462px 462px 372px;
+      & > .box {
+        width: 320px;
+        flex-direction: column;
+        padding: 37.5px 0 0 0;
+        justify-content: unset;
+        row-gap: 15px;
+        & > figure {
+          width: 180px;
+          height: 180px;
+        }
+        & > .left {
+          & > .title {
+            font-size: 25px;
+          }
+          & > .content {
+            margin-top: 14.5px;
+            width: 272px;
+            font-size: 13px;
+            line-height: 1.62;
+          }
+        }
+      }
+    }
+  }
 `;
 function Bottom() {
   return (

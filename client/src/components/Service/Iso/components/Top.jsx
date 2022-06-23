@@ -50,6 +50,56 @@ const Wrapper = styled.section`
     }
     & > figure {
       margin-top: 35.2px;
+      & > .mb {
+        display: none;
+      }
+    }
+  }
+  @media screen and (max-width: 1365px) {
+    & > div {
+      width: 728px;
+      padding-top: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > .sub {
+        text-align: center;
+      }
+      & > figure {
+        margin-top: 47.2px;
+        & > .pc {
+          width: 728px;
+          height: 187.6px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 469px;
+    & > div {
+      padding-top: 46.8px;
+      width: 320px;
+      & > .speech-bubble {
+        font-size: 12px;
+        padding: 9px 32.5px;
+      }
+      & > .title {
+        font-size: 25px;
+      }
+      & > .sub {
+        font-size: 13px;
+        line-height: 1.62;
+        margin-top: 14px;
+      }
+      & > figure {
+        margin-top: 30px;
+        & > .pc {
+          display: none;
+        }
+        & > .mb {
+          display: block;
+        }
+      }
     }
   }
 `;
@@ -67,6 +117,13 @@ function Top() {
             src="/assets/service/iso/middle.jpg"
             srcSet="/assets/service/iso/middle@2x.jpg 2x ,assets/service/iso/middle@3x.jpg 3x"
             alt=""
+            className="pc"
+          />
+          <img
+            src="/assets/service/iso/middle-mb.jpg"
+            srcSet="/assets/service/iso/middle-mb@2x.jpg 2x ,assets/service/iso/middle-mb@3x.jpg 3x"
+            alt=""
+            className="mb"
           />
         </figure>
       </div>

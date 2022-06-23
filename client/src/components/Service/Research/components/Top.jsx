@@ -50,6 +50,56 @@ const Wrapper = styled.section`
     }
     & > figure {
       margin-top: 35.2px;
+      & > .mb {
+        display: none;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1365px) {
+    height: 571px;
+    & > div {
+      width: 728px;
+      padding-top: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > .sub {
+        text-align: center;
+      }
+      & > figure {
+        & > .pc {
+          width: 728px;
+          height: 187.6px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 460px;
+    & > div {
+      padding-top: 46.8px;
+      width: 320px;
+      & > .speech-bubble {
+        font-size: 12px;
+        padding: 9px 17.5px;
+      }
+      & > .title {
+        font-size: 25px;
+      }
+      & > .sub {
+        font-size: 13px;
+        line-height: 1.62;
+      }
+      & > figure {
+        margin-top: 30px;
+        & > .mb {
+          display: block;
+        }
+        & > .pc {
+          display: none;
+        }
+      }
     }
   }
 `;
@@ -68,6 +118,13 @@ function Top() {
             src="/assets/service/research/middle.jpg"
             srcSet="/assets/service/research/middle@2x.jpg 2x ,assets/service/research/middle@3x.jpg 3x"
             alt=""
+            className="pc"
+          />
+          <img
+            src="/assets/service/research/middle-mb.jpg"
+            srcSet="/assets/service/research/middle-mb@2x.jpg 2x ,assets/service/research/middle-mb@3x.jpg 3x"
+            alt=""
+            className="mb"
           />
         </figure>
       </div>

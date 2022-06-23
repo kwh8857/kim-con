@@ -50,6 +50,56 @@ const Wrapper = styled.section`
     }
     & > figure {
       margin-top: 35.2px;
+      & > .mb {
+        display: none;
+      }
+    }
+  }
+  @media screen and (max-width: 1365px) {
+    height: 573.5px;
+    & > div {
+      width: 728px;
+      padding-top: 70.2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > .sub {
+        text-align: center;
+      }
+      & > figure {
+        margin-top: 47.2px;
+        & > .pc {
+          width: 728px;
+          height: 187.6px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 484px;
+    & > div {
+      width: 320px;
+      padding-top: 46.8px;
+      & > .speech-bubble {
+        font-size: 12px;
+        padding: 9px 14px;
+      }
+      & > .title {
+        font-size: 25px;
+      }
+      & > .sub {
+        font-size: 13px;
+        line-height: 1.62;
+      }
+      & > figure {
+        margin-top: 30px;
+        & > .mb {
+          display: block;
+        }
+        & > .pc {
+          display: none;
+        }
+      }
     }
   }
 `;
@@ -67,6 +117,13 @@ function Top() {
             src="/assets/service/voucher/middle.jpg"
             srcSet="/assets/service/voucher/middle@2x.jpg 2x ,assets/service/voucher/middle@3x.jpg 3x"
             alt=""
+            className="pc"
+          />
+          <img
+            src="/assets/service/voucher/middle-mb.jpg"
+            srcSet="/assets/service/voucher/middle-mb@2x.jpg 2x ,assets/service/voucher/middle-mb@3x.jpg 3x"
+            alt=""
+            className="mb"
           />
         </figure>
       </div>
