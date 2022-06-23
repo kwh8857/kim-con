@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 const Wrapper = styled.footer`
-  height: 192px;
+  height: 230px;
   width: 100%;
   background-color: #434343;
   color: #ffffff;
@@ -9,19 +9,27 @@ const Wrapper = styled.footer`
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
     line-height: 1.67;
     box-sizing: border-box;
-    padding-top: 46.2px;
+    padding: 43.9px 0;
     & > .left {
       & > figure {
         width: 180px;
         height: 33.4px;
-        margin-bottom: 16.4px;
+        margin-bottom: 14.4px;
       }
       & > .text {
+        font-size: 14px;
+        line-height: 1.43;
         & > .mb {
           display: none;
+        }
+      }
+      & > .nav {
+        margin-top: 14.4px;
+        & > a {
+          font-size: 14px;
+          color: white;
         }
       }
     }
@@ -29,6 +37,7 @@ const Wrapper = styled.footer`
       display: flex;
       align-items: flex-end;
       flex-direction: column;
+      justify-content: space-between;
       & > .nav-wrapper {
         margin-bottom: 20px;
         display: grid;
@@ -41,7 +50,7 @@ const Wrapper = styled.footer`
     }
   }
   @media screen and (max-width: 1365px) {
-    height: 275px;
+    height: 348px;
     & > .wrapper {
       flex-direction: column;
       align-items: center;
@@ -51,22 +60,26 @@ const Wrapper = styled.footer`
         display: flex;
         flex-direction: column;
         align-items: center;
-        row-gap: 16.4px;
         & > figure {
-          margin-bottom: unset;
+          margin-bottom: 14.4px;
+        }
+        & > .nav {
+          margin-top: 30px;
+          padding-left: 10px;
         }
       }
       & > .right {
         align-items: center;
         & > .nav-wrapper {
-          margin: 21.4px 0 15.6px 0;
+          margin: 35.3px 0 15.6px 0;
         }
       }
     }
   }
   @media screen and (max-width: 767px) {
-    height: 306px;
+    height: 398px;
     & > .wrapper {
+      padding: 53.6px 0 0 0;
       & > .left {
         & > .text {
           & > span {
@@ -76,10 +89,13 @@ const Wrapper = styled.footer`
             display: block;
           }
         }
+        & > .nav {
+          padding-left: unset;
+        }
       }
       & > .right {
         & > .nav-wrapper {
-          margin: 28.4px 0 15.6px 0;
+          margin: 34px 0 15.6px 0;
         }
       }
     }
@@ -98,18 +114,23 @@ function Footer() {
             />
           </figure>
           <div className="text">
-            사업자등록번호 123-45-12345 | 대표자 홍길동 <br /> 주소 서울특별시
-            강남구 테헤란로 123 <span>|</span>
-            <br className="mb" /> 문의 marketing@naver.com
+            케이콘즈(KCONS) <br /> 사업자등록번호: 501-38-71563 | 대표자: 김영조{" "}
+            <br /> 주소: 대구광역시 동구 동내로76, 209호 <span>|</span>{" "}
+            <br className="mb" /> 문의 kcons365@gmail.com
+          </div>
+          <div className="nav">
+            <a href="/about">회사소개 </a> &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="/"> 이용약관 </a> &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="/">개인정보처리방침</a>
           </div>
         </div>
         <div className="right">
           <div className="nav-wrapper">
             <figure>
-              <img src="/assets/footer/blog.svg" alt="블로그" />
+              <img src="/assets/footer/tel.svg" alt="전화" />
             </figure>
             <figure>
-              <img src="/assets/footer/facebook.svg" alt="페이스북" />
+              <img src="/assets/footer/kakao.svg" alt="카카오" />
             </figure>
             <figure>
               <img src="/assets/footer/youtube.svg" alt="유튜브" />

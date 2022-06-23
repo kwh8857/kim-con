@@ -8,69 +8,82 @@ const menuarr = [
   { title: "고객지원", link: "/support" },
 ];
 const Wrapper = styled.div`
-  display: flex;
   z-index: 1000;
   box-sizing: border-box;
-  align-items: center;
-  padding: 0 74px;
   width: 100%;
   height: 64px;
-  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   transition: background-color 0.2s ease-in-out;
-  & > .right {
-    display: flex;
+  & > .wrapper {
+    width: 1266px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 180px 270px 180px;
     align-items: center;
-    column-gap: 34px;
-    & > button {
-      cursor: pointer;
-      width: 119px;
-      height: 40px;
-      border-radius: 57px;
-      background-color: #ffde00;
+    justify-content: space-between;
+    background-color: transparent;
+    & > .right {
       display: flex;
       align-items: center;
-      font-size: 13px;
-      font-weight: bold;
-      color: #434343;
-      column-gap: 11px;
-      box-sizing: border-box;
-      padding-left: 11px;
-      & > img {
-        width: 23px;
-      }
-      & > .text {
+      column-gap: 34px;
+      & > button {
+        cursor: pointer;
+        width: 119px;
+        height: 40px;
+        border-radius: 57px;
+        background-color: #ffde00;
+        display: flex;
+        align-items: center;
         font-size: 13px;
         font-weight: bold;
+        color: #434343;
+        column-gap: 11px;
+        box-sizing: border-box;
+        padding-left: 11px;
+        & > img {
+          width: 23px;
+        }
+        & > .text {
+          font-size: 13px;
+          font-weight: bold;
+        }
       }
-    }
-    & > .mb-menu {
-      display: none;
-      cursor: pointer;
-      height: 28px;
-      width: 28px;
+      & > .mb-menu {
+        display: none;
+        cursor: pointer;
+        height: 28px;
+        width: 28px;
+      }
     }
   }
   ${(props) => {
     return css`
-      background-color: ${props.scroll ? "white" : "transparent"};
+      background-color: ${props.scroll || props.isOpen
+        ? "white"
+        : "transparent"};
     `;
   }}
-
   @media screen and (max-width: 1365px) {
-    padding: 0 20px;
-    & > .right {
-      & > .mb-menu {
-        display: block;
+    & > .wrapper {
+      width: 100%;
+      display: flex;
+      padding: 0 20px;
+      box-sizing: border-box;
+      & > .right {
+        & > .mb-menu {
+          display: block;
+        }
       }
     }
   }
   @media screen and (max-width: 767px) {
-    & > .right {
-      & > button {
-        display: none;
+    & > .wrapper {
+      & > .right {
+        & > button {
+          display: none;
+        }
       }
     }
   }
@@ -151,64 +164,66 @@ function Header() {
     };
   }, [location.pathname]);
   return (
-    <Wrapper scroll={isScroll}>
-      <Link to={"/"}>
-        <Logo>
-          <img
-            src="/assets/header/logo.png"
-            srcSet="/assets/header/logo@2x.png 2x , /assets/header/logo@3x.png 3x"
-            alt="김과장컨설팅"
-          />
-        </Logo>
-      </Link>
-      <Menu isOpen={isOpen}>
-        {menuarr.map(({ title, link }, idx) => {
-          return (
-            <Link
-              key={idx}
-              to={link}
-              onClick={() => {
-                if (isOpen) {
-                  setIsOpen(false);
+    <Wrapper scroll={isScroll} isOpen={isOpen}>
+      <div className="wrapper">
+        <Link to={"/"}>
+          <Logo>
+            <img
+              src="/assets/header/logo.png"
+              srcSet="/assets/header/logo@2x.png 2x , /assets/header/logo@3x.png 3x"
+              alt="김과장컨설팅"
+            />
+          </Logo>
+        </Link>
+        <Menu isOpen={isOpen}>
+          {menuarr.map(({ title, link }, idx) => {
+            return (
+              <Link
+                key={idx}
+                to={link}
+                onClick={() => {
+                  if (isOpen) {
+                    setIsOpen(false);
+                  }
+                }}
+                style={
+                  link === location.pathname
+                    ? {
+                        color: "#00be83",
+                        fontWeight: "bold",
+                      }
+                    : {
+                        color: "#434343",
+                        fontWeight: 500,
+                      }
                 }
-              }}
-              style={
-                link === location.pathname
-                  ? {
-                      color: "#00be83",
-                      fontWeight: "bold",
-                    }
-                  : {
-                      color: "#434343",
-                      fontWeight: 500,
-                    }
-              }
-            >
-              {title}
-              {idx !== 2 ? <div /> : undefined}
-            </Link>
-          );
-        })}
-      </Menu>
-      <div className="right">
-        <button
-          onClick={() => {
-            navigate("/request");
-          }}
-        >
-          <img src="/assets/header/kakao.svg" alt="" />
-          <div className="text">문의하기</div>
-        </button>
-        <div
-          className="mb-menu"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          <img
-            src={`/assets/header${isOpen ? "/cancel" : "/menu"}.svg`}
-            alt=""
-          />
+              >
+                {title}
+                {idx !== 2 ? <div /> : undefined}
+              </Link>
+            );
+          })}
+        </Menu>
+        <div className="right">
+          <button
+            onClick={() => {
+              navigate("/request");
+            }}
+          >
+            <img src="/assets/header/kakao.svg" alt="" />
+            <div className="text">문의하기</div>
+          </button>
+          <div
+            className="mb-menu"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          >
+            <img
+              src={`/assets/header${isOpen ? "/cancel" : "/menu"}.svg`}
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </Wrapper>

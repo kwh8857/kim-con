@@ -50,6 +50,76 @@ const Wrapper = styled.section`
       }
     }
   }
+  @media screen and (max-width: 1365px) {
+    height: 898px;
+    & > div {
+      width: 728px;
+      padding-top: 103px;
+      .title {
+        font-size: 28px;
+      }
+      .bar {
+        margin: 56.5px 0 55.8px 0;
+      }
+      & > .top {
+        & > .sub {
+          font-size: 15px;
+          margin-top: 21.2px;
+        }
+      }
+      & > .bottom {
+        & > .content {
+          height: 344px;
+          padding: 30.6px 64px 46.4px 28.5px;
+          & > .left {
+            font-size: 15px;
+            line-height: 2.33;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    height: 855px;
+    & > div {
+      width: 320px;
+      padding-top: 56px;
+      .title {
+        font-size: 20px;
+      }
+      .bar {
+        display: none;
+      }
+      & > .top {
+        & > .sub {
+          width: 210px;
+          margin-top: 15px;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+      }
+      & > .bottom {
+        margin-top: 88px;
+        & > .title {
+          width: 200px;
+          line-height: 1.5;
+        }
+        & > .content {
+          height: 426px;
+          flex-direction: column;
+          padding: 23px 19px 37px;
+          & > .left {
+            font-size: 14px;
+            line-height: 1.71;
+          }
+          & > figure {
+            width: 185px;
+            height: 140px;
+          }
+        }
+      }
+    }
+  }
 `;
 function Bottom() {
   return (

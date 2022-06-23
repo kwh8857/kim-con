@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from "react";
 import styled, { css } from "styled-components";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import List from "./components/List";
 const Nav = styled.div`
   width: 100%;
@@ -15,11 +13,12 @@ const Nav = styled.div`
   background-color: white;
   z-index: 500;
   & > .wrapper {
+    width: fit-content;
     display: grid;
     grid-template-columns: repeat(2, 169px);
     position: relative;
     column-gap: 30px;
-
+    justify-content: center;
     & > .bar {
       width: 169px;
       height: 3px;
@@ -61,9 +60,6 @@ function Support() {
   }, []);
   return (
     <React.Fragment>
-      <header>
-        <Header />
-      </header>
       <Nav now={now}>
         <div className="wrapper">
           <Btn
@@ -88,7 +84,6 @@ function Support() {
         </div>
       </Nav>
       <List now={now} />
-      <Footer />
     </React.Fragment>
   );
 }
