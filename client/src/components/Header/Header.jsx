@@ -138,6 +138,7 @@ function Header() {
   const navigate = useNavigate();
   const [isScroll, setIsScroll] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     document.getElementById("root").scrollTo(0, 0);
 
