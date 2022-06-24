@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import firebaseApp from "../../../config/firebaseApp";
+import Card from "./Card";
+
+const Fstore = firebaseApp.firestore();
 
 const Main = styled.main`
   width: 1001px;
@@ -58,8 +62,71 @@ const Main = styled.main`
       }
     }
   }
+  & > .bottom {
+    margin-top: 53px;
+  }
 `;
 function List({ now }) {
+  const [data, setData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
+  const [paging, setPaging] = useState(1);
+  const [keyowrd, setKeyowrd] = useState(undefined);
+  const length = parseFloat(String(displayData.length / 10));
+  const __search = useCallback(
+    (e) => {
+      setKeyowrd(e);
+    },
+    [data]
+  );
+  const __changePaging = useCallback(
+    (type) => {
+      if (type === "plus") {
+        setPaging(paging + 1);
+      } else {
+        setPaging(paging - 1);
+      }
+    },
+    [paging]
+  );
+
+  useEffect(() => {
+    setDisplayData([]);
+    Fstore.collection(now)
+      .orderBy("timestamp", "desc")
+      .get()
+      .then((res) => {
+        let arr = [];
+        res.forEach((item) => {
+          if (item.data().config.isPin) {
+            arr.unshift(item.data());
+          } else {
+            arr.push(item.data());
+          }
+        });
+        setData(arr);
+        setDisplayData(arr);
+      });
+    return () => {};
+  }, [now]);
+  useEffect(() => {
+    if (keyowrd) {
+      const clone = data.slice().filter(({ title }) => title.includes(keyowrd));
+      // const filt = clone.slice(
+      //   parseInt(`${paging > 1 ? paging - 1 : ""}0`),
+      //   parseInt(`${paging === 0 ? 1 : paging}0`)
+      // );
+      // setDisplayData(filt);
+    } else {
+      const clone = data.slice();
+      // const filt = clone.slice(
+      //   parseInt(`${paging > 1 ? paging - 1 : ""}0`),
+      //   parseInt(`${paging === 0 ? 1 : paging}0`)
+      // );
+      // setDisplayData(filt);
+    }
+    return () => {};
+  }, [paging, data, keyowrd]);
+
   return (
     <Main now={now}>
       <section className="top">
@@ -75,14 +142,105 @@ function List({ now }) {
           </div>
         </div>
         <div className="search">
-          <input type="text" />
+          <input
+            type="text"
+            onChange={(e) => {
+              __search(e.target.value);
+            }}
+          />
           <figure>
             <img src="/assets/support/search.svg" alt="" />
           </figure>
         </div>
+      </section>
+      <section className="bottom">
+        {displayData.map((item, idx) => {
+          return <Card key={idx} data={item} />;
+        })}
+        <BtnSection>
+          <img
+            src="/assets/left-arrow.svg"
+            alt="뒤로가기"
+            className="left"
+            onClick={() => {
+              if (paging > 1) {
+                __changePaging("minus");
+              }
+            }}
+          />
+          <div
+            className="page"
+            style={
+              length !== 0 && paging <= length
+                ? undefined
+                : {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }
+            }
+          >
+            <div className="now">{paging}</div>
+            {length !== 0 && paging <= length ? (
+              <div
+                className="next"
+                onClick={() => {
+                  __changePaging("plus");
+                }}
+              >
+                {paging + 1}
+              </div>
+            ) : undefined}
+          </div>
+          <img
+            src="/assets/right-arrow.svg"
+            alt="더보기"
+            className="right"
+            onClick={() => {
+              if (length !== 0 && paging <= length) {
+                __changePaging("plus");
+              }
+            }}
+          />
+        </BtnSection>
       </section>
     </Main>
   );
 }
 
 export default List;
+
+export const BtnSection = styled.div`
+  margin-top: 58px;
+  display: flex;
+  justify-content: center;
+  & > img {
+    width: 9px;
+    cursor: pointer;
+  }
+  .page {
+    display: grid;
+    grid-template-columns: repeat(2, 30px);
+    margin: 0 27.5px;
+    column-gap: 4px;
+    & > div {
+      cursor: pointer;
+      font-size: 13px;
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .now {
+      background-color: #434343;
+      color: white;
+    }
+    .next {
+      background-color: white;
+      color: #434343;
+      border: solid 1px #dbdbdb;
+    }
+  }
+`;

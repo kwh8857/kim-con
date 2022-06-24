@@ -24,22 +24,17 @@ function Video({ __close, template, temKey, category }) {
     [List, dispatch, temKey, category]
   );
   const __updateTemplate = useCallback(() => {
-    let arr = template.slice();
     selectList.forEach((item) => {
-      arr.push({
-        type: "VIDEO",
-        content: item,
-        id: `video-${
-          new Date().getTime() - Math.floor(Math.random() * (100 - 1 + 1)) + 1
-        }`,
-      });
-    });
-    dispatch({
-      type: "@layouts/CHANGE_EDITOR",
-      payload: arr,
+      const pal = document.getElementsByClassName("editor-screen")[0];
+      const vd = document.createElement("video");
+      vd.src = item;
+      vd.className = "video-wrapper";
+      vd.controls = true;
+      vd.draggable = true;
+      pal.appendChild(vd);
     });
     __close();
-  }, [selectList, template, __close, dispatch]);
+  }, [selectList, __close]);
   const __selectVideo = useCallback(
     (content) => {
       const arr = selectList.slice();

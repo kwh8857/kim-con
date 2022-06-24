@@ -69,6 +69,10 @@ function Editor({ location }) {
     });
   }, []);
   const __insetData = useCallback(() => {
+    dispatch({
+      type: "@config/isLoading",
+      payload: true,
+    });
     const template = document.getElementById("screen");
     const childnode = template.childNodes;
     const { title, isPin, isBlind, kind } = info;
@@ -104,6 +108,10 @@ function Editor({ location }) {
           kind,
           timestamp: Date.now(),
         }).then(() => {
+          dispatch({
+            type: "@config/isLoading",
+            payload: false,
+          });
           history.goBack();
         });
       } else {
@@ -116,11 +124,15 @@ function Editor({ location }) {
           },
           kind,
         }).then(() => {
+          dispatch({
+            type: "@config/isLoading",
+            payload: false,
+          });
           history.goBack();
         });
       }
     });
-  }, [category, temKey, info, history, type, __uploadFile]);
+  }, [category, temKey, info, history, type, __uploadFile, dispatch]);
 
   useEffect(() => {
     if (type === "new") {

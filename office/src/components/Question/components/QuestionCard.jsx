@@ -82,20 +82,18 @@ function QuestionCard({ data }) {
   } = data;
   console.log(new Date(timestamp));
   const navigate = useHistory();
-  const __nav = useCallback(() => {
-    navigate.push("/answer", { data });
-  }, [data, navigate]);
+  // const __nav = useCallback(() => {
+  //   navigate.push("/answer", { data });
+  // }, [data, navigate]);
   return (
     <Wrapper>
       <div className="left">
-        {/* <div className="status">{status ? "답변완료" : "미답변"}</div> */}
         <div className="title">{company}</div>
       </div>
       <div className="right">
         <div className="tel">{tel}</div>
         <div className="name">{sector}</div>
         <div className="time">{formatDate(timestamp, ".")}</div>
-        {/* <button onClick={__nav}>{status ? "답변수정" : "답변하기"}</button> */}
       </div>
     </Wrapper>
   );

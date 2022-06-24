@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import List from "./components/List";
 const Nav = styled.div`
@@ -75,7 +75,7 @@ function Support() {
             type="project"
             now={now}
             onClick={() => {
-              __change("project");
+              __change("blog");
             }}
           >
             지원사업

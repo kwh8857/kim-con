@@ -19,11 +19,8 @@ const Wrapper = styled.main`
 function Question() {
   const [original, setOriginal] = useState([]);
   const [questionList, setQuestionList] = useState([]);
-  const [isFilter, setIsFilter] = useState(false);
   const [keyword, setKeyword] = useState(undefined);
-  const __changeFilter = useCallback(() => {
-    setIsFilter(!isFilter);
-  }, [isFilter]);
+
   const __searching = useCallback((val) => {
     if (val) {
       setKeyword(val);
@@ -47,15 +44,13 @@ function Question() {
   }, []);
   useEffect(() => {
     let result = original.slice();
-    if (isFilter) {
-      result = result.filter(({ status }) => !status);
-    }
+
     if (keyword) {
       result = result.filter(({ title }) => title.includes(keyword));
     }
     setQuestionList(result);
     return () => {};
-  }, [isFilter, keyword, original]);
+  }, [keyword, original]);
   return (
     <Wrapper>
       <div className="container">
