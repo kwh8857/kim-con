@@ -58,7 +58,7 @@ function Notice() {
         if (result) {
           result.forEach((item) => {
             const value = item.data();
-            arr.push(Object.assign(value, { id: item.id, index: arr.length }));
+            arr.push(Object.assign(value, { id: item.id }));
           });
         }
       });
@@ -143,7 +143,10 @@ function Notice() {
           />
           <List>
             {DisplayList.map(
-              ({ title, timestamp, id, index, config, template }, idx) => {
+              (
+                { title, timestamp, id, index, config, template, kind },
+                idx
+              ) => {
                 return (
                   <Card
                     __delete={__deleteCard}
@@ -156,6 +159,7 @@ function Notice() {
                     index={ListData.length - index}
                     template={template}
                     __blind={__blind}
+                    kind={kind}
                   />
                 );
               }

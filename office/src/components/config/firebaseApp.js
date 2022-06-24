@@ -7,14 +7,13 @@ import "firebase/analytics";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB7m4H1jBYnMDERovliN6Kg2tLtCkgPBMg",
-  authDomain: "steadee-pf.firebaseapp.com",
-  databaseURL: "https://steadee-pf-default-rtdb.firebaseio.com",
-  projectId: "steadee-pf",
-  storageBucket: "steadee-pf.appspot.com",
-  messagingSenderId: "252193488049",
-  appId: "1:252193488049:web:91ac4e6226103257ba3690",
-  measurementId: "G-CWH0DV2B5L",
+  apiKey: "AIzaSyDG2LBfqkKdV5K22bH0n1GlXL1-1yust5M",
+  authDomain: "kconsweb.firebaseapp.com",
+  projectId: "kconsweb",
+  storageBucket: "kconsweb.appspot.com",
+  messagingSenderId: "837343930568",
+  appId: "1:837343930568:web:a12efdb85bf125683addfd",
+  measurementId: "G-4LG5NBNMXT",
 };
 // Initialize Firebase
 if (!firebaseApp.apps.length) {
@@ -23,6 +22,4 @@ if (!firebaseApp.apps.length) {
   firebaseApp.app(); // if already initialized, use that one
 }
 // firebaseApp.initializeApp(firebaseConfig);
-firebaseApp.analytics();
-firebaseApp.performance();
 export default firebaseApp;

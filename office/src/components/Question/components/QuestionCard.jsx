@@ -10,35 +10,17 @@ const Wrapper = styled.div`
   background-color: white;
   border-radius: 5px;
   position: relative;
+  padding: 0 34px 0 28px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  cursor: pointer;
   & > .left {
     display: flex;
     align-items: center;
-    & > .index {
-      width: 74px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: bold;
-      color: #007fff;
-    }
-    & > .status {
-      width: 69px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 57px;
-      font-size: 11px;
-      font-weight: bold;
-    }
     & > .title {
       white-space: nowrap;
       font-size: 16px;
       font-weight: bold;
-      margin-left: 24px;
       width: 380px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -50,14 +32,15 @@ const Wrapper = styled.div`
     font-size: 13px;
     font-weight: 500;
     color: #989898;
+    column-gap: 39px;
     & > .name {
-      width: 48px;
+      width: 100px;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-right: 55px;
     }
     & > .tel {
-      margin-right: 45px;
+      font-weight: 500;
+      color: #00be83;
     }
     & > button {
       cursor: pointer;
@@ -89,23 +72,30 @@ const Wrapper = styled.div`
   }}
 `;
 function QuestionCard({ data }) {
-  const { title, timestamp, tel, status, name, index } = data;
+  const {
+    data: {
+      company,
+      sector,
+      etc: { tel },
+    },
+    timestamp,
+  } = data;
+  console.log(new Date(timestamp));
   const navigate = useHistory();
   const __nav = useCallback(() => {
     navigate.push("/answer", { data });
   }, [data, navigate]);
   return (
-    <Wrapper status={status}>
+    <Wrapper>
       <div className="left">
-        <div className="index">{index + 1}</div>
-        <div className="status">{status ? "답변완료" : "미답변"}</div>
-        <div className="title">{title}</div>
+        {/* <div className="status">{status ? "답변완료" : "미답변"}</div> */}
+        <div className="title">{company}</div>
       </div>
       <div className="right">
-        <div className="name">{name}</div>
         <div className="tel">{tel}</div>
+        <div className="name">{sector}</div>
         <div className="time">{formatDate(timestamp, ".")}</div>
-        <button onClick={__nav}>{status ? "답변수정" : "답변하기"}</button>
+        {/* <button onClick={__nav}>{status ? "답변수정" : "답변하기"}</button> */}
       </div>
     </Wrapper>
   );

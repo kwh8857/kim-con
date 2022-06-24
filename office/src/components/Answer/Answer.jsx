@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import styled from "styled-components";
 import AnswerBox from "./components/AnswerBox";
 import TemplateView from "./components/TemplateView";
@@ -19,14 +18,6 @@ function Answer({
     },
   },
 }) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: "@database/ANSWER_RESET",
-      });
-    };
-  }, [dispatch]);
   return (
     <Wrapper>
       <div className="container">

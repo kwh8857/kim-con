@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import firebaseApp from "../../config/firebaseApp";
 const Fstorage = firebaseApp.storage();
-const Fstore = firebaseApp.firestore();
 function UploadFile({ __close, template, temKey, category, state }) {
   const dispatch = useDispatch();
   const [File, setFile] = useState(undefined);
@@ -13,14 +12,22 @@ function UploadFile({ __close, template, temKey, category, state }) {
           .put(item)
           .then((res) => {
             res.ref.getDownloadURL().then((url) => {
-              resolve({
-                type: "FILE",
-                content: {
-                  title: item.name,
-                  url,
-                },
-                id,
-              });
+              const pal = document.getElementsByClassName("editor-screen")[0];
+              let linkelement = document.createElement("div");
+              linkelement.className = "link-template";
+              linkelement.contentEditable = false;
+              linkelement.draggable = true;
+              let leftimg = document.createElement("img");
+              leftimg.src = "/assets/editor/down.svg";
+              leftimg.alt = "파일";
+              leftimg.className = "file-asset";
+              let title = document.createElement("div");
+              title.className = "link-title";
+              title.innerHTML = item.name;
+              linkelement.appendChild(leftimg);
+              linkelement.appendChild(title);
+              pal.appendChild(linkelement);
+              resolve(true);
             });
           });
       });
@@ -28,8 +35,11 @@ function UploadFile({ __close, template, temKey, category, state }) {
     [temKey, category]
   );
   const __readFile = useCallback(() => {
-    const arr = template.slice();
     let fileList = Object.values(File);
+    dispatch({
+      type: "@config/isLoading",
+      payload: true,
+    });
     Promise.all(
       fileList.map(async (item, idx) => {
         const result = await __uploadFile(
@@ -42,49 +52,14 @@ function UploadFile({ __close, template, temKey, category, state }) {
         });
         return result;
       })
-    ).then((result) => {
-      if (state === "new") {
-        Fstore.collection(category)
-          .doc(temKey)
-          .update({ template: [...arr, ...result] });
-      } else {
-        Fstore.collection(category)
-          .doc(temKey)
-          .get()
-          .then((res) => {
-            const value = res.data();
-            if (value.urlList) {
-              const concatArr = value.urlList.concat(result);
-              res.ref.update({ urlList: concatArr });
-              dispatch({
-                type: "@layouts/INIT_DELETELIST",
-                payload: concatArr,
-              });
-            } else {
-              res.ref.update({ urlList: result });
-              dispatch({
-                type: "@layouts/INIT_DELETELIST",
-                payload: result,
-              });
-            }
-          });
-      }
+    ).then(() => {
       dispatch({
-        type: "@layouts/CHANGE_EDITOR",
-        payload: [...arr, ...result],
+        type: "@config/isLoading",
+        payload: false,
       });
       __close();
     });
-  }, [
-    File,
-    dispatch,
-    __close,
-    template,
-    __uploadFile,
-    state,
-    category,
-    temKey,
-  ]);
+  }, [File, dispatch, __close, __uploadFile]);
   return (
     <div className="popup-wrapper file">
       <img

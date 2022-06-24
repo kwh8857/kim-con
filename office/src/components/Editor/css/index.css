@@ -299,6 +299,16 @@
   text-align: left;
   min-height: 1500px;
   border: unset;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #root .editor .editor-wrapper .editor-screen > div {
@@ -325,21 +335,10 @@
 }
 
 #root .editor .editor-wrapper .editor-screen .template-img {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 100%;
-  margin: 20px 0;
-  height: 100%;
-}
-
-#root .editor .editor-wrapper .editor-screen .template-img > img {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   max-width: 100%;
-  width: unset;
 }
 
 #root .editor .editor-wrapper .editor-screen .template-video {
@@ -415,6 +414,11 @@
       -ms-flex-align: center;
           align-items: center;
   position: relative;
+}
+
+#root .editor .editor-wrapper .editor-screen .link-template > .file-asset {
+  width: 21px;
+  margin-right: 15.5px;
 }
 
 #root .editor .editor-wrapper .editor-screen .link-template > .link-asset {

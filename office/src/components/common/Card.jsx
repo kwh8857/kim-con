@@ -92,6 +92,7 @@ const Wrapper = styled.div`
     & > .left {
       display: flex;
       align-items: center;
+      color: white;
       & > figure {
         cursor: pointer;
         margin-right: 11.5px;
@@ -110,7 +111,7 @@ const Wrapper = styled.div`
       justify-content: center;
       font-size: 13px;
       font-weight: bold;
-      color: #007fff;
+      color: #47d99b;
     }
   }
 
@@ -119,38 +120,26 @@ const Wrapper = styled.div`
       & > .setup {
         right: ${props.on ? "0" : "-430px"};
         transition: right 0.2s ease-in-out;
-        background-color: ${props.on === "remove" ? "#007fff" : "#dbdbdb"};
-      }
-      & > .left {
-        & > .index {
-          color: "#007fff";
-        }
-        & > .title {
-          color: "#a8a8a8";
-        }
+        background-color: #47d99b;
       }
     `;
   }}
 `;
 function Card({
-  index,
+  kind,
   title,
   timestamp,
-  config: { isBlind, isPin },
-  template,
+  config: { isPin },
   id,
   navigation,
   __delete,
-  __blind,
 }) {
-  const isFile = template
-    ? template.filter((item) => item.type === "FILE")
-    : [];
+  const isFile = false;
   const [On, setOn] = useState(undefined);
   return (
     <Wrapper on={On}>
       <div className="left">
-        <div className="category">우리이야기</div>
+        <div className="category">{kind}</div>
         <div className="title-wrapper">
           <div className="title">{title}</div>
           <div className="badge">
@@ -227,11 +216,8 @@ function Card({
         </div>
         <button
           onClick={() => {
-            if (On === "blind") {
-              __blind(id, isBlind);
-            } else {
-              __delete(id);
-            }
+            __delete(id);
+
             setOn(undefined);
           }}
         >

@@ -239,7 +239,7 @@ function Request() {
         Fstore.collection("/request")
           .add({
             data: info,
-            timestamp: new Date(),
+            timestamp: Date.now(),
           })
           .then(() => {
             reduxpatch({

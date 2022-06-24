@@ -99,54 +99,49 @@ function Login() {
   const IdRef = useRef(null);
   const PasswordRef = useRef(null);
   const __login = useCallback(() => {
-    dispatch({
-      type: "@config/isLogin",
-      payload: true,
+    const Id = IdRef.current.value;
+    const password = PasswordRef.current.value;
+    Fauth.setPersistence(firebaseApp.auth.Auth.Persistence.SESSION).then(() => {
+      return Fauth.signInWithEmailAndPassword(`${Id}@kimcons.com`, password)
+        .then((result) => {
+          const {
+            user: { uid },
+          } = result;
+          if (uid === "SgfGJBwoiveAHk2ofSZ8fSqNgC02") {
+            dispatch({
+              type: "@config/isLogin",
+              payload: true,
+            });
+          } else {
+            dispatch({
+              type: "@config/TOAST",
+              payload: {
+                isactive: true,
+                msg: "등록된 관리자가 아닙니다 접근에 주의하세요",
+              },
+            });
+          }
+        })
+        .catch((err) => {
+          if (err.code === "auth/user-not-found") {
+            dispatch({
+              type: "@config/TOAST",
+              payload: {
+                isactive: true,
+                msg: "존재하지않는 유저이거나 잘못된 이메일입니다",
+              },
+            });
+          } else if (err.code === "auth/wrong-password") {
+            dispatch({
+              type: "@config/TOAST",
+              payload: {
+                isactive: true,
+                msg: "비밀번호가 맞지않습니다",
+              },
+            });
+          }
+        });
     });
-    // Fauth.setPersistence(firebaseApp.auth.Auth.Persistence.SESSION).then(() => {
-    //   return Fauth.signInWithEmailAndPassword(
-    //     `${IdRef.current.value}@moogchi.com`,
-    //     PasswordRef.current.value
-    //   )
-    //     .then((result) => {
-    //       const {
-    //         user: { uid },
-    //       } = result;
-    //       if (uid === "I9JFP3oIyAX1w8veQzg74231M5R2") {
-    //         dispatch({
-    //           type: "@config/isLogin",
-    //           payload: true,
-    //         });
-    //       } else {
-    //         dispatch({
-    //           type: "@config/TOAST",
-    //           payload: {
-    //             isactive: true,
-    //             msg: "등록된 관리자가 아닙니다 접근에 주의하세요",
-    //           },
-    //         });
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       if (err.code === "auth/user-not-found") {
-    //         dispatch({
-    //           type: "@config/TOAST",
-    //           payload: {
-    //             isactive: true,
-    //             msg: "존재하지않는 유저이거나 잘못된 이메일입니다",
-    //           },
-    //         });
-    //       } else if (err.code === "auth/wrong-password") {
-    //         dispatch({
-    //           type: "@config/TOAST",
-    //           payload: {
-    //             isactive: true,
-    //             msg: "비밀번호가 맞지않습니다",
-    //           },
-    //         });
-    //       }
-    //     });
-    // });
   }, [IdRef, PasswordRef, dispatch]);
   return (
     <Wrapper>

@@ -32,15 +32,14 @@ function Question() {
     }
   }, []);
   useEffect(() => {
-    Fstore.collection("ask")
+    Fstore.collection("request")
       .orderBy("timestamp", "desc")
       .get()
       .then((res) => {
         let arr = [];
         res.forEach((item) => {
-          arr.push(
-            Object.assign(item.data(), { index: arr.length, key: item.id })
-          );
+          console.log(item.data());
+          arr.push(Object.assign(item.data(), { key: item.id }));
         });
         setOriginal(arr);
       });
@@ -61,7 +60,7 @@ function Question() {
     <Wrapper>
       <div className="container">
         <Search
-          title="고객문의 관리"
+          title="고객문의"
           type="question"
           placeholder="검색"
           searching={__searching}

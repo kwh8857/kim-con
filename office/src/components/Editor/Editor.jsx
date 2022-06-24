@@ -19,8 +19,6 @@ function Editor({ location }) {
   const history = useHistory();
   const { type, timestamp, category, id } = location.state;
   const temKey = useSelector((state) => state.database.key);
-  const deletelist = useSelector((state) => state.database.deletelist);
-  const template = useSelector((state) => state.database.editor);
   function reducer(state, action) {
     switch (action.type) {
       case "RESET":
@@ -28,11 +26,14 @@ function Editor({ location }) {
           title: undefined,
           isPin: false,
           isBlind: false,
+          kind: undefined,
         };
       case "INIT":
         return action.info;
       case "TITLE":
         return { ...state, title: action.title };
+      case "KIND":
+        return { ...state, kind: action.payload };
       case "PIN":
         return { ...state, isPin: action.isPin };
       case "BLIND":
@@ -45,91 +46,81 @@ function Editor({ location }) {
   const [info, patch] = useReducer(reducer, {
     title: undefined,
     isPin: false,
+    isBlind: false,
+    kind: undefined,
   });
   const [isUp, setIsUp] = useState({
     status: false,
     type: "",
   });
-  const __removeUrl = useCallback((template, urlList) => {
+  const __uploadFile = useCallback((data, title, temKey, index) => {
     return new Promise((resolve, reject) => {
-      if (urlList.length > 0) {
-        const clone = urlList.slice();
-        template.forEach(({ content: { url }, type }) => {
-          if (type === "IMAGE" || type === "FILE") {
-            for (let i = 0; i < clone.length; i++) {
-              const element = clone[i];
-              if (element.content.url === url) {
-                clone.splice(i, i + 1);
-              }
-            }
-          }
+      Fstorage.ref(`${temKey}/${title}`)
+        .putString(data, "base64", {
+          contentType: "image/jpeg",
+        })
+        .then((res) => {
+          res.ref.getDownloadURL().then((url) => {
+            const template = document.getElementById("screen");
+            template.childNodes[index].src = url;
+            resolve(url);
+          });
         });
-        resolve(clone);
-      } else {
-        resolve(undefined);
-      }
     });
   }, []);
-
   const __insetData = useCallback(() => {
-    const { title, isPin, isBlind } = info;
-    if (type !== "new") {
-      const res = Fstore.collection(category).doc(temKey);
-      if (deletelist.length > 0) {
-        __removeUrl(template, deletelist).then((urlList) => {
-          res
-            .update({
-              urlList,
-              template: template,
-              title: title,
-              config: {
-                isPin,
-                isBlind,
-              },
-            })
-            .then(() => {
-              history.goBack();
-            });
-        });
-      } else {
-        res
-          .update({
-            template: template,
-            title: title,
-            config: {
-              isPin,
-              isBlind,
-            },
-          })
-          .then(() => {
-            history.goBack();
+    const template = document.getElementById("screen");
+    const childnode = template.childNodes;
+    const { title, isPin, isBlind, kind } = info;
+    const pro = Array.from(childnode);
+    Promise.all(
+      pro.map(async (item, idx) => {
+        const { currentSrc, localName } = item;
+        if (localName === "img" && currentSrc.substr(0, 4) === "data") {
+          const data = currentSrc.split(",")[1];
+          const result = await __uploadFile(
+            data,
+            `${localName}${Math.random(1000)}`,
+            temKey,
+            idx
+          ).then((res) => {
+            return res;
           });
-      }
-    } else {
-      Fstore.collection(category)
-        .doc(temKey)
-        .update({
-          template: template,
+          return result;
+        } else {
+          return item;
+        }
+      })
+    ).then((res) => {
+      const db = Fstore.collection(category).doc(temKey);
+      if (type === "new") {
+        db.set({
+          template: template.innerHTML,
           title: title,
           config: {
             isBlind: false,
             isPin,
           },
-        })
-        .then(() => {
+          kind,
+          timestamp: Date.now(),
+        }).then(() => {
           history.goBack();
         });
-    }
-  }, [
-    template,
-    category,
-    temKey,
-    info,
-    history,
-    type,
-    __removeUrl,
-    deletelist,
-  ]);
+      } else {
+        db.update({
+          template: template.innerHTML,
+          title,
+          config: {
+            isBlind,
+            isPin,
+          },
+          kind,
+        }).then(() => {
+          history.goBack();
+        });
+      }
+    });
+  }, [category, temKey, info, history, type, __uploadFile]);
 
   useEffect(() => {
     if (type === "new") {
@@ -152,6 +143,7 @@ function Editor({ location }) {
               title: value.title,
               isPin: value.config.isPin,
               isBlind: value.config.isBlind,
+              kind: value.kind,
             },
           });
           if (value.urlList) {
@@ -177,22 +169,8 @@ function Editor({ location }) {
             });
           }
 
-          dispatch({
-            type: "@layouts/CHANGE_EDITOR",
-            payload: value.template
-              ? value.template
-              : [
-                  {
-                    type: "TITLE",
-                    content: "",
-                    id: `title-${
-                      new Date().getTime() -
-                      Math.floor(Math.random() * (100 - 1 + 1)) +
-                      1
-                    }`,
-                  },
-                ],
-          });
+          const screen = document.getElementById("screen");
+          screen.innerHTML = value.template;
         });
       dispatch({
         type: "@layouts/INIT_KEY",

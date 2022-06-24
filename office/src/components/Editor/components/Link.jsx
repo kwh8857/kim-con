@@ -1,8 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 
-function Link({ __close, template }) {
-  const dispatch = useDispatch();
+function Link({ __close }) {
   const [Title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [isNext, setisNext] = useState(false);
@@ -26,40 +24,10 @@ function Link({ __close, template }) {
     linkelement.appendChild(title);
     linkelement.appendChild(rightimg);
     let screen = document.getElementsByClassName("editor-screen")[0];
-    // linkelement.addEventListener("dragover", (event) => {
-    //   console.log("over");
-    //   event.preventDefault();
-    // });
-
-    // linkelement.addEventListener("dragend", (e) => {
-    //   console.log("drop");
-    //   console.log(e);
-    //   const id = e.dataTransfer.getData("text");
-    //   const dropzone = e.target;
-    //   console.log(dropzone);
-    //   console.log(screen.parentNode);
-    //   screen.parentNode.insertBefore(id);
-    //   e.dataTransfer.clearData();
-    // });
     screen.appendChild(linkelement);
     document.execCommand("insertHTML", false, linkelement);
-    // let arr = template.slice();
-    // arr.push({
-    //   type: "LINK",
-    //   content: {
-    //     title: Title,
-    //     url: link,
-    //   },
-    //   id: `link-${
-    //     new Date().getTime() - Math.floor(Math.random() * (100 - 1 + 1)) + 1
-    //   }`,
-    // });
-    // dispatch({
-    //   type: "@layouts/CHANGE_EDITOR",
-    //   payload: arr,
-    // });
     __close();
-  }, [Title, link, __close, template, dispatch]);
+  }, [Title, __close]);
 
   useEffect(() => {
     let regex =

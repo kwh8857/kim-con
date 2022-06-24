@@ -51,37 +51,13 @@ function Blog() {
         if (result) {
           result.forEach((item) => {
             const value = item.data();
-            arr.push(Object.assign(value, { id: item.id, index: arr.length }));
+            arr.push(Object.assign(value, { id: item.id }));
           });
         }
       });
     return arr;
   }, []);
-  const __blind = useCallback(
-    (id, state) => {
-      Fstore.collection("blog")
-        .doc(id)
-        .update({
-          config: {
-            isBlind: !state,
-          },
-        })
-        .then(() => {
-          dispatch({
-            type: "@config/TOAST",
-            payload: {
-              isactive: true,
-              msg: `게시글이 블라인드${state ? "해제" : ""} 되었습니다`,
-            },
-          });
-          __getData().then((result) => {
-            setListData(result);
-            setDisplayList(result);
-          });
-        });
-    },
-    [__getData, dispatch]
-  );
+
   const __searching = useCallback(
     (val) => {
       const filt = ListData.filter(
@@ -138,13 +114,17 @@ function Blog() {
         <Body>
           <Search
             title="지원사업 관리"
-            type="project"
+            type="blog"
             placeholder="검색"
+            add={__navMake}
             searching={__searching}
           />
           <List>
             {DisplayList.map(
-              ({ title, timestamp, id, index, config, template }, idx) => {
+              (
+                { title, timestamp, id, index, config, template, kind },
+                idx
+              ) => {
                 return (
                   <Card
                     __delete={__deleteCard}
@@ -154,9 +134,9 @@ function Blog() {
                     title={title}
                     timestamp={timestamp}
                     config={config}
+                    kind={kind}
                     index={ListData.length - index}
                     template={template}
-                    __blind={__blind}
                   />
                 );
               }

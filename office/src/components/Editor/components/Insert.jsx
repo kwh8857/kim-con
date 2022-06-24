@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Resizer from "react-image-file-resizer";
-import firebaseApp from "../../config/firebaseApp";
 const dummy = [
   // { img: "summary", type: "SUMMARY" },
   { img: "temp", type: "IMAGE" },
@@ -11,8 +10,6 @@ const dummy = [
   { img: "file", type: "FILE" },
 ];
 
-const Fstorage = firebaseApp.storage();
-const Fstore = firebaseApp.firestore();
 function Insert({ setIsUp, temKey, category, type }) {
   const dispatch = useDispatch();
   const template = useSelector((state) => state.database.editor);
@@ -35,9 +32,12 @@ function Insert({ setIsUp, temKey, category, type }) {
             (uri) => {
               const pal = document.getElementsByClassName("editor-screen")[0];
               const ima = document.createElement("img");
+              const text = document.createElement("div");
+              ima.className = "template-img";
               ima.src = imageUrl;
               ima.alt = file.name;
               pal.appendChild(ima);
+              pal.appendChild(text);
 
               resolve({
                 url: imageUrl,
@@ -57,12 +57,14 @@ function Insert({ setIsUp, temKey, category, type }) {
   const __imageUpdate = useCallback(
     (e) => {
       let fileList = Object.values(e.target.files);
-
       fileList.map((item) => {
-        __fileReader(item);
+        const pof = __fileReader(item).then(() => {
+          return true;
+        });
+        return pof;
       });
     },
-    [__fileReader, template, dispatch, temKey, category, type]
+    [__fileReader]
   );
   return (
     <div className="insert-wrapper">

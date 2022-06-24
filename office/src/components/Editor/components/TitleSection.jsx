@@ -1,6 +1,4 @@
 import React from "react";
-import { useState } from "react";
-
 import styled, { css } from "styled-components";
 const noticeCategory = ["우리이야기", "컨설팅사례", "정책기사"];
 const projectCategory = ["중소기업", "기타"];
@@ -119,8 +117,12 @@ const CategoryBtn = styled.button`
     `;
   }}
 `;
-function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
-  const [category, setCategory] = useState(undefined);
+function TitleSection({
+  dispatch,
+  info: { title, isPin, kind },
+  insert,
+  type,
+}) {
   return (
     <Wrapper isPin={isPin} category={type}>
       <div className="top">
@@ -153,7 +155,7 @@ function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
           <div
             className="btn"
             style={{
-              backgroundColor: title && category ? "var(--sub)" : "#dbdbdb",
+              backgroundColor: title && kind ? "var(--sub)" : "#dbdbdb",
             }}
             onClick={() => {
               insert();
@@ -191,15 +193,18 @@ function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
               return (
                 <CategoryBtn
                   key={idx}
-                  category={category}
+                  category={kind}
                   my={item}
                   className="category"
                   onClick={() => {
-                    setCategory(item);
+                    dispatch({
+                      type: "KIND",
+                      payload: item,
+                    });
                   }}
                 >
                   <div>
-                    {category === item ? (
+                    {kind === item ? (
                       <img src="/assets/common/check.svg" alt="" />
                     ) : undefined}
                   </div>
@@ -212,13 +217,20 @@ function TitleSection({ dispatch, info: { title, isPin }, insert, type }) {
                 <CategoryBtn
                   key={idx}
                   my={item}
-                  category={category}
+                  category={kind}
                   className="category"
                   onClick={() => {
-                    setCategory(item);
+                    dispatch({
+                      type: "KIND",
+                      payload: item,
+                    });
                   }}
                 >
-                  <div />
+                  <div>
+                    {kind === item ? (
+                      <img src="/assets/common/check.svg" alt="" />
+                    ) : undefined}
+                  </div>
                   {item}
                 </CategoryBtn>
               );
