@@ -254,7 +254,6 @@ const Wrapper = styled.main`
 function Answer() {
   const timestamp = useLocation().pathname.split("/")[2];
   const [data, setData] = useState(undefined);
-  console.log(data);
   useEffect(() => {
     Fstore.collection("request")
       .where("timestamp", "==", parseFloat(timestamp))

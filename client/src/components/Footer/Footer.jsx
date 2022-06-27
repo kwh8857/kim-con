@@ -13,7 +13,7 @@ const Wrapper = styled.footer`
     box-sizing: border-box;
     padding: 43.9px 0;
     & > .left {
-      & > figure {
+      & > a {
         width: 180px;
         height: 33.4px;
         margin-bottom: 14.4px;
@@ -126,15 +126,19 @@ function Footer() {
         </div>
         <div className="right">
           <div className="nav-wrapper">
-            <figure>
+            <a href="/" target={"_blank"} rel="noreferrer">
               <img src="/assets/footer/tel.svg" alt="전화" />
-            </figure>
-            <figure>
+            </a>
+            <a href="/" target={"_blank"} rel="noreferrer">
               <img src="/assets/footer/kakao.svg" alt="카카오" />
-            </figure>
-            <figure>
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCOzpPKKhUKVRnCa3NDF8xfA"
+              target={"_blank"}
+              rel="noreferrer"
+            >
               <img src="/assets/footer/youtube.svg" alt="유튜브" />
-            </figure>
+            </a>
           </div>
           <div className="from">©김과장 컨설팅. All rights reserved.</div>
         </div>

@@ -83,7 +83,7 @@ function QuestionCard({ data }) {
   const navigate = useHistory();
   const __nav = useCallback(() => {
     navigate.push(`/answer/${timestamp}`);
-  }, [data, navigate]);
+  }, [navigate, timestamp]);
   return (
     <Wrapper onClick={__nav}>
       <div className="left">

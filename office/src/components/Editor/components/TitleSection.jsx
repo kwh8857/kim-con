@@ -67,7 +67,6 @@ const Wrapper = styled.div`
     column-gap: 15px;
   }
   ${(props) => {
-    console.log(props.category);
     return css`
       .top {
         & > .right {

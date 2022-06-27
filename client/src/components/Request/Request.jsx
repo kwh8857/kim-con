@@ -109,7 +109,6 @@ function Request() {
       policy: false,
     },
   });
-  console.log(info);
   const __company = useCallback(
     (e) => {
       dispatch({

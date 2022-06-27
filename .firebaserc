@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "kconsweb"
+  },
+  "targets": {
+    "kconsweb": {
+      "hosting": {
+        "client": [
+          "kconsweb"
+        ],
+        "office": [
+          "kconsadmin"
+        ]
+      }
+    }
   }
 }

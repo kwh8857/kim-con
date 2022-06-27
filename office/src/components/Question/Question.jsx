@@ -35,7 +35,6 @@ function Question() {
       .then((res) => {
         let arr = [];
         res.forEach((item) => {
-          console.log(item.data());
           arr.push(Object.assign(item.data(), { key: item.id }));
         });
         setOriginal(arr);
