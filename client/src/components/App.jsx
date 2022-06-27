@@ -13,6 +13,7 @@ import Popup from "./Popup/Popup";
 import Finish from "./Finish/Finish";
 import Toast from "./Toast/Toast";
 import Side from "./Main/components/Side";
+import Detail from "./Detail/Detail";
 function App() {
   const { state, type } = useSelector((state) => state.config.isPopup);
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/service/*" element={<Service />} />
         <Route path="/support/*" element={<Support />} />
         <Route path="/request/end/*" element={<Finish />} />
+        <Route path="/detail/:category/:id/*" element={<Detail />} />
       </Routes>
       <Side />
       {state ? <Popup type={type} /> : undefined}

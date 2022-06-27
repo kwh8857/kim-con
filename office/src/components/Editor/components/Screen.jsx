@@ -23,11 +23,19 @@ function Screen() {
       onDrop={(e) => {
         if (DragData) {
           if (e.target.className !== "editor-screen") {
-            e.target.before(DragData.target);
+            const nodes = screenRef.current.childNodes;
+            Array.from(nodes).map((item, idx) => {
+              if (item === e.target) {
+                screenRef.current.insertBefore(DragData.target, nodes[idx]);
+                console.log(nodes[idx]);
+              }
+            });
           } else {
             if (e.clientY > DragData.clientY) {
+              console.log(e);
               e.target.appendChild(DragData.target);
             } else {
+              console.log(e);
               e.target.insertBefore(DragData.target, e.target.firstChild);
             }
           }

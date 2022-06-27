@@ -9,6 +9,34 @@ a {
   overflow-x: hidden;
 }
 
+#root font[size='1'] {
+  font-size: 13px;
+}
+
+#root font[size='2'] {
+  font-size: 15px;
+}
+
+#root font[size='3'] {
+  font-size: 17px;
+}
+
+#root font[size='4'] {
+  font-size: 19px;
+}
+
+#root font[size='5'] {
+  font-size: 21px;
+}
+
+#root font[size='6'] {
+  font-size: 23px;
+}
+
+#root font[size='7'] {
+  font-size: 25px;
+}
+
 * {
   margin: 0;
   padding: 0;

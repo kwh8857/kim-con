@@ -12,6 +12,9 @@ const Nav = styled.div`
   top: 0;
   background-color: white;
   z-index: 500;
+  & > .mb-now {
+    display: none;
+  }
   & > .wrapper {
     width: fit-content;
     display: grid;
@@ -19,6 +22,7 @@ const Nav = styled.div`
     position: relative;
     column-gap: 30px;
     justify-content: center;
+
     & > .bar {
       width: 169px;
       height: 3px;
@@ -32,6 +36,64 @@ const Nav = styled.div`
       return css`
         & > .bar {
           left: ${props.now === "notice" ? 0 : 200}px;
+        }
+      `;
+    }}
+  }
+  @media screen and (max-width: 1365px) {
+    & > .wrapper {
+      grid-template-columns: repeat(2, 110px);
+      column-gap: 20px;
+      & > .bar {
+        width: 110px;
+      }
+      ${(props) => {
+        return css`
+          & > .bar {
+            left: ${props.now === "notice" ? 0 : 130}px;
+          }
+        `;
+      }}
+    }
+  }
+  @media screen and (max-width: 767px) {
+    & > .mb-now {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 500;
+      position: relative;
+      cursor: pointer;
+      & > img {
+        width: 17.6px;
+        position: absolute;
+        right: 21.7px;
+      }
+    }
+    & > .wrapper {
+      transition: 0.2s ease-in;
+      width: 100%;
+      position: absolute;
+      background-color: white;
+      grid-template-columns: 100%;
+      overflow: hidden;
+      & > .bar {
+        display: none;
+      }
+    }
+    ${({ isOpen }) => {
+      return css`
+        & > .mb-now {
+          & > img {
+            transform: ${isOpen ? "rotate(180deg)" : "unset"};
+          }
+        }
+        & > .wrapper {
+          height: ${isOpen ? "180" : "0"}px;
+          bottom: ${isOpen ? "-181" : "0"}px;
         }
       `;
     }}
@@ -51,16 +113,34 @@ const Btn = styled.div`
       font-weight: ${props.type === props.now ? "bold" : "500"};
     `;
   }}
+  @media screen and (max-width: 1365px) {
+    font-size: 15px;
+  }
 `;
 function Support() {
   const [now, setNow] = useState("notice");
-
-  const __change = useCallback((val) => {
-    setNow(val);
-  }, []);
+  const [isOpen, setIsOpen] = useState(false);
+  const __change = useCallback(
+    (val) => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+      setNow(val);
+    },
+    [isOpen]
+  );
   return (
     <React.Fragment>
-      <Nav now={now}>
+      <Nav now={now} isOpen={isOpen}>
+        <div
+          className="mb-now"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          {now === "notice" ? "공지사항" : "지원사업"}
+          <img src="/assets/service/menu-arrow.svg" alt="" />
+        </div>
         <div className="wrapper">
           <Btn
             type={"notice"}
@@ -72,7 +152,7 @@ function Support() {
             공지사항
           </Btn>
           <Btn
-            type="project"
+            type="blog"
             now={now}
             onClick={() => {
               __change("blog");

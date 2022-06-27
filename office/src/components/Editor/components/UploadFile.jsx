@@ -17,6 +17,10 @@ function UploadFile({ __close, template, temKey, category, state }) {
               linkelement.className = "link-template";
               linkelement.contentEditable = false;
               linkelement.draggable = true;
+              let urldiv = document.createElement("div");
+              urldiv.innerHTML = url;
+              urldiv.style.display = "none";
+              linkelement.appendChild(urldiv);
               let leftimg = document.createElement("img");
               leftimg.src = "/assets/editor/down.svg";
               leftimg.alt = "파일";

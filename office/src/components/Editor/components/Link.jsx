@@ -5,7 +5,10 @@ function Link({ __close }) {
   const [link, setLink] = useState("");
   const [isNext, setisNext] = useState(false);
   const __initLink = useCallback(() => {
-    let linkelement = document.createElement("div");
+    let linkelement = document.createElement("a");
+    console.log(link);
+    linkelement.href = link;
+    linkelement.target = "_blank";
     linkelement.className = "link-template";
     linkelement.contentEditable = false;
     linkelement.draggable = true;
@@ -27,7 +30,7 @@ function Link({ __close }) {
     screen.appendChild(linkelement);
     document.execCommand("insertHTML", false, linkelement);
     __close();
-  }, [Title, __close]);
+  }, [Title, __close, link]);
 
   useEffect(() => {
     let regex =

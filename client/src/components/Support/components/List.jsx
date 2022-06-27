@@ -65,11 +65,42 @@ const Main = styled.main`
   & > .bottom {
     margin-top: 53px;
   }
+  @media screen and (max-width: 1365px) {
+    width: 768px;
+    height: 1424px;
+    padding-top: 47px;
+    & > .top {
+      flex-direction: column;
+      align-items: center;
+      justify-content: unset;
+      row-gap: 20px;
+      & > .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        & > .title {
+          font-size: 26px;
+        }
+        & > .sub {
+          font-size: 13px;
+          margin-top: 9.4px;
+        }
+      }
+    }
+    & > .bottom {
+      margin-top: 38px;
+      border-top: solid 1px #dbdbdb;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 function List({ now }) {
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
-  const [paging, setPaging] = useState(1);
+  const [paging, setPaging] = useState(0);
   const [keyowrd, setKeyowrd] = useState(undefined);
   const length = parseFloat(String(displayData.length / 10));
   const __search = useCallback(
@@ -111,18 +142,10 @@ function List({ now }) {
   useEffect(() => {
     if (keyowrd) {
       const clone = data.slice().filter(({ title }) => title.includes(keyowrd));
-      // const filt = clone.slice(
-      //   parseInt(`${paging > 1 ? paging - 1 : ""}0`),
-      //   parseInt(`${paging === 0 ? 1 : paging}0`)
-      // );
-      // setDisplayData(filt);
+      setDisplayData(clone);
     } else {
       const clone = data.slice();
-      // const filt = clone.slice(
-      //   parseInt(`${paging > 1 ? paging - 1 : ""}0`),
-      //   parseInt(`${paging === 0 ? 1 : paging}0`)
-      // );
-      // setDisplayData(filt);
+      setDisplayData(clone);
     }
     return () => {};
   }, [paging, data, keyowrd]);
@@ -147,6 +170,7 @@ function List({ now }) {
             onChange={(e) => {
               __search(e.target.value);
             }}
+            placeholder="검색어를 입력해주세요"
           />
           <figure>
             <img src="/assets/support/search.svg" alt="" />
@@ -154,8 +178,8 @@ function List({ now }) {
         </div>
       </section>
       <section className="bottom">
-        {displayData.map((item, idx) => {
-          return <Card key={idx} data={item} />;
+        {displayData.slice(paging * 10, paging * 10 + 10).map((item, idx) => {
+          return <Card key={idx} data={item} now={now} />;
         })}
         <BtnSection>
           <img
@@ -163,7 +187,7 @@ function List({ now }) {
             alt="뒤로가기"
             className="left"
             onClick={() => {
-              if (paging > 1) {
+              if (paging > 0) {
                 __changePaging("minus");
               }
             }}
@@ -171,7 +195,7 @@ function List({ now }) {
           <div
             className="page"
             style={
-              length !== 0 && paging <= length
+              length !== 0 && paging + 1 <= length
                 ? undefined
                 : {
                     display: "flex",
@@ -180,15 +204,15 @@ function List({ now }) {
                   }
             }
           >
-            <div className="now">{paging}</div>
-            {length !== 0 && paging <= length ? (
+            <div className="now">{paging + 1}</div>
+            {length !== 0 && paging + 1 <= length ? (
               <div
                 className="next"
                 onClick={() => {
                   __changePaging("plus");
                 }}
               >
-                {paging + 1}
+                {paging + 2}
               </div>
             ) : undefined}
           </div>
@@ -197,7 +221,7 @@ function List({ now }) {
             alt="더보기"
             className="right"
             onClick={() => {
-              if (length !== 0 && paging <= length) {
+              if (length !== 0 && paging + 1 <= length) {
                 __changePaging("plus");
               }
             }}

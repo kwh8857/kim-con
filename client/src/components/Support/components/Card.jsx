@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SupportCard = styled.div`
@@ -36,6 +37,28 @@ const SupportCard = styled.div`
     font-weight: bold;
     color: #989898;
   }
+  @media screen and (max-width: 1365px) {
+    height: 99px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: unset;
+    padding: 11px 20px 17px 20px;
+    row-gap: 5px;
+    & > .left {
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      column-gap: unset;
+      & > .kind {
+        width: fit-content;
+        font-size: 14px;
+      }
+      & > .title {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
 `;
 
 function Card({
@@ -45,9 +68,16 @@ function Card({
     config: { isPin },
     kind,
   },
+  now,
 }) {
+  const navigate = useNavigate();
   return (
-    <SupportCard isPin={isPin}>
+    <SupportCard
+      isPin={isPin}
+      onClick={() => {
+        navigate(`/detail/${now}/${timestamp}`);
+      }}
+    >
       <div className="left">
         <div className="kind">{kind}</div>
         <div className="title">
