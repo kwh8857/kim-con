@@ -20,13 +20,17 @@ const Wrapper = styled.div`
     width: 1266px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 180px 270px 180px;
+    grid-template-columns: ${({ pathname }) =>
+      pathname === "/" || pathname === "/request"
+        ? "180px 180px"
+        : "180px 270px 180px"};
     align-items: center;
     justify-content: space-between;
     background-color: transparent;
     & > .right {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       column-gap: 34px;
       & > button {
         cursor: pointer;
@@ -73,7 +77,8 @@ const Wrapper = styled.div`
       box-sizing: border-box;
       & > .right {
         & > .mb-menu {
-          display: block;
+          display: ${({ pathname }) =>
+            pathname === "/" || pathname === "/request" ? "none" : "block"};
         }
       }
     }
@@ -94,11 +99,13 @@ const Logo = styled.figure`
   cursor: pointer;
 `;
 const Menu = styled.nav`
-  display: grid;
+  display: ${({ pathname }) =>
+    pathname === "/" || pathname === "/request" ? "none" : "grid"};
   grid-template-columns: 72px 60px 48px;
   font-size: 13px;
   font-weight: bold;
   column-gap: 45px;
+
   @media screen and (max-width: 1365px) {
     transition: 0.2s ease-in-out;
     display: flex;
@@ -165,7 +172,7 @@ function Header() {
     };
   }, [location.pathname]);
   return (
-    <Wrapper scroll={isScroll} isOpen={isOpen}>
+    <Wrapper scroll={isScroll} isOpen={isOpen} pathname={location.pathname}>
       <div className="wrapper">
         <Link to={"/"}>
           <Logo>
@@ -176,7 +183,7 @@ function Header() {
             />
           </Logo>
         </Link>
-        <Menu isOpen={isOpen}>
+        <Menu isOpen={isOpen} pathname={location.pathname}>
           {menuarr.map(({ title, link }, idx) => {
             return (
               <Link

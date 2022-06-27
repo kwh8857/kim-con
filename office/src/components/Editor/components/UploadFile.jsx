@@ -5,6 +5,7 @@ const Fstorage = firebaseApp.storage();
 function UploadFile({ __close, template, temKey, category, state }) {
   const dispatch = useDispatch();
   const [File, setFile] = useState(undefined);
+
   const __uploadFile = useCallback(
     (item, id) => {
       return new Promise((resolve, reject) => {

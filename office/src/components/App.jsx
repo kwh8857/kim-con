@@ -46,7 +46,7 @@ function Navigation() {
           <>
             <Route path="/" exact component={Notice} />
             <Route path="/question" exact component={Question} />
-            <Route path="/answer" exact component={Answer} />
+            <Route path="/answer/:id" exact component={Answer} />
             <Route path="/popup" exact component={PopupManager} />
             <Route path="/blog" exact component={Blog} />
             <Route path="/editor" exact component={Editor} />

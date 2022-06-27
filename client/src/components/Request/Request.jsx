@@ -29,6 +29,11 @@ function reducer(state, action) {
       return { ...state, plan: action.payload };
     case "teamarr":
       return { ...state, teamarr: action.payload };
+    case "teamarr/detail":
+      let arr = state.teamarr;
+      arr[action.index] = action.payload;
+
+      return { ...state, teamarr: [...arr] };
     case "category":
       return { ...state, category: action.payload };
     case "content":
@@ -104,6 +109,7 @@ function Request() {
       policy: false,
     },
   });
+  console.log(info);
   const __company = useCallback(
     (e) => {
       dispatch({
@@ -118,6 +124,16 @@ function Request() {
       dispatch({
         type: "number",
         number: e,
+      });
+    },
+    [dispatch]
+  );
+  const __detail = useCallback(
+    (e, index) => {
+      dispatch({
+        type: "teamarr/detail",
+        payload: e,
+        index,
       });
     },
     [dispatch]
@@ -386,7 +402,14 @@ function Request() {
                   <div className="year">고용보험 등재 연월</div>
                 </div>
                 {info.teamarr.map((item, idx) => {
-                  return <TeamInput key={idx} data={item} index={idx} />;
+                  return (
+                    <TeamInput
+                      key={idx}
+                      data={item}
+                      index={idx}
+                      __update={__detail}
+                    />
+                  );
                 })}
               </div>
             </div>
@@ -650,20 +673,6 @@ const section1Input = [
     ],
   },
 ];
-// const section1Speech = [
-//   <div className="text">
-//     업력에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업력을
-//     입력해주세요.
-//   </div>,
-//   <div className="text">
-//     업종에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 업종을
-//     입력해주세요.
-//   </div>,
-//   <div className="text long">
-//     사업장 소재지에 따라 수혜 가능한 지원사업이 달라집니다. <br /> 정확한 지역을
-//     입력해주세요.
-//   </div>,
-// ];
 const sectorArr = [
   {
     img: <img alt="" src="/assets/request/marketing.svg" />,

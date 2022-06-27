@@ -5,6 +5,7 @@ function TeamInput({
     number: { first, second },
     year,
   },
+  __update,
   index,
 }) {
   const firstRef = useRef(null);
@@ -25,6 +26,18 @@ function TeamInput({
               firstRef.current.value = val.slice(0, 2);
             }
           }}
+          onBlur={(e) => {
+            __update(
+              {
+                number: {
+                  first: e.target.value,
+                  second,
+                },
+                year,
+              },
+              index
+            );
+          }}
         />
         <div className="circle-wrapper">
           {[0, 0, 0, 0].map((item, idx) => {
@@ -42,6 +55,18 @@ function TeamInput({
             if (val.length > 1) {
               secondRef.current.value = val.slice(0, 1);
             }
+          }}
+          onBlur={(e) => {
+            __update(
+              {
+                number: {
+                  first,
+                  second: e.target.value,
+                },
+                year,
+              },
+              index
+            );
           }}
         />
         <div className="circle-wrapper">
@@ -64,6 +89,18 @@ function TeamInput({
               const val = number.replace(/(\d{4})(\d{2})/, "$1-$2");
               yearRef.current.value = val;
             }
+          }}
+          onBlur={(e) => {
+            __update(
+              {
+                number: {
+                  first,
+                  second,
+                },
+                year: e.target.value,
+              },
+              index
+            );
           }}
         />
       </div>

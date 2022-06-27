@@ -51,6 +51,7 @@ function Notice() {
   );
   const __getData = useCallback(async () => {
     let arr = [];
+    let pin = [];
     await Fstore.collection("notice")
       .orderBy("timestamp", "desc")
       .get()
@@ -58,12 +59,17 @@ function Notice() {
         if (result) {
           result.forEach((item) => {
             const value = item.data();
-            arr.push(Object.assign(value, { id: item.id }));
+            if (value.config.isPin) {
+              pin.push(Object.assign(value, { id: item.id }));
+            } else {
+              arr.push(Object.assign(value, { id: item.id }));
+            }
           });
         }
       });
-    return arr;
+    return [...pin, ...arr];
   }, []);
+
   const __blind = useCallback(
     (id, state) => {
       Fstore.collection("notice")

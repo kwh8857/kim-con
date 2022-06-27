@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import List from "./components/List";
 const Nav = styled.div`
@@ -118,17 +119,27 @@ const Btn = styled.div`
   }
 `;
 function Support() {
-  const [now, setNow] = useState("notice");
+  const [now, setNow] = useState(
+    JSON.parse(window.localStorage.getItem("now")) || "notice"
+  );
+  const [paging, setPaging] = useState(
+    JSON.parse(window.localStorage.getItem("paging")) || 0
+  );
   const [isOpen, setIsOpen] = useState(false);
   const __change = useCallback(
     (val) => {
       if (isOpen) {
         setIsOpen(false);
       }
+      setPaging(0);
       setNow(val);
     },
     [isOpen]
   );
+  useEffect(() => {
+    window.localStorage.setItem("now", JSON.stringify(now));
+    return () => {};
+  }, [now]);
   return (
     <React.Fragment>
       <Nav now={now} isOpen={isOpen}>
@@ -163,7 +174,7 @@ function Support() {
           <div className="bar" />
         </div>
       </Nav>
-      <List now={now} />
+      <List now={now} paging={paging} setPaging={setPaging} />
     </React.Fragment>
   );
 }

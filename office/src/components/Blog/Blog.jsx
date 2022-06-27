@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from "react";
-
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Animation } from "../styles/Animation";
@@ -7,9 +6,13 @@ import firebaseApp from "../config/firebaseApp";
 import Card from "../common/Card";
 import { useDispatch } from "react-redux";
 import Search from "../common/Search";
+import Infinite from "../common/Infinite";
 const Fstore = firebaseApp.firestore();
 const Fstorage = firebaseApp.storage();
-const Wrapper = styled.main``;
+const Wrapper = styled.main`
+  background-color: #f8f8f8;
+  padding-bottom: 120px;
+`;
 const List = styled.div`
   width: 100%;
   height: 100%;
@@ -31,6 +34,7 @@ function Blog() {
   const history = useHistory();
   const [ListData, setListData] = useState([]);
   const [DisplayList, setDisplayList] = useState([]);
+  const [page, setPage] = useState(1);
   const __navMake = useCallback(
     (type, timestamp, id) => {
       history.push("/editor", {
@@ -44,19 +48,25 @@ function Blog() {
   );
   const __getData = useCallback(async () => {
     let arr = [];
+    let pin = [];
     await Fstore.collection("blog")
       .orderBy("timestamp", "desc")
+      .limit(page * 10)
       .get()
       .then((result) => {
         if (result) {
           result.forEach((item) => {
             const value = item.data();
-            arr.push(Object.assign(value, { id: item.id }));
+            if (value.config.isPin) {
+              pin.push(Object.assign(value, { id: item.id }));
+            } else {
+              arr.push(Object.assign(value, { id: item.id }));
+            }
           });
         }
       });
-    return arr;
-  }, []);
+    return [...pin, ...arr];
+  }, [page]);
 
   const __searching = useCallback(
     (val) => {
@@ -141,6 +151,7 @@ function Blog() {
                 );
               }
             )}
+            <Infinite setPage={setPage} />
           </List>
         </Body>
       </Animation>

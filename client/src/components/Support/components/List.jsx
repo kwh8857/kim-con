@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import firebaseApp from "../../../config/firebaseApp";
 import Card from "./Card";
-
+import "../css/index.css";
 const Fstore = firebaseApp.firestore();
 
 const Main = styled.main`
@@ -97,18 +97,15 @@ const Main = styled.main`
     width: 100%;
   }
 `;
-function List({ now }) {
+function List({ now, paging, setPaging }) {
+  const mainRef = useRef(null);
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
-  const [paging, setPaging] = useState(0);
   const [keyowrd, setKeyowrd] = useState(undefined);
   const length = parseFloat(String(displayData.length / 10));
-  const __search = useCallback(
-    (e) => {
-      setKeyowrd(e);
-    },
-    [data]
-  );
+  const __search = useCallback((e) => {
+    setKeyowrd(e);
+  }, []);
   const __changePaging = useCallback(
     (type) => {
       if (type === "plus") {
@@ -117,24 +114,27 @@ function List({ now }) {
         setPaging(paging - 1);
       }
     },
-    [paging]
+    [paging, setPaging]
   );
 
   useEffect(() => {
-    setDisplayData([]);
+    mainRef.current.classList.remove("animation");
+    void mainRef.current.offsetWidth;
+    mainRef.current.classList.add("animation");
     Fstore.collection(now)
       .orderBy("timestamp", "desc")
       .get()
       .then((res) => {
         let arr = [];
+        let pin = [];
         res.forEach((item) => {
           if (item.data().config.isPin) {
-            arr.unshift(item.data());
+            pin.push(item.data());
           } else {
             arr.push(item.data());
           }
         });
-        setData(arr);
+        setData([...pin, ...arr]);
         setDisplayData(arr);
       });
     return () => {};
@@ -149,9 +149,13 @@ function List({ now }) {
     }
     return () => {};
   }, [paging, data, keyowrd]);
+  useEffect(() => {
+    window.localStorage.setItem("paging", JSON.stringify(paging));
+    return () => {};
+  }, [paging]);
 
   return (
-    <Main now={now}>
+    <Main now={now} ref={mainRef} className="animation">
       <section className="top">
         <div className="left">
           <div className="title">

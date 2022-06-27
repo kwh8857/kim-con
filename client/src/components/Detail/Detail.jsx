@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import firebaseApp from "../../config/firebaseApp";
@@ -16,6 +16,7 @@ const DetailPage = styled.main`
         color: #00be83;
       }
       & > .title {
+        margin-top: 7px;
         font-size: 33px;
         font-weight: bold;
       }
@@ -44,7 +45,6 @@ const DetailPage = styled.main`
         padding-right: 21.3px;
         display: flex;
         align-items: center;
-
         position: relative;
 
         & > .file-asset {
@@ -87,7 +87,21 @@ function Detail() {
   const location = useLocation();
   const templateRef = useRef(null);
   const [data, setData] = useState(undefined);
-
+  const __download = useCallback((url, name) => {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "blob";
+    xhr.onload = (event) => {
+      var blob = URL.createObjectURL(xhr.response);
+      var link = document.createElement("a");
+      link.href = blob;
+      link.download = name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    };
+    xhr.open("GET", url);
+    xhr.send();
+  }, []);
   useEffect(() => {
     if (templateRef) {
       const projectid = location.pathname.split("/");
@@ -101,13 +115,22 @@ function Detail() {
               view: val.view ? val.view + 1 : 1,
             });
             templateRef.current.innerHTML = val.template;
+            const list = document.getElementsByClassName("link-template file");
+            for (let i = 0; i < list.length; i++) {
+              const e = list[i];
+              e.addEventListener("click", () => {
+                __download(
+                  e.firstChild.textContent,
+                  e.childNodes[2].textContent
+                );
+              });
+            }
             setData(val);
           });
         });
     }
     return () => {};
-  }, [location, templateRef]);
-
+  }, [location, templateRef, __download]);
   return (
     <DetailPage>
       <div className="wrapper">

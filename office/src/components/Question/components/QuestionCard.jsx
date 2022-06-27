@@ -80,13 +80,12 @@ function QuestionCard({ data }) {
     },
     timestamp,
   } = data;
-  console.log(new Date(timestamp));
   const navigate = useHistory();
-  // const __nav = useCallback(() => {
-  //   navigate.push("/answer", { data });
-  // }, [data, navigate]);
+  const __nav = useCallback(() => {
+    navigate.push(`/answer/${timestamp}`);
+  }, [data, navigate]);
   return (
-    <Wrapper>
+    <Wrapper onClick={__nav}>
       <div className="left">
         <div className="title">{company}</div>
       </div>
