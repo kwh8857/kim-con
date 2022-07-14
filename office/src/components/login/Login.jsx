@@ -107,7 +107,7 @@ function Login() {
           const {
             user: { uid },
           } = result;
-          if (uid === "SgfGJBwoiveAHk2ofSZ8fSqNgC02") {
+          if (uid === "LeKtJ5lzttSpq3bZJIIXOsPM5gt1") {
             dispatch({
               type: "@config/isLogin",
               payload: true,

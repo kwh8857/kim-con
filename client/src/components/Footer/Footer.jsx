@@ -13,9 +13,8 @@ const Wrapper = styled.footer`
     box-sizing: border-box;
     padding: 43.9px 0;
     & > .left {
-      & > a {
+      & > figure {
         width: 180px;
-        height: 33.4px;
         margin-bottom: 14.4px;
       }
       & > .text {

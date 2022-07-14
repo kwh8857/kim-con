@@ -14,8 +14,6 @@ import Blog from "./Blog/Blog";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import firebaseApp from "./config/firebaseApp";
-// Id:moogchi
-// Pass:^jtbc~moogchi^
 const Fauth = firebaseApp.auth();
 function Navigation() {
   const dispatch = useDispatch();
